@@ -1,37 +1,82 @@
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
+.page-content {
+	padding-top: 10px;
 }
 
-.zf-green {
-    color: #68b604;
+.qz-pointer {
+	cursor: pointer;
+	word-wrap: break-word;
 }
 
-.btn-success {
-  background-color: #57a900;
-  background-image: -moz-linear-gradient(top, #70d900, #57a900);
-  background-image: -ms-linear-gradient(top, #70d900, #57a900);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
-  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
-  background-image: -o-linear-gradient(top, #70d900, #57a900);
-  background-image: linear-gradient(top, #70d900, #57a900);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+.login {
+	background-color: #222 !important
 }
 
-.btn-success:hover,
-.btn-success:active,
-.btn-success.active,
-.btn-success.disabled,
-.btn-success[disabled] {
-  background-color: #57a900;
+.login .content .form-control {
+	background-color: white;
+	border: 1px solid #6ba3c8;
+	height: 43px;
+	color: #222;
 }
 
-.btn-success:active, .btn-success.active {
-  background-color: #57a900;
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #9E9E9E !important;
 }
 
-div.container a.brand {
-    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
-    margin-left: 0;
-    padding: 8px 20px 12px 40px;
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #9E9E9E !important;
+	opacity: 1;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #9E9E9E !important;
+	opacity: 1;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #9E9E9E !important;
+}
+
+:placeholder-shown {
+	/* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+	color: #9E9E9E !important;
+}
+
+.pac-container {
+	background-color: #FFF;
+	z-index: 20;
+	position: fixed;
+	display: inline-block;
+	float: left;
+}
+
+.page-photo-buttons {
+	width: 140px;
+	height: 140px;
+	background-color: rgba(16, 149, 122, .2) !important;
+}
+
+.upload-photo{
+	background: url('../img/photos.png');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.publish-default {
+	background: #EEEEEE !important;
+}
+
+.publish-1 {
+	background: #FFCDD2 !important;
+}
+
+.publish-0 {
+	background: #E8F5E9 !important;
+}
+
+.queued-0 {
+	background: #FFFDE7 !important;
+}
+
+.myHandle {
+	cursor: move;
 }
