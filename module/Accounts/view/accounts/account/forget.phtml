@@ -1,0 +1,19 @@
+<?php $email = isset($this->Form['email']) ? $this->Form['email'] : ''; ?>
+<?php echo $this->partial('message'); ?>
+<!-- BEGIN FORGOT PASSWORD FORM -->
+<form name="myForm" class="forget-form" action="<?php echo $this->url('forget',array(),array('force_canonical' => true)); ?>" method="post" ng-controller="ForgetCtrl" style="display: block;">
+	<div class="form-title">
+		<span class="form-title"><?php echo $this->translate('Forget Password ?');?></span>
+		<span class="form-subtitle"><?php echo $this->translate('Enter your username or e-mail to reset it.');?></span>
+	</div>
+	<div class="form-group">
+		<input ng-model="email_username" class="form-control" type="text" autocomplete="on" placeholder="<?php echo $this->translate('Username or Email');?>" name="email" required="required" />
+	</div>
+	<div class="form-actions" ng-show="buttons">
+		<a href="<?php echo $this->url('login',array(),array('force_canonical' => true)); ?>" id="back-btn" class="btn red" ><?php echo $this->translate('Back');?></a>
+		<button ng-click="forget();" type="button" class="btn red uppercase pull-right" ng-disabled="myForm.$invalid"><?php echo $this->translate('Submit');?></button>
+	</div>
+	<div align="center"><?php echo $this->partial('spinners');?></div>
+</form>
+<!-- END FORGOT PASSWORD FORM -->
+<p ng-show="false"><?php echo $this->translate('You have exceeded the number of requests allowed for password reset.');?></p>

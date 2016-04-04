@@ -1,0 +1,56 @@
+<!-- SHOW ERROR/SUCCESS MESSAGES -->
+<div id="alert-message" class="alert alert-danger hide" role="alert"></div>
+<div id="alert-succes" class="alert alert-success hide" role="alert"></div>
+
+<div class="row">
+<div class="col-md-12">
+<?php
+// Mensagens via Flash Messenger
+use \Zend\Mvc\Controller\Plugin\FlashMessenger;
+$flashMessenger = new FlashMessenger();
+// Mensagens Normais via viewmodel
+if (isset($this->FAILURE)) {
+    ?>
+<!-- Error -->
+<div class="alert alert-dismissable alert-danger">
+	<?php  echo($this->FAILURE);?>
+	<button class="close" aria-hidden="true" data-dismiss="alert"
+		type="button">x</button>
+</div>
+<?php }elseif(isset($this->WARNING)){?>
+
+<!-- Warning -->
+<div class="alert alert-dismissable alert-warning">
+	<?php  echo($this->WARNING);?>
+	<button class="close" aria-hidden="true" data-dismiss="alert"
+		type="button">x</button>
+</div>
+<?php }elseif(isset($this->INFORMATION)){?>
+<!-- Information -->
+<div class="alert alert-dismissable alert-info">
+	<?php  echo($this->INFORMATION);?>
+	<button class="close" aria-hidden="true" data-dismiss="alert"
+		type="button">x</button>
+</div>
+
+<?php
+
+} elseif (isset($this->SUCCESS) || $flashMessenger->hasSuccessMessages()) {
+    $msg = '';
+    if (isset($this->SUCCESS)) {
+        $msg = $this->SUCCESS;
+    } else {
+        $message = $flashMessenger->getSuccessMessages();
+        $msg = $message[0];
+        $flashMessenger->clearMessages();
+    }
+    ?>
+<!-- Success -->
+<div class="alert alert-dismissable alert-success">
+	<?php  echo($msg);?>
+	<button class="close" aria-hidden="true" data-dismiss="alert"
+		type="button">x</button>
+</div>
+<?php }?>
+</div>
+</div>

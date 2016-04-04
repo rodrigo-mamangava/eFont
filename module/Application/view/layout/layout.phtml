@@ -1,55 +1,187 @@
 <?php echo $this->doctype(); ?>
-
-<html lang="en">
+<html lang="en" ng-app="ShopApp">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
-
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
-
-        <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath('css/style.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap.min.css')) ?>
-
-        <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery.min.js'))
-            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>
-
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- METATAGS -->
+	    <?php echo $this->partial('metatags');?>
+	    <title>E-Font Shop</title>
+		<!-- BEGIN GLOBAL MANDATORY STYLES -->
+		<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700&amp;subset=all' rel='stylesheet' type='text/css'>
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/socicon/socicon.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/bootstrap-social/bootstrap-social.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/animate/animate.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<!-- END GLOBAL MANDATORY STYLES -->
+		<!-- BEGIN: BASE PLUGINS  -->
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/css/settings.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/css/layers.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/css/navigation.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/cubeportfolio/css/cubeportfolio.min.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/owl-carousel/owl.theme.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/owl-carousel/owl.transitions.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/fancybox/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/plugins/slider-for-bootstrap/css/slider.css" rel="stylesheet" type="text/css" />
+		<!-- END: BASE PLUGINS -->
+		<!-- BEGIN THEME STYLES -->
+		<link href="<?php echo $this->basePath(); ?>/assets/base/css/plugins.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/base/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/base/css/themes/default.css" rel="stylesheet" id="style_theme" type="text/css" />
+		<link href="<?php echo $this->basePath(); ?>/assets/base/css/custom.css" rel="stylesheet" type="text/css" />
+		<!-- END THEME STYLES -->
+		<!-- BOWER -->
+		<link rel="stylesheet" href="<?php echo $this->basePath(); ?>/bower_components/animate.css/animate.min.css">
+		<!-- END BOWER -->
+		<!-- BEGIN CUSTOM -->
+		<link href="<?php echo $this->basePath(); ?>/css/spinners.css" rel="stylesheet">
+		<link href="<?php echo $this->basePath(); ?>/css/style.css" rel="stylesheet">
+		<!-- END CUSTOM -->
     </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <body class="c-layout-header-fixed c-layout-header-mobile-fixed c-layout-header-topbar c-layout-header-topbar-collapse">
+		<?php echo $this->partial('navbar');?>
+        <!-- BEGIN: PAGE CONTAINER -->
+        <div class="c-layout-page">
+            <!-- BEGIN: PAGE CONTENT -->
+            <?php echo $this->partial('spinners');?>
+            <div dynamic-template ng-init="changeTemplateURL('/ef-welcome',null,'');"><?php echo $this->content; ?></div>
+		    <!-- END: PAGE CONTENT -->
+        </div>
+        <!-- END: PAGE CONTAINER -->
+        <!-- BEGIN: LAYOUT/FOOTERS/FOOTER-6 -->
+        <a name="footer"></a>
+        <footer class="c-layout-footer c-layout-footer-6 c-bg-grey-1">
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('Skeleton Application') ?></a>
+                <div class="c-prefooter c-bg-white">
+                    <div class="c-head">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="c-left">
+                                    <div class="socicon">
+                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid c-bg-grey-1 c-font-grey-2 c-theme-on-hover socicon-facebook tooltips" data-original-title="Facebook" data-container="body"></a>
+                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid c-bg-grey-1 c-font-grey-2 c-theme-on-hover socicon-twitter tooltips" data-original-title="Twitter" data-container="body"></a>
+                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid c-bg-grey-1 c-font-grey-2 c-theme-on-hover socicon-google tooltips" data-original-title="Google" data-container="body"></a>
+                                        <a href="#" class="socicon-btn socicon-btn-circle socicon-solid c-bg-grey-1 c-font-grey-2 c-theme-on-hover socicon-mail tooltips" data-original-title="Tumblr" data-container="body"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-line"></div>
+                    <div class="c-foot">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="c-content-title-1 c-title-md">
+                                    <h3 class="c-font-uppercase c-font-bold">About
+                                        <span class="c-theme-font"><?php echo $this->translate('E-Font Shop');?></span>
+                                    </h3>
+                                    <div class="c-line-left hide"></div>
+                                </div>
+                                <p class="c-text c-font-16 c-font-regular">Tolerare unus ducunt ad brevis buxum. Est alter buxum, cesaris. Eheu, lura! Racanas crescere in emeritis oenipons! Ubi est rusticus repressor? Lixa grandis clabulare est. Eposs tolerare.</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="c-content-title-1 c-title-md">
+                                    <h3 class="c-font-uppercase c-font-bold">Subscribe to Newsletter</h3>
+                                    <div class="c-line-left hide"></div>
+                                </div>
+                                <div class="c-line-left hide"></div>
+                                <form action="#">
+                                    <div class="input-group input-group-lg c-square">
+                                        <input type="text" class="form-control c-square c-font-grey-3 c-border-grey c-theme" placeholder="Your Email Here" />
+                                        <span class="input-group-btn">
+                                            <button class="btn c-theme-btn c-theme-border c-btn-square c-btn-uppercase c-font-16" type="button">Subscribe</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
             </div>
-        </nav>
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
+            <div class="c-postfooter c-bg-dark-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 c-col">
+                            <p class="c-copyright c-font-grey"><?php echo date('Y');?> &copy; <?php echo $this->translate('E-Font Shop');?>
+                                <span class="c-font-grey-3"><?php echo $this->translate('All Rights Reserved.')?></span>
+                            </p>
+                        </div>
+                        <div class="col-md-6 col-sm-12 c-col">
+                            <ul class="list-unstyled list-inline pull-right">
+                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/1.png" width="60" /></li>
+                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/2.png" width="60" /></li>
+                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/22.png" width="60" /></li>
+                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/5.png" width="60" /></li>
+                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/6.png" width="60" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- END: LAYOUT/FOOTERS/FOOTER-6 -->    	
+		<!-- END CONTAINER -->
+		
+        <!-- BEGIN: LAYOUT/FOOTERS/GO2TOP -->
+        <div class="c-layout-go2top">
+            <i class="icon-arrow-up"></i>
+        </div>
+        <!-- END: LAYOUT/FOOTERS/GO2TOP -->
+        <!-- BEGIN: LAYOUT/BASE/BOTTOM -->
+        <!-- BEGIN: CORE PLUGINS -->
+        <!--[if lt IE 9]>
+		<script src="<?php echo $this->basePath(); ?>/assets/global/plugins/excanvas.min.js"></script> 
+		<![endif]-->
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/jquery.easing.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/reveal-animate/wow.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/base/js/scripts/reveal-animate/reveal-animate.js" type="text/javascript"></script>
+        <!-- END: CORE PLUGINS -->
+        <!-- BEGIN: LAYOUT PLUGINS -->
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/js/jquery.themepunch.tools.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/js/jquery.themepunch.revolution.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/js/extensions/revolution.extension.slideanims.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/js/extensions/revolution.extension.layeranimation.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/js/extensions/revolution.extension.navigation.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/revo-slider/js/extensions/revolution.extension.video.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/plugins/slider-for-bootstrap/js/bootstrap-slider.js" type="text/javascript"></script>
+        <!-- END: LAYOUT PLUGINS -->
+        <!-- BEGIN: THEME SCRIPTS -->
+        <script src="<?php echo $this->basePath(); ?>/assets/base/js/components.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/base/js/components-shop.js" type="text/javascript"></script>
+        <script src="<?php echo $this->basePath(); ?>/assets/base/js/app.js" type="text/javascript"></script>
+        
+		<!-- BEGIN ANGULAR JS -->
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-i18n/angular-locale_pt-br.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/ngstorage/ngStorage.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-ui-select2/src/select2.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-ui-sortable/sortable.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/video.js/dist/video.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-ipsum/dist/ipsum.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
+		
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/functions.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/message.js"></script>
+		
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/app.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/directives/directive.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/services/ShopSrvc.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/WelcomeCtrl.js"></script>
+		<!-- END ANGULAR JS -->
     </body>
 </html>

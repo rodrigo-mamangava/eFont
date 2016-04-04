@@ -9,3 +9,7 @@ nbproject
 .settings
 vendor
 composer.phar
+composer.lock
+zftool.phar
+data
+public/bower_components

@@ -1,0 +1,22 @@
+<?php echo $this->partial('message'); ?>
+<!-- BEGIN FORGOT PASSWORD FORM -->
+<form class="forget-form" action="<?php echo $this->url('two-factor-verify',array('action'=>'save'),array('force_canonical' => true)); ?>" method="post" style="display: block;">
+	<h3><?php echo $this->translate('Two-Step Verification');?></h3>
+	<p>
+		 <?php echo $this->translate('To help increase the security of your data, follow the steps below.');?>
+	</p>
+	<div class="form-group">
+		<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="<?php echo $this->translate('Insert verification code')?>" name="two_step_pin" required="required" value="" maxlength="10"/>
+	</div>
+	<div class="form-actions">
+		<button type="submit" class="btn blue uppercase pull-right col-md-12"><?php echo $this->translate('Verify');?></button>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-md-12 margin-top-20 margin-bottom-20">
+		<a href="<?php echo $this->url('two-factor-problems',array(),array('force_canonical' => true)); ?>">
+		<?php echo $this->translate('Problems with your code?');?> </a>
+		</div>
+	</div>	
+</form>
+<!-- END FORGOT PASSWORD FORM -->

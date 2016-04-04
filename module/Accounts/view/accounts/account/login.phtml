@@ -1,0 +1,37 @@
+<?php $email = isset ( $this->Form ['email'] ) ? $this->Form ['email'] : ''; ?>
+<?php echo $this->partial('message'); ?>
+<!-- BEGIN LOGIN FORM -->
+<form class="login-form" name="loginForm" ng-controller="LoginCtrl" ng-submit="login()" novalidate>
+	<div class="form-title">
+		<span class="form-title"><?php echo $this->translate('Welcome.');?></span>
+		<span class="form-subtitle"><?php echo $this->translate('Please login.');?></span>
+	</div>
+		
+	<div class="alert alert-danger display-hide">
+		<button class="close" data-close="alert"></button>
+		<span>
+		<?php echo $this->translate('Enter any username and password.');?> </span>
+	</div>
+	<div class="form-group">
+		<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+		<label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate('Username');?></label>
+		<input class="form-control form-control-solid" type="text" autocomplete="off" placeholder="Username" name="username" required="required" value="<?php echo $email;?>" ng-model="credentials.username"/>
+	</div>
+	
+	<div class="form-group">
+		<label class="control-label visible-ie8 visible-ie9"><?php echo $this->translate('Password');?></label>
+		<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" required="required" ng-model="credentials.password"/>
+	</div>
+	
+	<div class="form-actions" ng-show="buttons">
+		<button type="submit" class="btn red btn-block uppercase" ng-disabled="loginForm.$invalid"><?php echo $this->translate('Login');?></button>
+	</div>
+	<div align="center"><?php echo $this->partial('spinners');?></div>
+			
+	<div class="form-actions">
+		<div class="pull-right forget-password-block">
+			<a href="<?php echo $this->url('forget',array(),array('force_canonical' => true)); ?>" id="forget-password" class="forget-password"><?php echo $this->translate('Forgot Password?');?></a>
+		</div>
+	</div>
+</form>
+<!-- END LOGIN FORM -->
