@@ -17,4 +17,10 @@ class ShopCheckoutController extends ApplicationController
 	{
 		return $this->viewModel->setTerminal ( true );
 	}
+	/**
+	 * Completando operacao
+	 */
+	public function completeAction(){
+		return $this->viewModel->setTerminal ( true );
+	}
 }

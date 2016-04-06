@@ -39,24 +39,24 @@ class ApplicationController extends AbstractActionController {
 		// $this->authService = new AuthenticationService ();
 		$this->authService = \Accounts\Controller\AuthenticatorController::getInstance ();
 		$controller = $this->getEvent ()->getRouteMatch ()->getParam ( 'controller' );
-		if (! $this->authService->hasIdentity ()) {
-			if ($controller == 'Application\Controller\Index' || $controller == 'Application\Controller\Welcome') { // Liberado sem sessao
-				return parent::onDispatch ( $e );
-			} else {
-				return $this->redirect ()->toRoute ( "login" );
-			}
-		} else {
-			self::userLogged ();
-			if ($controller == 'Application\Controller\Company') { // Root + Reseller
-				if (self::get_privilege_type () != 2) {
-					return $this->redirect ()->toRoute ( "logout" ); // Saindo
-				}
-			}elseif ($controller == 'Application\Controller\UserSystem'){
-				if (self::get_privilege_type () != 2 && self::get_privilege_type () != 1) {
-					return $this->redirect ()->toRoute ( "logout" ); // Saindo
-				}
-			}
-		}
+// 		if (! $this->authService->hasIdentity ()) {
+// 			if ($controller == 'Application\Controller\Index' || $controller == 'Application\Controller\Welcome') { // Liberado sem sessao
+// 				return parent::onDispatch ( $e );
+// 			} else {
+// 				return $this->redirect ()->toRoute ( "login" );
+// 			}
+// 		} else {
+// 			self::userLogged ();
+// 			if ($controller == 'Application\Controller\Company') { // Root + Reseller
+// 				if (self::get_privilege_type () != 2) {
+// 					return $this->redirect ()->toRoute ( "logout" ); // Saindo
+// 				}
+// 			}elseif ($controller == 'Application\Controller\UserSystem'){
+// 				if (self::get_privilege_type () != 2 && self::get_privilege_type () != 1) {
+// 					return $this->redirect ()->toRoute ( "logout" ); // Saindo
+// 				}
+// 			}
+// 		}
 		return parent::onDispatch ( $e );
 	}
 	/**

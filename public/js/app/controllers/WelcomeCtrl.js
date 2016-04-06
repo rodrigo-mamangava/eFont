@@ -6,4 +6,8 @@ ShopApp.controller('WelcomeCtrl', function($scope, $timeout, $http, $localStorag
 	$timeout(function(){
 		isPageScripts();
 	},300);	
+	
+	$scope.notimplemented = function(){
+		bootbox.alert('Not implemented.');
+	};
 });

@@ -40,8 +40,34 @@ return array (
 								) 
 						),
 						/**
-						 * LOGGED
+						 * User
 						 */
+						'shop-customer' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/shop-customer[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*' 
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Customer',
+												'action' => 'index' 
+										) 
+								) 
+						),
+						'shop-customer-account' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/shop-customer-account[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*' 
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Index',
+												'action' => 'customer' 
+										) 
+								) 
+						),
 						/**
 						 * SHOP
 						 */
@@ -68,6 +94,19 @@ return array (
 										'defaults' => array (
 												'controller' => 'Application\Controller\ShopCheckout',
 												'action' => 'index' 
+										) 
+								) 
+						),
+						'shop-checkout-complete' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/shop-checkout-complete[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*' 
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\ShopCheckout',
+												'action' => 'complete' 
 										) 
 								) 
 						),
@@ -111,7 +150,7 @@ return array (
 								) 
 						),
 						/**
-						 * USER
+						 * Index
 						 */
 						'ef-welcome' => array (
 								'type' => 'Segment',
@@ -194,6 +233,7 @@ return array (
 		'controllers' => array (
 				'invokables' => array (
 						// View Logged
+						'Application\Controller\Customer' => 'Application\Controller\CustomerController',
 						// View Shop
 						'Application\Controller\ShopCart' => 'Application\Controller\ShopCartController',
 						'Application\Controller\ShopCheckout' => 'Application\Controller\ShopCheckoutController',
@@ -222,7 +262,10 @@ return array (
 						'spinners' => __DIR__ . '/../view/layout/spinners.phtml',
 						'copyright' => __DIR__ . '/../view/layout/copyright.phtml',
 						'message' => __DIR__ . '/../view/layout/message.phtml',
-						'upload/file' => __DIR__ . '/../view/application/upload/upload.phtml' 
+						'upload/file' => __DIR__ . '/../view/application/upload/upload.phtml',
+						'shop/product/list' => __DIR__ . '/../view/application/example/product-grid.phtml',
+						'shop/customer/account' => __DIR__ . '/../view/application/customer/account.phtml',
+						'shop/customer/leftmenu' => __DIR__ . '/../view/application/customer/leftmenu.phtml' 
 				),
 				'template_path_stack' => array (
 						__DIR__ . '/../view' 

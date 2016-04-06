@@ -32,6 +32,10 @@ class IndexController extends ApplicationController {
 		$this->viewModel->setTerminal ( true );
 		return $this->viewModel;
 	}
+	
+	public function customerAction(){
+		return $this->viewModel->setTerminal ( true );
+	}
 	/**
 	 * Politica e privacidade
 	 * @return \Zend\View\Model\ViewModel
