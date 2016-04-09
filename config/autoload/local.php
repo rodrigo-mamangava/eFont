@@ -9,7 +9,7 @@ return array (
 		),
 		'ACL_CUSTOMER' => array (),
 		'Register' => array (
-				'users_table' => "user",
+				'users_table' => "user_system",
 				'password_column' => 'password',
 				'username_column' => 'username',
 				'name_column' => 'name',

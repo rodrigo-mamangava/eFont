@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.5.0",  
+    "angular": "1.5.0",
     "angular-animate": "^1.5.0",
     "animate.css": "^3.5.1",
     "ngstorage": "^0.3.10",
@@ -32,6 +32,7 @@
     "video.js": "^5.8.5",
     "angular-ipsum": "^0.0.4",
     "angular-bootstrap-switch": "^0.5.0",
-    "angular-i18n": "^1.5.3"
+    "angular-i18n": "^1.5.3",
+    "bootbox.js": "^4.4.0"
   }
 }

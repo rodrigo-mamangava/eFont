@@ -21,7 +21,96 @@ class AccountController extends \Application\Controller\ApplicationController {
 	 * @return \Application\Controller\Zend\View\Model\ViewModel
 	 */
 	public function signUpAction() {
-		return $this->viewModel;
+		// Request
+		$Request = $this->getRequest ();
+		$status = $outcome = false;
+		$data = 'Please use only letters (a-z), numbers, and periods.';
+		// POST
+		if ($Request->isPost ()) {
+			try {
+				$post = $this->postJsonp ();
+				
+				$firstname = isset ( $post ['firstname'] ) ? $post ['firstname'] : null;
+				$lastname = isset ( $post ['lastname'] ) ? $post ['lastname'] : null;
+				$fullname = isset ( $post ['fullname'] ) ? $post ['fullname'] : $firstname . ' ' . $lastname;
+				$phone = isset ( $post ['tel'] ) ? $post ['tel'] : null;
+				
+				$email = isset ( $post ['email'] ) ? strtolower ( ValidadorController::removeBlank ( $post ['email'] ) ) : null;
+				$username = isset ( $post ['username'] ) ? strtolower ( ValidadorController::removeBlank ( $post ['username'] ) ) : $email;
+				$password = isset ( $post ['password'] ) ? $post ['password'] : null;
+				
+				$address = isset ( $post ['address'] ) ? $post ['address'] : '';
+				$address_complement = isset ( $post ['complement'] ) ? $post ['complement'] : '';
+				$address_state = '';
+				$address_city = isset ( $post ['city'] ) ? $post ['city'] : '';
+				$address_country = isset ( $post ['country'] ) ? $post ['country'] : '';
+				$address_postcode = isset ( $post ['postcode'] ) ? $post ['postcode'] : '';
+				// Default, para uso futuro
+				$privilege_type_id = 1;
+				$provider= 'register';
+				
+				// Validacao basica
+				if (! ValidadorController::isValidEmail ( $email )) {
+					throw new \Exception ( $this->translate ( 'Email' ) . ' ' . $this->translate ( 'You can\'t leave this empty.' ) );
+				} elseif (! ValidadorController::isValidSenha ( $password )) {
+					throw new \Exception ( $this->translate ( 'Password: Short passwords are easy to guess. Try one with at least 8 characters. <br/> Use at least 8 characters. Don\'t use a password from another site or something too obvious like your pet\'s name.' ) );
+				} else {
+					// Controller necessarios
+					$CompanyController = new \Shop\Controller\CompanyController ( $this->getServiceLocator () );
+					$UserController = new \Shop\Controller\UserSystemController ( $this->getServiceLocator () );
+					// Usuario ja existe ?
+					$user = $UserController->findByEmail ( $email );
+					if ($user) {
+						throw new \Exception ( $this->translate ( 'Email already registered. Would you like try another or forgot your password?' ) );
+					} else {
+						$company_id = $CompanyController->save ( null, $fullname, $phone, $email, $phone, $address, $address_complement, $address_city, $address_state, $address_country, $address_postcode );
+						if ($company_id) {
+							// Auth
+							$auth = \Accounts\Controller\AuthenticatorController::getInstance ();
+							$auth->clearIdentity ();
+							// Salvando novo usuario
+							$rs = $UserController->save ( null, $username, $password, $email, $phone, $privilege_type_id, $company_id, 1, $firstname, $lastname, $address, $address_city, $address_complement, $address_country, $address_postcode );
+							if ($rs) {
+								try {
+									$adapter = new \Accounts\Service\Adapter\Register ( $this->getServiceLocator (), $this->getSystemConfig () );
+									$adapter->setUsernameAndPassword ( $email, $password );
+									$result = $auth->authenticate ( $adapter );
+									
+									if (isset ( $result ) && ! $result->isValid ()) {
+										throw new \Exception ( $this->translate ( 'Login failed!' ) );
+									} else {
+										$Identify = $auth->getIdentity ( $provider );
+										if (method_exists ( $Identify, 'getId' )) {
+											$user_id = $Identify->getId ();
+											if ($user_id) {
+												// Limpando Identidade para sobrecrever com id do sistema
+												// Update date login
+												$User = new \Shop\Controller\UserSystemController ( $this->getServiceLocator () );
+												$User->updated ( $user_id, array (
+														'dt_last_login_web' => date ( 'Y-m-d H:i:s' ) 
+												), $Identify->getCompany_id () );
+												// Fim, redireciona para a tela inicial
+												$this->showResponse ( true, '/connect', $user_id );
+												die ();
+											} else {
+												throw new \Exception ( $this->translate ( 'Unable to register the social network, please sign-up with mail or try again.' ) );
+											}
+										}
+									}
+								} catch ( \Exception $e ) {
+									throw new \Exception ( $this->translate ( 'The user name or password is incorrect.' ) );
+								}
+							}
+						}
+					}
+				}
+			} catch ( \Exception $e ) {
+				$data = $e->getMessage ();
+			}
+		}
+		// Response
+		parent::showResponse ( $status, $data, $outcome, true );
+		die ();
 	}
 	/**
 	 * Se username/email estao disponivel
@@ -45,10 +134,12 @@ class AccountController extends \Application\Controller\ApplicationController {
 		$auth = \Accounts\Controller\AuthenticatorController::getInstance ();
 		if (! $auth->hasIdentity ()) {
 			// throw new \Exception('Not logged in!', 404);
-			return $this->redirect ()->toRoute ( 'login' );
+			return $this->redirect ()->toRoute ( 'home' );
 			exit ();
 		} else {
-			return $this->redirect ()->toRoute ( 'welcome', array ('action' => 'index'));
+			return $this->redirect ()->toRoute ( 'shop-customer', array (
+					'action' => 'welcome' 
+			) );
 		}
 		return $this->viewModel;
 	}
@@ -63,7 +154,7 @@ class AccountController extends \Application\Controller\ApplicationController {
 		$auth->clearIdentity ();
 		// Two Step
 		$this->unsetTwoStepVerification ();
-		return $this->redirect ()->toRoute ( 'login' );
+		return $this->redirect ()->toRoute ( 'home' );
 	}
 	/**
 	 * Criando Sessao
@@ -87,7 +178,7 @@ class AccountController extends \Application\Controller\ApplicationController {
 				$email = strtolower ( $post ['username'] );
 				$password = $post ['password'];
 				// Validacao basica
-				if (! ValidadorController::isValidUsername ( $email )) {
+				if (! ValidadorController::isValidEmail ( $email )) {
 					throw new \Exception ( $this->translate ( 'Username: Please use only letters (a-z), numbers and full stops.' ) );
 				} elseif (! ValidadorController::isValidNotEmpty ( $password ) || ! ValidadorController::isValidStringLength ( $password, 8, 30 ) || ! ValidadorController::isValidSenha ( $password )) {
 					throw new \Exception ( $this->translate ( 'Password is not valid!.<br/>' ) . $this->translate ( 'Password: Short passwords are easy to guess. Try one with at least 8 characters. <br/>
@@ -107,7 +198,7 @@ class AccountController extends \Application\Controller\ApplicationController {
 								if ($user_id) {
 									// Limpando Identidade para sobrecrever com id do sistema
 									// Update date login
-									$User = new \Quiz\Controller\UserSystemController ( $this->getServiceLocator () );
+									$User = new \Shop\Controller\UserSystemController ( $this->getServiceLocator () );
 									$User->updated ( $user_id, array (
 											'dt_last_login_web' => date ( 'Y-m-d H:i:s' ) 
 									), $Identify->getCompany_id () );
@@ -122,9 +213,10 @@ class AccountController extends \Application\Controller\ApplicationController {
 					} catch ( \Exception $e ) {
 						// if ($e->getCode () == 423) {
 						// throw new \Exception ( $e->getMessage () );
+						// }else{
+						// throw new \Exception ( $e->getMessage () );
 						// }
-						// throw new \Exception ( $this->translate ( 'The user name or password is incorrect.' ) );
-						throw new \Exception ( $e->getMessage () );
+						throw new \Exception ( $this->translate ( 'The user name or password is incorrect.' ) );
 					}
 				}
 			}
@@ -146,7 +238,7 @@ class AccountController extends \Application\Controller\ApplicationController {
 	 * @return \Application\Controller\Zend\View\Model\ViewModel
 	 */
 	public function socialAction() {
-		return $this->viewModel;
+		return $this->viewModel->setTerminal ( true );
 	}
 	/**
 	 * Iniciando processo de lembrete senha
@@ -154,68 +246,7 @@ class AccountController extends \Application\Controller\ApplicationController {
 	 * @return \Application\Controller\Zend\View\Model\ViewModel
 	 */
 	public function forgetAction() {
-		// Default
-		$data = ("Unknown Error, try again, please.");
-		$rs = $record = $outcome = $status = false;
-		// Request
-		$Request = $this->getRequest ();
-		$remote_address = $Request->getServer ( 'REMOTE_ADDR' );
-		$role = 'USERS';
-		// POST
-		if ($Request->isPost ()) {
-			try {
-				$post = $this->postJsonp ();
-				$email = isset ( $post ['email'] ) ? $post ['email'] : null;
-				// Validacao basica
-				if (! ValidadorController::isValidEmail ( $email ) && ! ValidadorController::isValidUsername ( $email )) {
-					$data = $this->translate ( "You can't leave this empty." ) . '<br/><br/>';
-					$data .= $this->translate ( "Email." ) . ' ' . $this->translate ( "Please use only letters (a-z), numbers and full stops." ) . '<br/>';
-					$data .= $this->translate ( "Username." ) . ' ' . $this->translate ( "Please use only letters (a-z), numbers and full stops." ) . '<br/>';
-				} else {
-					$UserSystemController = new \Quiz\Controller\UserSystemController ( $this->getServiceLocator () );
-					if (ValidadorController::isValidEmail ( $email )) {
-						$res = $UserSystemController->fetchByEmail ( $email );
-						if ($res) {
-							if (count ( $res ) == 1) {
-								$record = current ( $res );
-							} else {
-								throw new \Exception ( $this->translate ( 'There is more than one registered user with this email, please enter the user name and click submit again.' ) );
-							}
-						} else {
-							throw new \Exception ( $this->translate ( 'Could not validate your email/username, please make sure filled out correctly or are a registered email/username.' ) );
-						}
-					} elseif (ValidadorController::isValidUsername ( $email )) {
-						$record = $UserSystemController->findByUsername ( $email );
-					}
-					
-					// Contem registro?
-					if (! $record) {
-						throw new \Exception ( $this->translate ( 'Could not validate your email/username, please make sure filled out correctly or are a registered email/username.' ) );
-					} else {
-						if ($record ['removed'] == 0 && ValidadorController::isValidEmail ( $record ['email'] )) { // Nao esta bloqueado
-							$Forgot = new \Forgot\Controller\ForgotController ( $this->getServiceLocator (), $this->getLocale () );
-							$rs = $Forgot->recover ( $role, $record ['id'], $record ['email'], $remote_address );
-							if (! $rs) {
-								throw new \Exception ( $this->translate ( 'An unknown error occurred, could not send the forget email, please try again.' ) );
-							} else {
-								// Success
-								$this->flashMessenger ()->addSuccessMessage ( $this->translate ( 'An email has been sent automatically to the email address associated with your login. Please check the email folder and span filters for the email. The link will expire in 24 hours.' ) );
-								$data = $this->translate ( 'An email has been sent automatically to the email address associated with your login. Please check the email folder and span filters for the email. The link will expire in 24 hours.' );
-								$record = $outcome = $status = true;
-							}
-						} else {
-							throw new \Exception ( $this->translate ( 'Your account has not been activated, please fill out the registration again or confirm your registration and email.' ) );
-						}
-					}
-				}
-			} catch ( \Exception $e ) {
-				$data = $this->translate ( $e->getMessage () );
-			}
-			// Response
-			self::showResponse ( $status, $data, $outcome, true );
-			die ();
-		}
-		return $this->viewModel;
+		return $this->viewModel->setTerminal ( true );
 	}
 	/**
 	 * Resetando a senha
@@ -223,48 +254,6 @@ class AccountController extends \Application\Controller\ApplicationController {
 	 * @return \Application\Controller\Zend\View\Model\ViewModel
 	 */
 	public function resetAction() {
-		// GET
-		$Params = $this->params ();
-		$hash = $Params->fromQuery ( 'hash' );
-		// var_dump(base64_decode ( $hash ) );
-		if (! ValidadorController::isValidNotEmpty ( $hash )) {
-			$this->viewModel->setVariables ( array (
-					'FAILURE' => $this->translate ( 'An attempt has been made to operate on an impersonation token by a thread that is not currently impersonating a client. [001]' ) 
-			) );
-		} elseif (! ValidadorController::isValidRegexp ( $hash, 'base64' )) {
-			$this->viewModel->setVariables ( array (
-					'FAILURE' => $this->translate ( 'An attempt has been made to operate on an impersonation token by a thread that is not currently impersonating a client. [002]' ) 
-			) );
-		} else {
-			// Decrypt
-			$ForgotController = new \Forgot\Controller\ForgotController ( $this->getServiceLocator () );
-			try {
-				$decrypt = $ForgotController->decode ( $hash );
-				if (! $decrypt) {
-					$this->viewModel->setVariables ( array (
-							'FAILURE' => $this->translate ( 'An attempt has been made to operate on an impersonation token by a thread that is not currently impersonating a client. [003]' ) 
-					) );
-				} else {
-					$User = $decrypt;
-					if (isset ( $User ['user_id'] )) {
-						// Desabilitando o Hash
-						if ($ForgotController->reset ( $User )) {
-							// Redirecionando para a pagina de entrada
-							$this->flashMessenger ()->addSuccessMessage ( $this->translate ( 'Your password has been updated and a new password has been sent to your email. Please, check your mail.' ) );
-						} else {
-							$this->viewModel->setVariables ( array (
-									'FAILURE' => $this->translate ( 'The token for this account has expired or blocked due to several attempts to change. [006]' ) 
-							) );
-						}
-					}
-				}
-			} catch ( Exception $e ) {
-				$hash = null;
-				$this->viewModel->setVariables ( array (
-						'FAILURE' => $this->translate ( 'An attempt has been made to operate on an impersonation token by a thread that is not currently impersonating a client. [008]' ) 
-				) );
-			}
-		}
-		return $this->viewModel;
+		return $this->viewModel->setTerminal ( true );
 	}
 }

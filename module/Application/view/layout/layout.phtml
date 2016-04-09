@@ -47,7 +47,11 @@
         <div class="c-layout-page">
             <!-- BEGIN: PAGE CONTENT -->
             <?php echo $this->partial('spinners');?>
-            <div dynamic-template ng-init="changeTemplateURL('/ef-welcome');"><?php echo $this->content; ?></div>
+            <?php if(isset($this->CHANGETEMPLATEURL) && strlen($this->CHANGETEMPLATEURL) > 1 ){?>
+            <div dynamic-template ng-init="changeTemplateURL('<?php echo $this->CHANGETEMPLATEURL;?>');"><?php echo $this->content; ?></div>
+            <?php }else{?>
+            <div dynamic-template ng-init="changeTemplateURL('/shop-customer-account');"><?php echo $this->content; ?></div>
+            <?php }?>
 		    <!-- END: PAGE CONTENT -->
         </div>
         <!-- END: PAGE CONTAINER -->
@@ -111,11 +115,11 @@
                         </div>
                         <div class="col-md-6 col-sm-12 c-col">
                             <ul class="list-unstyled list-inline pull-right">
-                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/1.png" width="60" /></li>
-                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/2.png" width="60" /></li>
-                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/22.png" width="60" /></li>
-                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/5.png" width="60" /></li>
-                                <li><img class="img-responsive" src="assets/base/img/content/payments/light/6.png" width="60" /></li>
+                                <li><img class="img-responsive" src="<?php echo $this->basePath(); ?>/assets/base/img/content/payments/light/1.png" width="60" /></li>
+                                <li><img class="img-responsive" src="<?php echo $this->basePath(); ?>/assets/base/img/content/payments/light/2.png" width="60" /></li>
+                                <li><img class="img-responsive" src="<?php echo $this->basePath(); ?>/assets/base/img/content/payments/light/22.png" width="60" /></li>
+                                <li><img class="img-responsive" src="<?php echo $this->basePath(); ?>/assets/base/img/content/payments/light/5.png" width="60" /></li>
+                                <li><img class="img-responsive" src="<?php echo $this->basePath(); ?>/assets/base/img/content/payments/light/6.png" width="60" /></li>
                             </ul>
                         </div>
                     </div>
@@ -174,6 +178,7 @@
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/video.js/dist/video.min.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-ipsum/dist/ipsum.min.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/bower_components/bootbox.js/bootbox.js"></script>
 		
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/functions.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/message.js"></script>
@@ -182,6 +187,7 @@
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/directives/directive.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/services/ShopSrvc.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/WelcomeCtrl.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/RegisterCtrl.js"></script>
 		<!-- END ANGULAR JS -->
     </body>
 </html>

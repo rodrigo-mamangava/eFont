@@ -34,4 +34,11 @@ class CustomerController extends ApplicationController
 	public function accountAction(){
 		return $this->viewModel->setTerminal ( true );
 	}
+	/**
+	 * Bem vindo
+	 */
+	public function welcomeAction(){
+		$this->setLayoutVariable('CHANGETEMPLATEURL', '/shop-customer/index');
+		return $this->viewModel;
+	}
 }

@@ -70,6 +70,28 @@
                         <!-- Dropdown menu toggle on mobile: c-toggler class can be applied to the link arrow or link itself depending on toggle mode -->
                         <nav class="c-mega-menu c-pull-right c-mega-menu-dark c-mega-menu-dark-mobile c-fonts-uppercase c-fonts-bold">
                             <ul class="nav navbar-nav c-theme-nav">
+                                <?php if(isset($this->USER_LOGGED)){?>
+								<?php if($this->USER_LOGGED === true){?>
+								<li class="c-active" id="nav-menu-shop-customer"><a href="javascript:;" ng-click="changeTemplateURL('/shop-customer/index', '', 'nav-menu-shop-customer');" class="c-link dropdown-toggle"><?php echo $this->translate('Dashboard');?><span class="c-arrow c-toggler"></span></a>
+								<div class="dropdown-menu c-menu-type-mega c-menu-type-fullwidth" style="min-width: auto"></div></li>
+								
+								<?php if($this->USER_LOGGED === true && ($this->USER_PRIVILEGE_TYPE == 1)){?>
+								<li id="nav-menu-shop-projects"><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/index', '', 'nav-menu-shop-projects');" class="c-link dropdown-toggle"><?php echo $this->translate('Projects');?><span class="c-arrow c-toggler"></span></a>
+								<div class="dropdown-menu c-menu-type-mega c-menu-type-fullwidth" style="min-width: auto"></div></li>								
+								<?php }?>
+								
+								<?php if($this->USER_LOGGED === true && ($this->USER_PRIVILEGE_TYPE == 2)){?>
+								<li id="nav-menu-shop-admin"><a href="javascript:;" ng-click="changeTemplateURL('/shop-admin/index', '', 'nav-menu-shop-admin');" class="c-link dropdown-toggle"><?php echo $this->translate('Admin');?><span class="c-arrow c-toggler"></span></a>
+								<div class="dropdown-menu c-menu-type-mega c-menu-type-fullwidth" style="min-width: auto"></div></li>									
+								<?php }?>
+								
+								<!-- REMOVE -->
+								<li><a href="javascript:;" class="c-link dropdown-toggle"><span class="text-muted"><?php echo $this->translate('Admin');?></span><span class="c-arrow c-toggler"></span></a>
+								<div class="dropdown-menu c-menu-type-mega c-menu-type-fullwidth" style="min-width: auto"></div></li>									
+								<!-- REMOVE -->
+								
+								<?php }?>
+								<?php }?>
                                 <li class="c-search-toggler-wrapper">
                                     <a href="#" class="c-btn-icon c-search-toggler">
                                         <i class="fa fa-search"></i>
@@ -81,10 +103,13 @@
                                         <span class="c-cart-number c-theme-bg">2</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="javascript:;" ng-click="changeTemplateURL('/shop-customer-account');" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold">
-                                        <i class="icon-user"></i> Sign In</a>
-                                </li>
+                                <?php if(isset($this->USER_LOGGED)){?>
+								<?php if($this->USER_LOGGED === true){?>
+								<li><a href="<?php echo $this->url('logout',array(),array('force_canonical' => true)); ?>" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-logout"></i> Logout</a></li>
+								<?php }?>
+								<?php }else{?>
+                                <li><a href="javascript:;" ng-click="changeTemplateURL('/shop-customer-account');" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-user"></i> Sign In</a></li>
+                                <?php }?>
                             </ul>
                         </nav>
                         <!-- END: MEGA MENU -->

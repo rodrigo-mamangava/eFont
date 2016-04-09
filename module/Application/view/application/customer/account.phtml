@@ -1,15 +1,15 @@
-<section ng-controller="WelcomeCtrl">
+<section ng-controller="RegisterCtrl">
             <!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
             <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
                 <div class="container">
                     <div class="c-page-title c-pull-left">
-                        <h3 class="c-font-uppercase c-font-sbold">Customer Login/Register</h3>
-                        <h4 class="">Page Sub Title Goes Here</h4>
+                        <h3 class="c-font-uppercase c-font-sbold"><?php echo $this->translate('Customer Login/Register');?></h3>
+                        <h4 class=""><?php echo $this->translate('Page Sub Title Goes Here');?></h4>
                     </div>
                     <ul class="c-page-breadcrumbs c-theme-nav c-pull-right c-fonts-regular">
-                        <li><a href="javascript:;" ng-click="changeTemplateURL('/ef-welcome');">Shop</a></li>
+                        <li><a href="javascript:;" ng-click="changeTemplateURL('/ef-welcome');"><?php echo $this->translate('Shop');?></a></li>
                         <li>/</li>
-                        <li><a href="shop-customer-account.html">Customer Login/Register</a></li>
+                        <li><a href="shop-customer-account.html"><?php echo $this->translate('Customer Login/Register');?></a></li>
                     </ul>
                 </div>
             </div>
@@ -24,18 +24,18 @@
                                 <div class="panel panel-default c-panel">
                                     <div class="panel-body c-panel-body">
                                     
-                                        <form class="c-form-login">
+                                        <form class="c-form-login" name="loginForm" ng-submit="login()" novalidate>
                                             <div class="form-group has-feedback">
-                                                <input type="text" class="form-control c-square c-theme input-lg" placeholder="Username">
+                                                <input type="email" class="form-control c-square c-theme input-lg" placeholder="<?php echo $this->translate('Username');?>" ng-model="form.username" required="required" autocomplete="off">
                                                 <span class="glyphicon glyphicon-user form-control-feedback c-font-grey"></span>
                                             </div>
                                             <div class="form-group has-feedback">
-                                                <input type="password" class="form-control c-square c-theme input-lg" placeholder="Password">
+                                                <input type="password" class="form-control c-square c-theme input-lg" placeholder="<?php echo $this->translate('Password');?>" ng-model="form.password" required="required" autocomplete="off">
                                                 <span class="glyphicon glyphicon-lock form-control-feedback c-font-grey"></span>
                                             </div>
-                                            <div class="row c-margin-t-40">
+                                            <div class="row c-margin-t-40" ng-show="buttons">
                                                 <div class="col-md-12 col-sm-12">
-                                                    <button type="button" ng-click="changeTemplateURL('/shop-customer/index');" class="pull-left col-md-12 btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">Login</button>
+                                                    <button type="submit" ng-disabled="loginForm.$invalid" class="pull-left col-md-12 btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" >Login</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -45,10 +45,10 @@
 				                                <div class="list-unstyled c-bs-grid-small-space">
 				                                    <div class="row">
 				                                        <div class="col-md-6 col-sm-12 c-margin-t-10">
-				                                            <a class="btn btn-block btn-social c-btn-square c-btn-uppercase btn-md btn-facebook"><i class="fa fa-facebook"></i> Sign in with Facebook </a>
+				                                            <a class="btn btn-block btn-social c-btn-square c-btn-uppercase btn-md btn-facebook"><i class="fa fa-facebook"></i> <?php echo $this->translate('Sign in with Facebook');?> </a>
 				                                        </div>
 				                                        <div class="col-md-6 col-sm-12 c-margin-t-10">
-				                                            <a class="btn btn-block btn-social c-btn-square c-btn-uppercase btn-md btn-google"><i class="fa fa-google-plus"></i> Sign in with Google </a>
+				                                            <a class="btn btn-block btn-social c-btn-square c-btn-uppercase btn-md btn-google"><i class="fa fa-google-plus"></i> <?php echo $this->translate('Sign in with Google');?> </a>
 				                                        </div>
 				                                    </div>
 				                                </div>
@@ -62,77 +62,70 @@
                                     <div class="panel-body c-panel-body">
                                         <div class="c-content-title-1">
                                             <h3 class="c-left">
-                                                <i class="icon-user"></i> Don't have an account yet?</h3>
+                                                <i class="icon-user"></i> <?php echo $this->translate('Don\'t have an account yet?');?></h3>
                                             <div class="c-line-left c-theme-bg"></div>
-                                            <p>Join us and enjoy shopping online today.</p>
+                                            <p><?php echo $this->translate('Join us and enjoy shopping online today.');?></p>
                                         </div>
                                         <div class="c-margin-fix">
                                             <div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600">
-                                                <input type="checkbox" id="checkbox6-444" class="c-check">
+                                                <input type="checkbox" id="checkbox6-444" class="c-check" ng-model="reigster_now">
                                                 <label for="checkbox6-444">
                                                     <span class="inc"></span>
                                                     <span class="check"></span>
-                                                    <span class="box"></span> Register Now! </label>
+                                                    <span class="box"></span> <?php echo $this->translate('Register Now!');?> </label>
                                             </div>
                                         </div>
-                                        <form class="c-form-register c-margin-t-20">
-                                            <div class="form-group">
-                                                <label class="control-label">Country</label>
-                                                <select class="form-control c-square c-theme">
-                                                    <option value="1">Malaysia</option>
-                                                    <option value="2">Singapore</option>
-                                                    <option value="3">Indonesia</option>
-                                                    <option value="4">Thailand</option>
-                                                    <option value="5">China</option>
-                                                </select>
-                                            </div>
+                                        <form class="c-form-register c-margin-t-20" ng-show="reigster_now" name="registerForm" ng-submit="register()" novalidate>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <label class="control-label">First Name</label>
-                                                        <input type="text" class="form-control c-square c-theme" placeholder="First Name"> </div>
+                                                        <label class="control-label"><?php echo $this->translate('First Name');?></label>
+                                                        <input ng-model="form.firstname" required="required" type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('First Name');?>"> </div>
                                                     <div class="col-md-6">
-                                                        <label class="control-label">Last Name</label>
-                                                        <input type="text" class="form-control c-square c-theme" placeholder="Last Name"> </div>
+                                                        <label class="control-label"><?php echo $this->translate('Last Name');?></label>
+                                                        <input ng-model="form.lastname" required="required" type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Last Name');?>"> </div>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="row">
+                                                <div class="form-group col-md-6 has-error">
+                                                    <label class="control-label"><?php echo $this->translate('Email Address');?></label>
+                                                    <input ng-model="form.email" required="required" type="email" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Email Address');?>"> </div>
+
+                                            <div class="form-group col-md-6 has-error">
+                                                <label class="control-label"><?php echo $this->translate('Account Password');?></label>
+                                                <input ng-model="form.password" required="required" type="password" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Password');?>"> </div>
+                                                    
+                                                <div class="col-md-6">
+                                                    <label class="control-label"><?php echo $this->translate('Phone');?></label>
+                                                    <input ng-model="form.tel" type="tel" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Phone');?>"> </div>
+                                            </div>                                            
                                             <div class="form-group">
-                                                <label class="control-label">Address</label>
-                                                <input type="text" class="form-control c-square c-theme" placeholder="Street Address"> </div>
+                                                <label class="control-label"><?php echo $this->translate('Address');?></label>
+                                                <input ng-model="form.address" type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Street Address');?>"> </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control c-square c-theme" placeholder="Apartment, suite, unit etc. (optional)"> </div>
+                                                <input ng-model="form.complement" type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Apartment, suite, unit etc. (optional)');?>"> </div>
                                             <div class="form-group">
-                                                <label class="control-label">Town / City</label>
-                                                <input type="text" class="form-control c-square c-theme" placeholder="Town / City"> </div>
+                                                <label class="control-label"><?php echo $this->translate('Town / City');?></label>
+                                                <input ng-model="form.city" type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Town / City');?>"> </div>
                                             <div class="row">
                                                 <div class="form-group col-md-6">
-                                                    <label class="control-label">State / County</label>
-                                                    <select class="form-control c-square c-theme">
-                                                        <option value="0">Select an option...</option>
-                                                        <option value="1">Malaysia</option>
-                                                        <option value="2">Singapore</option>
-                                                        <option value="3">Indonesia</option>
-                                                        <option value="4">Thailand</option>
-                                                        <option value="5">China</option>
-                                                    </select>
+                                                    <label class="control-label"><?php echo $this->translate('State / County');?></label>
+                                                <select class="form-control c-square c-theme" ng-model="form.country">
+                                                    <option value="<?php echo $this->translate('Brazil');?>"><?php echo $this->translate('Brazil');?></option>
+                                                    <option value="<?php echo $this->translate('Singapore');?>"><?php echo $this->translate('Singapore');?></option>
+                                                    <option value="<?php echo $this->translate('Indonesia');?>"><?php echo $this->translate('Indonesia');?></option>
+                                                    <option value="<?php echo $this->translate('Thailand');?>"><?php echo $this->translate('Thailand');?></option>
+                                                    <option value="<?php echo $this->translate('China');?>"><?php echo $this->translate('China');?></option>
+                                                </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="control-label">Postcode / Zip</label>
-                                                    <input type="text" class="form-control c-square c-theme" placeholder="Postcode / Zip"> </div>
+                                                    <label class="control-label"><?php echo $this->translate('Postcode / Zip');?></label>
+                                                    <input ng-model="form.postcode" type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Postcode / Zip');?>"> </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <label class="control-label">Email Address</label>
-                                                    <input type="email" class="form-control c-square c-theme" placeholder="Email Address"> </div>
-                                                <div class="col-md-6">
-                                                    <label class="control-label">Phone</label>
-                                                    <input type="tel" class="form-control c-square c-theme" placeholder="Phone"> </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Account Password</label>
-                                                <input type="password" class="form-control c-square c-theme" placeholder="Password"> </div>
+
                                             <div class="form-group c-margin-t-40">
-                                                <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">Register</button>
+                                                <button type="submit" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold" ng-disabled="registerForm.$invalid"><?php echo $this->translate('Register');?></button>
                                             </div>
                                         </form>
                                     </div>

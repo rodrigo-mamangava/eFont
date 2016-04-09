@@ -128,7 +128,7 @@ class Register implements \Zend\Authentication\Adapter\AdapterInterface {
 						}
 					}
 					//Empresa Desabilitada
-					$Company = new \Quiz\Controller\CompanyController($this->_serviceLocator);
+					$Company = new \Shop\Controller\CompanyController($this->_serviceLocator);
 					$appos_customers = $Company->find($user->company_id);
 					if($appos_customers){
 						$removed = isset($appos_customers['removed']) ? $appos_customers['removed'] : 0; 

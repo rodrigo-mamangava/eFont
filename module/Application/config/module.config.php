@@ -40,7 +40,26 @@ return array (
 								) 
 						),
 						/**
-						 * User
+						 * ADMIN
+						 */
+						/**
+						 * SALES
+						 */
+						'shop-projects' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/shop-projects[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*'
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Projects',
+												'action' => 'index'
+										)
+								)
+						),
+						/**
+						 * USER
 						 */
 						'shop-customer' => array (
 								'type' => 'Segment',
@@ -232,6 +251,8 @@ return array (
 		),
 		'controllers' => array (
 				'invokables' => array (
+						//View Sales
+						'Application\Controller\Projects' => 'Application\Controller\ProjectsController',
 						// View Logged
 						'Application\Controller\Customer' => 'Application\Controller\CustomerController',
 						// View Shop
@@ -265,7 +286,8 @@ return array (
 						'upload/file' => __DIR__ . '/../view/application/upload/upload.phtml',
 						'shop/product/list' => __DIR__ . '/../view/application/example/product-grid.phtml',
 						'shop/customer/account' => __DIR__ . '/../view/application/customer/account.phtml',
-						'shop/customer/leftmenu' => __DIR__ . '/../view/application/customer/leftmenu.phtml' 
+						'shop/customer/leftmenu' => __DIR__ . '/../view/application/customer/leftmenu.phtml',
+						'shop/projects/leftmenu' => __DIR__ . '/../view/application/projects/leftmenu.phtml' 
 				),
 				'template_path_stack' => array (
 						__DIR__ . '/../view' 

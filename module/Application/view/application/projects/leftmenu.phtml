@@ -1,0 +1,28 @@
+<?php if(isset($this->USER_LOGGED)){?>
+<?php if($this->USER_LOGGED === true  && ($this->USER_PRIVILEGE_TYPE == 1)){?>
+<div class="c-layout-sidebar-menu c-theme ">
+	<!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+	<div class="c-sidebar-menu-toggler">
+		<h3 class="c-title c-font-uppercase c-font-bold">Projects</h3>
+		<a href="javascript:;" class="c-content-toggler">
+			<span class="c-line"></span>
+			<span class="c-line"></span>
+			<span class="c-line"></span>
+		</a>
+	</div>
+	<ul class="c-sidebar-menu collapse " id="sidebar-menu-1">
+		<li class="c-dropdown c-open">
+			<a href="javascript:;" class="c-toggler">Projects</a>
+			<ul class="c-dropdown-menu">
+				<li id="sidebar-menu-shop-projects-dashboard" class="c-active"><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/index',null,null,'sidebar-menu-shop-projects-dashboard');">Dashbord</a></li>
+				<li id="sidebar-menu-shop-projects-products" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/products',null,null,'sidebar-menu-shop-projects-products');">Projects</a></li>
+				<li id="sidebar-menu-shop-projects-licenses" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/licenses',null,null,'sidebar-menu-shop-projects-licenses');">Licenses</a></li>
+				<li id="sidebar-menu-shop-projects-infos" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/infos',null,null,'sidebar-menu-shop-projects-infos');">Infos</a></li>
+				<li id="sidebar-menu-shop-projects-promotions" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/promotions',null,null,'sidebar-menu-shop-projects-promotions');">Promotions</a></li>
+			</ul>
+		</li>
+	</ul>
+	<!-- END: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+</div>
+<?php }?>
+<?php }?>

@@ -1,20 +1,29 @@
-ShopApp.directive("dynamicTemplate",function($localStorage){
+ShopApp.directive("dynamicTemplate",function($localStorage, $timeout){
 	return {
 		restrict: 'A',
 		replace: true,
 		template: '<div ng-include="template_url"></div>',
 		controller: function($scope){
-			$scope.changeTemplateURL = function(where, search, tab){
+			$scope.changeTemplateURL = function(where, search, tab, nav){
 				$scope.template_url = where;
-				console.log(where, search, tab);
-				
+				console.log(where, search, tab, nav);
+
 				search = typeof search !== 'undefined' ? search : null;
 				$localStorage.search = search;
-				
+
 				tab = typeof tab !== 'undefined' ? tab : null;	
 				if(tab != null && tab.length > 1){
-					$('.nav li').removeClass('active open selected');
-					$('#'+tab).addClass('active open selected');
+					$('.nav li').removeClass('c-active');
+					$('#'+tab).addClass('c-active');
+				}	
+
+				nav = typeof nav !== 'undefined' ? nav : null;
+				if(nav != null && nav.length > 1){
+					console.log(nav);
+					$timeout(function(){
+						$('.c-dropdown-menu li').removeClass('c-active');
+						$('#'+nav).addClass('c-active');
+					},200);
 				}				
 			}
 		}
