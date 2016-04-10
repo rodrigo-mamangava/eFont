@@ -16,8 +16,8 @@
                             	<?php $lang = isset($_GET['language'])?strtolower($_GET['language']):'br'; ?>
                                 <a href="javascript:;"><?php echo $lang;?></a>
                                 <ul class="dropdown-menu pull-right" role="menu">
-                                    <li <?php if($lang == 'en'){?> class="active" <?php }?>><a href="<?php echo $this->url(null,array(),array('force_canonical' => true)); ?>?language=en"><?php echo $this->translate('English');?></a> </li>
-                                    <li <?php if($lang == 'br'){?> class="active" <?php }?>><a href="<?php echo $this->url(null,array(),array('force_canonical' => true)); ?>?language=br"><?php echo $this->translate('Portuguese');?></a></li>
+                                    <li <?php if($lang == 'en'){?> class="active" <?php }?>><a href="<?php echo $this->url('home',array(),array('force_canonical' => true)); ?>?language=en"><?php echo $this->translate('English');?></a> </li>
+                                    <li <?php if($lang == 'br'){?> class="active" <?php }?>><a href="<?php echo $this->url('home',array(),array('force_canonical' => true)); ?>?language=br"><?php echo $this->translate('Portuguese');?></a></li>
                                 </ul>
                             </li>
                             <li class="c-search hide">
