@@ -87,6 +87,19 @@ return array (
 										) 
 								) 
 						),
+						'ef-profile' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/ef-profile[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*'
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Profile',
+												'action' => 'index'
+										)
+								)
+						),						
 						/**
 						 * SHOP
 						 */
@@ -255,6 +268,7 @@ return array (
 						'Application\Controller\Projects' => 'Application\Controller\ProjectsController',
 						// View Logged
 						'Application\Controller\Customer' => 'Application\Controller\CustomerController',
+						'Application\Controller\Profile' => 'Application\Controller\ProfileController',
 						// View Shop
 						'Application\Controller\ShopCart' => 'Application\Controller\ShopCartController',
 						'Application\Controller\ShopCheckout' => 'Application\Controller\ShopCheckoutController',

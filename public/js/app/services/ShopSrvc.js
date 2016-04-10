@@ -14,7 +14,6 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 				console.log(err);
 			});	
 		},
-		
 		register: function(data){
 			//GET
 			return $http.post('/sign-up', data)
@@ -24,6 +23,27 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 				console.log(err);
 			});	
 		},		
+		/**
+		 * Profile
+		 */
+		saveProfile: function(data){
+			//POST
+			return $http.post('/ef-profile/save', data)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},
+		getProfile: function(){
+			//GET
+			return $http.get('/ef-profile/edit')
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},			
 		/**
 		 * Fake Random
 		 */

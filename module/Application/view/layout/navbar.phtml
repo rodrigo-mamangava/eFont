@@ -109,10 +109,10 @@
                                 </li>
                                 <?php if(isset($this->USER_LOGGED)){?>
 								<?php if($this->USER_LOGGED === true){?>
-								<li><a href="<?php echo $this->url('logout',array(),array('force_canonical' => true)); ?>" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-logout"></i> Logout</a></li>
+								<li><a href="<?php echo $this->url('logout',array(),array('force_canonical' => true)); ?>" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-logout"></i> <?php echo $this->translate('Logout');?></a></li>
 								<?php }?>
 								<?php }else{?>
-                                <li><a href="javascript:;" ng-click="changeTemplateURL('/shop-customer-account');" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-user"></i> Sign In</a></li>
+                                <li><a href="javascript:;" ng-click="changeTemplateURL('/shop-customer-account');" class="c-btn-border-opacity-04 c-btn btn-no-focus c-btn-header btn btn-sm c-btn-border-1x c-btn-dark c-btn-circle c-btn-uppercase c-btn-sbold"><i class="icon-user"></i> <?php echo $this->translate('Sign In');?></a></li>
                                 <?php }?>
                             </ul>
                         </nav>

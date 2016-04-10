@@ -50,12 +50,13 @@ class ApplicationController extends AbstractActionController {
 				|| $controller == 'Application\Controller\Welcome') { // Liberado sem sessao
 				return parent::onDispatch ( $e );
 			} else {
-				return $this->redirect ()->toRoute ( "home" );
+				self::getSessionTimeout();
+				die();
 			}
 		} else {
 			self::userLogged ();
 			if ($controller == 'Application\Controller\Company') { // Root + Reseller
-				return $this->redirect ()->toRoute ( "home" );
+				self::getSessionTimeout();
 				die();
 			}
 		}
@@ -118,6 +119,22 @@ class ApplicationController extends AbstractActionController {
 			return $root;
 		}
 		return false;
+	}
+	
+	/**
+	 * Aviso que a sessao expirou
+	 */
+	public function getSessionTimeout(){
+		echo '
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js" />		
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" />		
+		<script type="text/javascript">
+			bootbox.alert("'.$this->translate('Your session is about to expire.').'", function() {
+				window.location.href = "/logout";
+			});
+		</script>' ;
+		
+		return;
 	}
 	/**
 	 * Forca a atualizacao da imagem de avatar na sessao

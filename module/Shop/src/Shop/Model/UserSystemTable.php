@@ -8,7 +8,7 @@ use Zend\Db\Sql\Select;
 
 /**
  * Usuários do SISTEMA
- * 
+ *
  * @author Claudio
  *        
  */
@@ -21,27 +21,27 @@ class UserSystemTable extends AbstractTableGateway {
 	/**
 	 * Salva/Atualiza um item
 	 *
-	 * @param unknown $id
-	 * @param unknown $username
-	 * @param unknown $password
-	 * @param unknown $email
-	 * @param unknown $phone
-	 * @param unknown $privilege_type_id
-	 * @param unknown $company_id
-	 * @param unknown $status
-	 * @param unknown $firstname
-	 * @param unknown $lastname
-	 * @param unknown $address
-	 * @param unknown $address_city
-	 * @param unknown $address_complement
-	 * @param unknown $address_country
-	 * @param unknown $address_postcode
-	 * @param string $image
+	 * @param unknown $id        	
+	 * @param unknown $username        	
+	 * @param unknown $password        	
+	 * @param unknown $email        	
+	 * @param unknown $phone        	
+	 * @param unknown $privilege_type_id        	
+	 * @param unknown $company_id        	
+	 * @param unknown $status        	
+	 * @param unknown $firstname        	
+	 * @param unknown $lastname        	
+	 * @param unknown $address        	
+	 * @param unknown $address_city        	
+	 * @param unknown $address_complement        	
+	 * @param unknown $address_country        	
+	 * @param unknown $address_postcode        	
+	 * @param string $image        	
 	 */
 	public function save($id, $username, $password, $email, $phone, $privilege_type_id, $company_id, $status, $firstname, $lastname, $address, $address_city, $address_complement, $address_country, $address_postcode, $image = '') {
 		$data = array (
 				'company_id' => $company_id,
-				'username' => addslashes ( $username ),				
+				'username' => addslashes ( $username ),
 				'name' => addslashes ( $firstname . ' ' . $lastname ),
 				'firstname' => addslashes ( $firstname ),
 				'lastname' => addslashes ( $lastname ),
@@ -115,6 +115,23 @@ class UserSystemTable extends AbstractTableGateway {
 		try {
 			// SELECT
 			$select = new Select ();
+			$select->columns ( array (
+					'id',
+					'name',
+					'username',
+					'email',
+					'phone',
+					'tel'=>'phone',
+					'dt_last_login_web',
+					'company_id',
+					'firstname',
+					'lastname',
+					'address',
+					'address_city',
+					'address_complement',
+					'address_country',
+					'address_postcode'
+			) );
 			// JOIN
 			$select->join ( 'company', "company.id = {$this->table}.company_id", array (
 					'company_name' => 'name' 
@@ -200,7 +217,7 @@ class UserSystemTable extends AbstractTableGateway {
 	
 	/**
 	 * Busca por emails
-	 * 
+	 *
 	 * @param unknown $email        	
 	 */
 	public function fetchByEmail($email) {
@@ -225,7 +242,7 @@ class UserSystemTable extends AbstractTableGateway {
 	
 	/**
 	 * Busca por id, email e senha
-	 * 
+	 *
 	 * @param unknown $company_id        	
 	 * @param unknown $username        	
 	 * @param unknown $password        	

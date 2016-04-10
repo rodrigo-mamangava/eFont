@@ -13,7 +13,7 @@
                 </div>
             </div>
             <!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
-            <div class="container">
+            <div class="container" ng-controller="ProfileCtrl" ng-init="getProfile();">
 				<?php echo $this->partial('shop/customer/leftmenu');?>
                 <div class="c-layout-sidebar-content ">
                     <!-- BEGIN: PAGE CONTENT -->
@@ -22,19 +22,16 @@
                         <h3 class="c-font-uppercase c-font-bold"><?php echo $this->translate('My Dashboard');?></h3>
                         <div class="c-line-left"></div>
                         <p class=""> <?php echo $this->translate('Hello');?>
-                            <a href="#" class="c-theme-link">Joe Doe</a> (<a href="#" class="c-theme-link"><?php echo $this->translate('not Joe Doe? Sign out');?></a>).
+                            <a href="javascript:;" ng-click="changeTemplateURL('/shop-customer/profile',null,null,'sidebar-menu-shop-customer-profile');" class="c-theme-link">{{form.name}}</a> (<a href="<?php echo $this->url('logout',array(),array('force_canonical' => true)); ?>" class="c-theme-link"><?php echo $this->translate('not {{form.name}} ? Sign out');?></a>).
                             <br /> </p>
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12 c-margin-b-20">
-                            <h3 class="c-font-uppercase c-font-bold">Joe Doe</h3>
+                            <h3 class="c-font-uppercase c-font-bold">{{form.name}}</h3>
                             <ul class="list-unstyled">
-                                <li>25, Lorem Lis Street, Orange C, California, US</li>
-                                <li>Phone: 800 123 3456</li>
-                                <li>Fax: 800 123 3456</li>
-                                <li>Email:
-                                    <a href="mailto:example@example.com" class="c-theme-link">example@example.com</a>
-                                </li>
+                                <li><?php echo $this->translate('Address');?>: {{form.address}}, {{form.address_city}}, {{form.address_country}}</li>
+                                <li><?php echo $this->translate('Phone');?>: {{form.phone}}</li>
+                                <li><?php echo $this->translate('Email');?>: {{form.email}}</li>
                             </ul>
                         </div>
                     </div>
