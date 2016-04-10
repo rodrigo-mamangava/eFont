@@ -46,7 +46,7 @@ class AccountController extends \Application\Controller\ApplicationController {
 				$address_country = isset ( $post ['country'] ) ? $post ['country'] : '';
 				$address_postcode = isset ( $post ['postcode'] ) ? $post ['postcode'] : '';
 				// Default, para uso futuro
-				$privilege_type_id = 1;
+				$privilege_type_id = 3;
 				$provider= 'register';
 				
 				// Validacao basica

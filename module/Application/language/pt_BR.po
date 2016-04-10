@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 09:24-0300\n"
-"PO-Revision-Date: 2016-03-29 09:28-0300\n"
+"POT-Creation-Date: 2016-04-10 11:24-0300\n"
+"PO-Revision-Date: 2016-04-10 11:40-0300\n"
 "Last-Translator: Diogo Melo <dmelo87@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: pt\n"
@@ -15,15 +15,56 @@ msgstr ""
 "X-Generator: Poedit 1.8.7\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: Accounts/src/Accounts/Controller/AccountController.php:91
+#: Accounts/src/Accounts/Controller/AccountController.php:54
+msgid "Email"
+msgstr "Email"
+
+#: Accounts/src/Accounts/Controller/AccountController.php:54
+msgid "You can't leave this empty."
+msgstr "Você não pode deixar este campo vazio."
+
+#: Accounts/src/Accounts/Controller/AccountController.php:56
+msgid ""
+"Password: Short passwords are easy to guess. Try one with at least 8 "
+"characters. <br/> Use at least 8 characters. Don't use a password from "
+"another site or something too obvious like your pet's name."
+msgstr ""
+"Senha: Curto senhas são fáceis de adivinhar. Tente um com pelo menos 8 "
+"caracteres. <br/> Utilize pelo menos 8 caracteres. Não use uma senha de "
+"outro site ou algo muito óbvio, como o nome do seu animal de estimação"
+
+#: Accounts/src/Accounts/Controller/AccountController.php:64
+msgid ""
+"Email already registered. Would you like try another or forgot your password?"
+msgstr "Email já registrado. Gostaria tentar outro ou esqueceu sua senha?"
+
+#: Accounts/src/Accounts/Controller/AccountController.php:80
+#: Accounts/src/Accounts/Controller/AccountController.php:193
+msgid "Login failed!"
+msgstr "Falha no login, tente novamente."
+
+#: Accounts/src/Accounts/Controller/AccountController.php:96
+#: Accounts/src/Accounts/Controller/AccountController.php:209
+msgid ""
+"Unable to register the social network, please sign-up with mail or try again."
+msgstr ""
+"Não é possível registrar a rede social, por favor, inscrever-se com correio "
+"ou tente novamente."
+
+#: Accounts/src/Accounts/Controller/AccountController.php:101
+#: Accounts/src/Accounts/Controller/AccountController.php:219
+msgid "The user name or password is incorrect."
+msgstr "O usuário e a senha que você digitou não coincidem. "
+
+#: Accounts/src/Accounts/Controller/AccountController.php:182
 msgid "Username: Please use only letters (a-z), numbers and full stops."
 msgstr "Usuário. Por favor, digite somente letras (a-z), números ou pontos."
 
-#: Accounts/src/Accounts/Controller/AccountController.php:93
+#: Accounts/src/Accounts/Controller/AccountController.php:184
 msgid "Password is not valid!.<br/>"
 msgstr "Senha digitada não foi aceita.<br/>"
 
-#: Accounts/src/Accounts/Controller/AccountController.php:93
+#: Accounts/src/Accounts/Controller/AccountController.php:184
 msgid ""
 "Password: Short passwords are easy to guess. Try one with at least 8 "
 "characters. <br/>\n"
@@ -33,144 +74,15 @@ msgstr ""
 "Use pelo menos oito caracteres. Não use uma senha de outro site ou algo "
 "muito óbvio, como o nome de seu animal de estimação."
 
-#: Accounts/src/Accounts/Controller/AccountController.php:102
-msgid "Login failed!"
-msgstr "Falha no login, tente novamente."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:118
-msgid ""
-"Unable to register the social network, please sign-up with mail or try again."
-msgstr ""
-"Não é possível registrar a rede social, por favor, inscrever-se com correio "
-"ou tente novamente."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:171
-#: Application/src/Application/Controller/CompanyController.php:86
-#: Application/src/Application/Controller/ContestCategoriesController.php:72
-#: Application/src/Application/Controller/ContestRangeController.php:81
-#: Application/src/Application/Controller/PrizesController.php:75
-#: Application/src/Application/Controller/PrizesController.php:77
-#: Application/src/Application/Controller/UserSystemController.php:87
-#: Application/src/Application/Controller/UserSystemController.php:89
-msgid "You can't leave this empty."
-msgstr "Você não pode deixar este campo vazio."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:172
-#: Application/src/Application/Controller/CompanyController.php:90
-#: Application/src/Application/Controller/UserSystemController.php:93
-msgid "Email."
-msgstr "Email."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:172
-#: Accounts/src/Accounts/Controller/AccountController.php:173
-#: Application/src/Application/Controller/UserSystemController.php:93
-#: Application/src/Application/Controller/UserSystemController.php:95
-msgid "Please use only letters (a-z), numbers and full stops."
-msgstr "Por favor, use apenas letras, números e ponto"
-
-#: Accounts/src/Accounts/Controller/AccountController.php:173
-#: Application/src/Application/Controller/UserSystemController.php:95
-msgid "Username."
-msgstr "Usuário"
-
-#: Accounts/src/Accounts/Controller/AccountController.php:182
-msgid ""
-"There is more than one registered user with this email, please enter the "
-"user name and click submit again."
-msgstr ""
-"Há mais de um usuário registrado com esse e-mail, digite o nome de usuário e "
-"clique e tente novamente."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:185
-#: Accounts/src/Accounts/Controller/AccountController.php:193
-msgid ""
-"Could not validate your email/username, please make sure filled out "
-"correctly or are a registered email/username."
-msgstr ""
-"Não foi possível validar seu e-mail /usuário, certifique-se de ter "
-"preenchido corretamente ou se é um e-mail /usuário registrado."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:199
-msgid ""
-"An unknown error occurred, could not send the forget email, please try again."
-msgstr "Ocorreu um erro desconhecido no envio do email, tente novamente."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:202
-#: Accounts/src/Accounts/Controller/AccountController.php:203
-msgid ""
-"An email has been sent automatically to the email address associated with "
-"your login. Please check the email folder and span filters for the email. "
-"The link will expire in 24 hours."
-msgstr ""
-"Um email foi enviado automaticamente para o e-mail associado ao seu login. O "
-"link irá expirar em 24 horas. Caso não receba o e-mail, por favor, verifique "
-"a caixa de spam ou tente novamente."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:207
-msgid ""
-"Your account has not been activated, please fill out the registration again "
-"or confirm your registration and email."
-msgstr ""
-"A sua conta não foi ativada, por favor preencha o registro novamente ou "
-"confirme a sua inscrição pelo e-mail utilizado no registro."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:232
-msgid ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [001]"
-msgstr ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [001]"
-
-#: Accounts/src/Accounts/Controller/AccountController.php:236
-msgid ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [002]"
-msgstr ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [002]"
-
-#: Accounts/src/Accounts/Controller/AccountController.php:245
-msgid ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [003]"
-msgstr ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [003]"
-
-#: Accounts/src/Accounts/Controller/AccountController.php:253
-msgid ""
-"Your password has been updated and a new password has been sent to your "
-"email. Please, check your mail."
-msgstr ""
-"Sua senha foi atualizado e uma nova senha foi enviada para o seu e-mail. Por "
-"favor, verifique seu e-mail."
-
-#: Accounts/src/Accounts/Controller/AccountController.php:256
-msgid ""
-"The token for this account has expired or blocked due to several attempts to "
-"change. [006]"
-msgstr ""
-"O token para esta conta expirou ou foi bloqueado devido a várias tentativas "
-"de acesso indevido. [006]"
-
-#: Accounts/src/Accounts/Controller/AccountController.php:264
-msgid ""
-"An attempt has been made to operate on an impersonation token by a thread "
-"that is not currently impersonating a client. [008]"
-msgstr ""
-"Uma tentativa foi feita para funcionar com um token de representação por um "
-"thread que não está representando um cliente. [008]"
-
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:45
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:43
 msgid "Token not acceptable"
 msgstr "Sua sessão não é válida. Refaça o login."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:48
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:46
 msgid "Token is invalid or expired"
 msgstr "Sua sessão expirou."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:53
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:51
 msgid ""
 "Upgrade Required. You need to upgrade application or try the validation "
 "number again ."
@@ -178,58 +90,58 @@ msgstr ""
 "Atualização necessária. Você precisa atualizar seu aplicativo ou entre em "
 "contato com o nosso suporte para maiores informações."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:59
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:57
 msgid "Your code has been disabled. because it was used in another phone."
 msgstr "Seu acesso foi desativado. porque ocorreu o acesso em outro telefone."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:201
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:164
 msgid "Unknown error in authentication, contact the support, please."
 msgstr "Falha na sua autenticação, entre em contato com o suporte técnico."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:232
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:195
 msgid "Format token is invalid."
 msgstr "Formato do token não é válido. "
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:248
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:274
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:211
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:237
 msgid "Invalid Key/Token/Session "
 msgstr "Sessão expirou.  Refaça o login."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:298
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:261
 msgid "Invalid user"
 msgstr "Inválido usuário."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:300
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:263
 msgid "Invalid password"
 msgstr "Senha não é válida ou muita curta."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:311
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:274
 msgid "Houston, We have a problem with your privileges."
-msgstr ""
+msgstr "Houston, nós temos um problema com os seus privilégios."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:328
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:359
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:362
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:288
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:319
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:322
 msgid "Authentication Failure"
 msgstr "Falha na autenticação. "
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:332
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:292
 msgid "Failure due to identity not being found."
 msgstr "Falha no login, usuário não encontrado."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:336
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:296
 msgid "Failure due to identity being ambiguous."
 msgstr "Falha no login."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:340
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:300
 msgid "Failure due to invalid credential being supplied."
 msgstr "Falha no login."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:344
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:304
 msgid "Failure due to uncategorized reasons."
 msgstr "Falha no login."
 
-#: Accounts/src/Accounts/Controller/OAuthMobileController.php:351
+#: Accounts/src/Accounts/Controller/OAuthMobileController.php:311
 msgid "Your registration is blocked, please contact support service."
 msgstr "Sua conta foi bloqueada, por favor, entre em contato com o suporte."
 
@@ -242,179 +154,9 @@ msgstr "Código da empresa não pode ser vazio."
 msgid "Wrong code. Try again."
 msgstr "Código inválido, tente novamente."
 
-#: Application/src/Application/Controller/ApplicationController.php:251
+#: Application/src/Application/Controller/ApplicationController.php:253
 msgid "Oops! No permissions."
 msgstr "Ops! Sem  permissão."
-
-#: Application/src/Application/Controller/CompanyController.php:30
-#: Application/src/Application/Controller/CompanyController.php:60
-#: Application/src/Application/Controller/CompanyController.php:112
-#: Application/src/Application/Controller/CompanyController.php:141
-#: Application/src/Application/Controller/ContestCategoriesController.php:29
-#: Application/src/Application/Controller/ContestCategoriesController.php:59
-#: Application/src/Application/Controller/ContestCategoriesController.php:96
-#: Application/src/Application/Controller/ContestCategoriesController.php:125
-#: Application/src/Application/Controller/ContestController.php:67
-#: Application/src/Application/Controller/ContestController.php:211
-#: Application/src/Application/Controller/ContestRangeController.php:33
-#: Application/src/Application/Controller/ContestRangeController.php:63
-#: Application/src/Application/Controller/ContestRangeController.php:111
-#: Application/src/Application/Controller/ContestRangeController.php:140
-#: Application/src/Application/Controller/PrizesController.php:29
-#: Application/src/Application/Controller/PrizesController.php:59
-#: Application/src/Application/Controller/PrizesController.php:99
-#: Application/src/Application/Controller/PrizesController.php:128
-#: Application/src/Application/Controller/UploadController.php:26
-#: Application/src/Application/Controller/UploadController.php:54
-#: Application/src/Application/Controller/UserSystemController.php:32
-#: Application/src/Application/Controller/UserSystemController.php:62
-#: Application/src/Application/Controller/UserSystemController.php:133
-#: Application/src/Application/Controller/UserSystemController.php:163
-msgid "Unknown Error, try again, please."
-msgstr "Erro desconhecido, tente novamente, por favor."
-
-#: Application/src/Application/Controller/CompanyController.php:86
-#: Application/src/Application/Controller/ContestCategoriesController.php:72
-#: Application/src/Application/Controller/ContestRangeController.php:81
-#: Application/src/Application/Controller/PrizesController.php:75
-msgid "Id."
-msgstr "Id."
-
-#: Application/src/Application/Controller/CompanyController.php:88
-#: Application/src/Application/Controller/ContestCategoriesController.php:74
-#: Application/src/Application/Controller/ContestRangeController.php:83
-#: Application/src/Application/Controller/UserSystemController.php:91
-#: Application/view/application/prizes/form.phtml:18
-msgid "Name."
-msgstr "Nome."
-
-#: Application/src/Application/Controller/CompanyController.php:88
-#: Application/src/Application/Controller/ContestCategoriesController.php:74
-#: Application/src/Application/Controller/ContestRangeController.php:83
-#: Application/src/Application/Controller/UserSystemController.php:91
-msgid "You can't leave this empty or exceeded the number of characters."
-msgstr ""
-"Você não pode deixar este campo vazio ou excedeu o número de caracteres."
-
-#: Application/src/Application/Controller/CompanyController.php:90
-msgid "Please use only letters (a-z), address_numbers and full stops."
-msgstr "Por favor, use apenas letras (a-z), números e ponto."
-
-#: Application/src/Application/Controller/CompanyController.php:120
-#: Application/src/Application/Controller/CompanyController.php:130
-#: Application/src/Application/Controller/CompanyController.php:149
-#: Application/src/Application/Controller/CompanyController.php:159
-#: Application/src/Application/Controller/ContestCategoriesController.php:104
-#: Application/src/Application/Controller/ContestCategoriesController.php:114
-#: Application/src/Application/Controller/ContestCategoriesController.php:133
-#: Application/src/Application/Controller/ContestCategoriesController.php:143
-#: Application/src/Application/Controller/ContestController.php:219
-#: Application/src/Application/Controller/ContestRangeController.php:119
-#: Application/src/Application/Controller/ContestRangeController.php:129
-#: Application/src/Application/Controller/ContestRangeController.php:148
-#: Application/src/Application/Controller/ContestRangeController.php:158
-#: Application/src/Application/Controller/PrizesController.php:107
-#: Application/src/Application/Controller/PrizesController.php:117
-#: Application/src/Application/Controller/PrizesController.php:136
-#: Application/src/Application/Controller/PrizesController.php:146
-#: Application/src/Application/Controller/UserSystemController.php:141
-#: Application/src/Application/Controller/UserSystemController.php:152
-#: Application/src/Application/Controller/UserSystemController.php:171
-#: Application/src/Application/Controller/UserSystemController.php:181
-msgid "Invalid Id"
-msgstr "Inválido Id."
-
-#: Application/src/Application/Controller/ContestController.php:152
-msgid "Contest. You can't leave this empty."
-msgstr "Quiz. Não pode ser vazio."
-
-#: Application/src/Application/Controller/ContestController.php:154
-msgid "Title. You can't leave this empty."
-msgstr "Titulo. Não pode ser vazio."
-
-#: Application/src/Application/Controller/ContestController.php:156
-msgid "Starting Date is invalid."
-msgstr "Data inicial não é válida. "
-
-#: Application/src/Application/Controller/ContestController.php:158
-msgid "Voting Date is invalid."
-msgstr "Data de votação não é válida."
-
-#: Application/src/Application/Controller/ContestController.php:160
-msgid "End Date is invalid."
-msgstr "Data de encerramento não é valida"
-
-#: Application/src/Application/Controller/ContestController.php:162
-msgid "Question. You can't leave this empty."
-msgstr "Quiz deve conter pelo menos uma questão."
-
-#: Application/src/Application/Controller/ContestController.php:164
-msgid "Type. You can't leave this empty."
-msgstr "Deve ser selecionado um Tipo."
-
-#: Application/src/Application/Controller/ContestController.php:260
-msgid "Oops! You're lost."
-msgstr "Oops! Você está perdido."
-
-#: Application/src/Application/Controller/ContestRangeController.php:85
-msgid "Start."
-msgstr "Início"
-
-#: Application/src/Application/Controller/ContestRangeController.php:85
-msgid "You can't leave this empty and it should only contain positive numbers."
-msgstr ""
-"Você não pode deixar este vazio e deve conter apenas números positivos."
-
-#: Application/src/Application/Controller/ContestRangeController.php:87
-msgid "End."
-msgstr "Fim"
-
-#: Application/src/Application/Controller/ContestRangeController.php:87
-msgid ""
-"You can't leave this empty  and it should only contain positive numbers."
-msgstr ""
-"Você não pode deixar este vazio e deve conter apenas números positivos."
-
-#: Application/src/Application/Controller/ContestRangeController.php:89
-msgid "\"Start\" cannot be greater than the \"End\"."
-msgstr "\"Início\" não pode ser maior que o \"Fim\""
-
-#: Application/src/Application/Controller/PrizesController.php:77
-msgid "Points."
-msgstr "Pontos"
-
-#: Application/src/Application/Controller/UploadController.php:38
-#: Application/src/Application/Controller/UploadController.php:66
-msgid "Failure on file loading, try again.."
-msgstr ""
-
-#: Application/src/Application/Controller/UserSystemController.php:87
-msgid "Users Id."
-msgstr "Código do Usuário"
-
-#: Application/src/Application/Controller/UserSystemController.php:89
-msgid "Company."
-msgstr "Empresa"
-
-#: Application/src/Application/Controller/UserSystemController.php:98
-#: Application/src/Application/Controller/UserSystemController.php:100
-msgid ""
-"Password: Short passwords are easy to guess. Try one with at least 8 "
-"characters. <br/> Use at least 8 characters. Don't use a password from "
-"another site or something too obvious like your pet's name."
-msgstr ""
-"Senha: Curto senhas são fáceis de adivinhar. Tente um com pelo menos 8 "
-"caracteres. <br/> Utilize pelo menos 8 caracteres. Não use uma senha de "
-"outro site ou algo muito óbvio, como o nome do seu animal de estimação"
-
-#: Application/src/Application/Controller/UserSystemController.php:102
-msgid "Confirm your password: These passwords don't match. Try again?."
-msgstr "As senhas não coincidem, por favor, revise os dados digitados"
-
-#: Application/src/Application/Controller/UserSystemController.php:112
-msgid "Someone already has that username. Try another?"
-msgstr ""
-"O \"Usuário\" não está disponível para registro, por favor, tente outro nome"
 
 #: Email/src/Email/Controller/MailerController.php:40
 #: Email/src/Email/Controller/MailerController.php:63
@@ -529,7 +271,7 @@ msgstr ""
 msgid "[Quiz] Notification Service"
 msgstr "[Quiz] Notificação"
 
-#: Forgot/src/Forgot/Controller/ForgotController.php:38
+#: Forgot/src/Forgot/Controller/ForgotController.php:40
 #: Accounts/view/accounts/account/forget.phtml:19
 msgid "You have exceeded the number of requests allowed for password reset."
 msgstr "Você excedeu o número de pedidos para resetar a senha."
@@ -547,12 +289,12 @@ msgid "Username or Email"
 msgstr "Usuário ou email"
 
 #: Accounts/view/accounts/account/forget.phtml:13
-#: Application/view/application/contest-answers/index.phtml:8
-#: Application/view/application/contest/form.phtml:191
 msgid "Back"
 msgstr "Voltar"
 
 #: Accounts/view/accounts/account/forget.phtml:14
+#: Application/view/application/customer/profile.phtml:104
+#: Application/view/application/shop-checkout/index.phtml:188
 msgid "Submit"
 msgstr "Enviar"
 
@@ -569,12 +311,16 @@ msgid "Enter any username and password."
 msgstr "digite seu usuário e senha"
 
 #: Accounts/view/accounts/account/login.phtml:17
-#: Application/view/application/user-system/form.phtml:26
+#: Application/view/application/customer/account.phtml:29
 msgid "Username"
 msgstr "Usuário"
 
 #: Accounts/view/accounts/account/login.phtml:22
-#: Application/view/application/user-system/form.phtml:32
+#: Application/view/application/customer/account.phtml:33
+#: Application/view/application/customer/account.phtml:97
+#: Application/view/application/customer/profile.phtml:91
+#: Application/view/application/customer/profile.phtml:96
+#: Application/view/application/shop-checkout/index.phtml:102
 msgid "Password"
 msgstr "Senha"
 
@@ -607,555 +353,586 @@ msgstr "Verificar"
 msgid "Problems with your code?"
 msgstr "Problemas com seu código?"
 
-#: Application/view/application/company/form.phtml:6
-#: Application/view/application/user-system/form.phtml:44
-#: Application/view/application/user-system/index.phtml:21
-msgid "Company"
-msgstr "Empresa"
+#: Application/view/application/customer/account.phtml:6
+#: Application/view/application/customer/account.phtml:12
+#: Application/view/application/customer/profile.phtml:5
+msgid "Customer Login/Register"
+msgstr "Cliente Login/Cadastro "
 
-#: Application/view/application/company/form.phtml:14
-msgid "Address"
-msgstr "Endereço"
+#: Application/view/application/customer/account.phtml:7
+msgid "Page Sub Title Goes Here"
+msgstr ""
 
-#: Application/view/application/company/form.phtml:19
-#: Application/view/application/contest-categories/form.phtml:16
-#: Application/view/application/contest-categories/form.phtml:18
-#: Application/view/application/contest-categories/index.phtml:21
-#: Application/view/application/contest-range/form.phtml:16
-#: Application/view/application/contest-range/form.phtml:18
-#: Application/view/application/contest-range/index.phtml:21
-#: Application/view/application/prizes/form.phtml:16
-#: Application/view/application/prizes/index.phtml:21
-#: Application/view/application/user-system/form.phtml:19
-#: Application/view/application/user-system/index.phtml:20
-msgid "Name"
+#: Application/view/application/customer/account.phtml:10
+#: Application/view/application/customer/history.phtml:9
+#: Application/view/application/projects/index.phtml:9
+#: Application/view/application/projects/infos.phtml:9
+#: Application/view/application/projects/licenses.phtml:9
+#: Application/view/application/projects/products.phtml:9
+#: Application/view/application/projects/promotions.phtml:9
+#: Application/view/application/shop-cart/index.phtml:9
+#: Application/view/application/shop-checkout/complete.phtml:9
+#: Application/view/application/shop-checkout/index.phtml:9
+#: Application/view/application/shop-product-details/index.phtml:9
+#: Application/view/application/shop-product-list/index.phtml:10
+msgid "Shop"
+msgstr "Loja"
+
+#: Application/view/application/customer/account.phtml:48
+msgid "Sign in with Facebook"
+msgstr "Entrar com Facebook"
+
+#: Application/view/application/customer/account.phtml:51
+msgid "Sign in with Google"
+msgstr "Entrar com Google+"
+
+#: Application/view/application/customer/account.phtml:65
+msgid "Don't have an account yet?"
+msgstr "Não tem uma conta ainda?"
+
+#: Application/view/application/customer/account.phtml:67
+msgid "Join us and enjoy shopping online today."
+msgstr "Junte-se a nós e realize suas compras online hoje."
+
+#: Application/view/application/customer/account.phtml:75
+msgid "Register Now!"
+msgstr "Registre-se!"
+
+#: Application/view/application/customer/account.phtml:82
+#: Application/view/application/customer/account.phtml:83
+#: Application/view/application/customer/profile.phtml:32
+#: Application/view/application/customer/profile.phtml:33
+#: Application/view/application/shop-checkout/index.phtml:29
+#: Application/view/application/shop-checkout/index.phtml:30
+msgid "First Name"
 msgstr "Nome"
 
-#: Application/view/application/company/form.phtml:21
-msgid "Headquarters, subsidiary or name, etc."
-msgstr "Sede, filial ou nome do local"
+#: Application/view/application/customer/account.phtml:85
+#: Application/view/application/customer/account.phtml:86
+#: Application/view/application/customer/profile.phtml:35
+#: Application/view/application/customer/profile.phtml:36
+#: Application/view/application/shop-checkout/index.phtml:32
+#: Application/view/application/shop-checkout/index.phtml:33
+msgid "Last Name"
+msgstr "Sobrenome"
 
-#: Application/view/application/company/form.phtml:28
-msgid "Street Addresses"
-msgstr "Logradouro"
-
-#: Application/view/application/company/form.phtml:40
-msgid "Number"
-msgstr "Número"
-
-#: Application/view/application/company/form.phtml:47
-msgid "City"
-msgstr "Cidade"
-
-#: Application/view/application/company/form.phtml:52
-msgid "State"
-msgstr "Estado"
-
-#: Application/view/application/company/form.phtml:60
-msgid "Country"
-msgstr "País"
-
-#: Application/view/application/company/form.phtml:65
-msgid "Postal Code"
-msgstr "CEP"
-
-#: Application/view/application/company/form.phtml:80
-#: Application/view/application/company/form.phtml:84
-#: Application/view/application/company/index.phtml:23
-#: Application/view/application/user-system/form.phtml:64
-msgid "Contact"
-msgstr "Contato"
-
-#: Application/view/application/company/form.phtml:86
-msgid "Contact Name"
-msgstr "Nome"
-
-#: Application/view/application/company/form.phtml:91
-#: Application/view/application/user-system/form.phtml:68
-msgid "Email"
+#: Application/view/application/customer/account.phtml:92
+#: Application/view/application/customer/account.phtml:93
+#: Application/view/application/customer/profile.phtml:78
+#: Application/view/application/customer/profile.phtml:79
+#: Application/view/application/shop-checkout/index.phtml:79
+#: Application/view/application/shop-checkout/index.phtml:80
+msgid "Email Address"
 msgstr "Email"
 
-#: Application/view/application/company/form.phtml:95
-#: Application/view/application/company/index.phtml:22
-#: Application/view/application/user-system/form.phtml:72
-#: Application/view/application/user-system/index.phtml:23
+#: Application/view/application/customer/account.phtml:96
+#: Application/view/application/shop-checkout/index.phtml:101
+msgid "Account Password"
+msgstr "Senha"
+
+#: Application/view/application/customer/account.phtml:100
+#: Application/view/application/customer/account.phtml:101
+#: Application/view/application/customer/profile.phtml:81
+#: Application/view/application/customer/profile.phtml:82
+#: Application/view/application/shop-checkout/index.phtml:82
+#: Application/view/application/shop-checkout/index.phtml:83
 msgid "Phone"
 msgstr "Telefone"
 
-#: Application/view/application/company/form.phtml:97
-#: Application/view/application/prizes/form.phtml:25
-#: Application/view/application/user-system/form.phtml:74
-msgid "Only numbers"
-msgstr "Somente números"
+#: Application/view/application/customer/account.phtml:104
+#: Application/view/application/customer/profile.phtml:42
+#: Application/view/application/shop-checkout/index.phtml:44
+msgid "Address"
+msgstr "Endereço"
 
-#: Application/view/application/company/form.phtml:103
-#: Application/view/application/contest-categories/form.phtml:24
-#: Application/view/application/contest-range/form.phtml:38
-#: Application/view/application/contest/form.phtml:190
-#: Application/view/application/prizes/form.phtml:50
-#: Application/view/application/user-system/form.phtml:88
-msgid "Save"
-msgstr "Salvar"
+#: Application/view/application/customer/account.phtml:105
+#: Application/view/application/customer/profile.phtml:43
+#: Application/view/application/shop-checkout/index.phtml:45
+msgid "Street Address"
+msgstr "Logradouro"
 
-#: Application/view/application/company/form.phtml:104
-#: Application/view/application/contest-categories/form.phtml:25
-#: Application/view/application/contest-range/form.phtml:39
-#: Application/view/application/prizes/form.phtml:51
-#: Application/view/application/user-system/form.phtml:89
-msgid "Go Back"
-msgstr "Voltar"
+#: Application/view/application/customer/account.phtml:107
+#: Application/view/application/customer/profile.phtml:47
+#: Application/view/application/shop-checkout/index.phtml:49
+msgid "Apartment, suite, unit etc. (optional)"
+msgstr "Apto, casa, referência etc (opcional)"
 
-#: Application/view/application/company/index.phtml:6
-#: Application/view/layout/navbar.phtml:37
-#: Application/view/layout/navbar.phtml:75
-msgid "Companies"
-msgstr "Empresas"
+#: Application/view/application/customer/account.phtml:109
+#: Application/view/application/customer/account.phtml:110
+#: Application/view/application/customer/profile.phtml:51
+#: Application/view/application/customer/profile.phtml:52
+#: Application/view/application/shop-checkout/index.phtml:53
+#: Application/view/application/shop-checkout/index.phtml:54
+msgid "Town / City"
+msgstr "Cidade"
 
-#: Application/view/application/company/index.phtml:10
-#: Application/view/application/contest-categories/index.phtml:11
-#: Application/view/application/contest-range/index.phtml:11
-#: Application/view/application/contest/index.phtml:8
-#: Application/view/application/prizes/index.phtml:11
-#: Application/view/application/user-system/index.phtml:10
-msgid "Remove"
-msgstr "Remover"
+#: Application/view/application/customer/account.phtml:113
+#: Application/view/application/customer/profile.phtml:58
+#: Application/view/application/shop-checkout/index.phtml:60
+msgid "State / County"
+msgstr "País"
 
-#: Application/view/application/company/index.phtml:10
-#: Application/view/application/contest-answers/index.phtml:60
-#: Application/view/application/contest-answers/index.phtml:61
-#: Application/view/application/contest-categories/index.phtml:11
-#: Application/view/application/contest-range/index.phtml:11
-#: Application/view/application/contest/index.phtml:8
-#: Application/view/application/prizes/index.phtml:11
-#: Application/view/application/user-system/index.phtml:10
-msgid "No"
-msgstr "Não"
+#: Application/view/application/customer/account.phtml:115
+#: Application/view/application/customer/profile.phtml:61
+#: Application/view/application/shop-checkout/index.phtml:62
+msgid "Brazil"
+msgstr "Brasil"
 
-#: Application/view/application/company/index.phtml:10
-#: Application/view/application/contest-answers/index.phtml:60
-#: Application/view/application/contest-categories/index.phtml:11
-#: Application/view/application/contest-range/index.phtml:11
-#: Application/view/application/contest/index.phtml:8
-#: Application/view/application/prizes/index.phtml:11
-#: Application/view/application/user-system/index.phtml:10
-msgid "Are you sure?"
-msgstr "Você tem certeza?"
-
-#: Application/view/application/company/index.phtml:10
-msgid "You will remove the Companies"
-msgstr "Você vai remover as empresas"
-
-#: Application/view/application/company/index.phtml:10
-#: Application/view/application/contest-categories/index.phtml:11
-#: Application/view/application/contest-range/index.phtml:11
-#: Application/view/application/contest/index.phtml:8
-#: Application/view/application/prizes/index.phtml:11
-#: Application/view/application/user-system/index.phtml:10
-msgid ""
-"Please, click inside the box and select the action. You can select one or "
-"more."
+#: Application/view/application/customer/account.phtml:116
+#: Application/view/application/customer/profile.phtml:62
+#: Application/view/application/shop-checkout/index.phtml:63
+msgid "Singapore"
 msgstr ""
-"Por favor, selecione um ou mais item clicando na caixa de seleção ao lado do "
-"nome. Você deve selecionar um ou mais itens. "
 
-#: Application/view/application/company/index.phtml:20
-msgid "Company Name"
-msgstr "Nome"
+#: Application/view/application/customer/account.phtml:117
+#: Application/view/application/customer/profile.phtml:63
+#: Application/view/application/shop-checkout/index.phtml:64
+msgid "Indonesia"
+msgstr ""
 
-#: Application/view/application/company/index.phtml:21
-#: Application/view/application/user-system/index.phtml:22
-msgid "E-mail"
-msgstr "E-mail"
+#: Application/view/application/customer/account.phtml:118
+#: Application/view/application/customer/profile.phtml:64
+#: Application/view/application/shop-checkout/index.phtml:65
+msgid "Thailand"
+msgstr ""
 
-#: Application/view/application/company/index.phtml:48
-#: Application/view/application/contest-answers/index.phtml:79
-#: Application/view/application/contest-categories/index.phtml:43
-#: Application/view/application/contest-range/index.phtml:47
-#: Application/view/application/contest/index.phtml:54
-#: Application/view/application/prizes/index.phtml:45
-#: Application/view/application/user-system/index.phtml:50
-msgid "No data to display!"
-msgstr "Sem dados para exibir!"
+#: Application/view/application/customer/account.phtml:119
+#: Application/view/application/customer/profile.phtml:65
+#: Application/view/application/shop-checkout/index.phtml:66
+msgid "China"
+msgstr ""
 
-#: Application/view/application/company/index.phtml:49
-#: Application/view/application/contest-answers/index.phtml:80
-#: Application/view/application/contest-categories/index.phtml:44
-#: Application/view/application/contest-range/index.phtml:48
-#: Application/view/application/contest/index.phtml:55
-#: Application/view/application/prizes/index.phtml:46
-#: Application/view/application/user-system/index.phtml:51
-msgid "Your search did not match any records."
-msgstr "Sua busca não encontrou nenhum registro."
+#: Application/view/application/customer/account.phtml:123
+#: Application/view/application/customer/account.phtml:124
+#: Application/view/application/customer/profile.phtml:69
+#: Application/view/application/customer/profile.phtml:70
+#: Application/view/application/shop-checkout/index.phtml:70
+#: Application/view/application/shop-checkout/index.phtml:71
+msgid "Postcode / Zip"
+msgstr "CEP"
 
-#: Application/view/application/company/index.phtml:52
-#: Application/view/application/contest-answers/index.phtml:83
-#: Application/view/application/contest-categories/index.phtml:47
-#: Application/view/application/contest-range/index.phtml:51
-#: Application/view/application/contest/index.phtml:58
-#: Application/view/application/prizes/index.phtml:49
-#: Application/view/application/user-system/index.phtml:54
-msgid "Suggestions:"
-msgstr "Sugestões:"
+#: Application/view/application/customer/account.phtml:128
+msgid "Register"
+msgstr "Registro"
 
-#: Application/view/application/company/index.phtml:53
-#: Application/view/application/contest-answers/index.phtml:84
-#: Application/view/application/contest-categories/index.phtml:48
-#: Application/view/application/contest-range/index.phtml:52
-#: Application/view/application/contest/index.phtml:59
-#: Application/view/application/prizes/index.phtml:50
-#: Application/view/application/user-system/index.phtml:55
-msgid "Make sure that all words are spelled correctly."
-msgstr "Certifique-se de que todas as palavras estão escritas corretamente."
+#: Application/view/application/customer/history.phtml:5
+#: Application/view/application/customer/history.phtml:11
+#: Application/view/application/customer/history.phtml:23
+#: Application/view/application/customer/leftmenu.phtml:19
+msgid "Order History"
+msgstr "Pedidos"
 
-#: Application/view/application/company/index.phtml:54
-#: Application/view/application/contest-answers/index.phtml:85
-#: Application/view/application/contest-categories/index.phtml:49
-#: Application/view/application/contest-range/index.phtml:53
-#: Application/view/application/contest/index.phtml:60
-#: Application/view/application/prizes/index.phtml:51
-#: Application/view/application/user-system/index.phtml:56
-msgid "Try different keywords."
-msgstr "Tente diferente palavras-chave."
-
-#: Application/view/application/company/index.phtml:55
-#: Application/view/application/contest-answers/index.phtml:86
-#: Application/view/application/contest-categories/index.phtml:50
-#: Application/view/application/contest-range/index.phtml:54
-#: Application/view/application/contest/index.phtml:61
-#: Application/view/application/prizes/index.phtml:52
-#: Application/view/application/user-system/index.phtml:57
-msgid "Try more general keywords."
-msgstr "Use palavras comuns ou parcial."
-
-#: Application/view/application/company/index.phtml:56
-#: Application/view/application/contest-answers/index.phtml:87
-#: Application/view/application/contest-categories/index.phtml:51
-#: Application/view/application/contest-range/index.phtml:55
-#: Application/view/application/contest/index.phtml:62
-#: Application/view/application/prizes/index.phtml:53
-#: Application/view/application/user-system/index.phtml:58
-msgid "Try fewer keywords."
-msgstr "Digite menos letras no campo de busca."
-
-#: Application/view/application/company/index.phtml:57
-#: Application/view/application/contest-categories/index.phtml:52
-#: Application/view/application/contest-range/index.phtml:56
-#: Application/view/application/contest/index.phtml:63
-#: Application/view/application/prizes/index.phtml:54
-#: Application/view/application/user-system/index.phtml:59
-msgid "Create a new record."
-msgstr "Crie um novo registro;"
-
-#: Application/view/application/contest-answers/index.phtml:5
-#: Application/view/application/contest/index.phtml:23
-msgid "Answers"
-msgstr "Respostas"
-
-#: Application/view/application/contest-answers/index.phtml:7
-msgid "Wrong"
-msgstr "Erradas"
-
-#: Application/view/application/contest-answers/index.phtml:7
-msgid "Correct"
-msgstr "Corretas"
-
-#: Application/view/application/contest-answers/index.phtml:18
-#: Application/view/application/contest/form.phtml:11
-msgid "Contest"
-msgstr "Quiz"
-
-#: Application/view/application/contest-answers/index.phtml:19
-msgid "Question"
-msgstr "Questão"
-
-#: Application/view/application/contest-answers/index.phtml:20
-msgid "Answer"
-msgstr "Resposta"
-
-#: Application/view/application/contest-answers/index.phtml:21
-msgid "Who"
-msgstr "Quem"
-
-#: Application/view/application/contest-answers/index.phtml:22
-msgid "When"
-msgstr "Quando"
-
-#: Application/view/application/contest-answers/index.phtml:23
-msgid "Winner"
-msgstr "Vencedor"
-
-#: Application/view/application/contest-answers/index.phtml:29
-msgid "By Vote"
-msgstr "Por Voto"
-
-#: Application/view/application/contest-answers/index.phtml:29
-msgid "By admin"
-msgstr "Por admin"
-
-#: Application/view/application/contest-answers/index.phtml:60
-#: Application/view/application/contest-answers/index.phtml:61
-msgid "Yes"
-msgstr "Sim"
-
-#: Application/view/application/contest-answers/index.phtml:61
-msgid "Are you sure you want to choose the answer as the winner?"
-msgstr "Tem certeza que deseja selecionar esse usuário como vencedor?"
-
-#: Application/view/application/contest-answers/index.phtml:101
+#: Application/view/application/customer/history.phtml:28
+#: Application/view/application/shop-cart/index.phtml:23
 msgid "Image"
-msgstr ""
+msgstr "Imagem"
 
-#: Application/view/application/contest-answers/index.phtml:115
-msgid "Video"
-msgstr ""
+#: Application/view/application/customer/history.phtml:31
+#: Application/view/application/customer/history.phtml:52
+msgid "Order"
+msgstr "Pedidos"
 
-#: Application/view/application/contest-categories/form.phtml:7
-#: Application/view/application/contest/form.phtml:33
-#: Application/view/application/contest/form.phtml:34
-#: Application/view/application/contest/index.phtml:21
-msgid "Category"
-msgstr "Categoria"
+#: Application/view/application/customer/history.phtml:34
+msgid "Font"
+msgstr "Fonte"
 
-#: Application/view/application/contest-categories/form.phtml:7
-#: Application/view/application/contest-categories/index.phtml:7
-#: Application/view/application/contest/form.phtml:33
-#: Application/view/layout/navbar.phtml:87
-msgid "Sector"
-msgstr "Segmento"
+#: Application/view/application/customer/history.phtml:37
+#: Application/view/application/customer/history.phtml:62
+#: Application/view/application/shop-cart/index.phtml:32
+#: Application/view/application/shop-cart/index.phtml:53
+#: Application/view/application/shop-checkout/complete.phtml:88
+msgid "Price"
+msgstr "Preço"
 
-#: Application/view/application/contest-categories/index.phtml:7
-#: Application/view/layout/navbar.phtml:32
-#: Application/view/layout/navbar.phtml:87
-msgid "Categories"
-msgstr "Categorias"
+#: Application/view/application/customer/history.phtml:40
+#: Application/view/application/customer/history.phtml:66
+#: Application/view/application/shop-checkout/complete.phtml:44
+msgid "Payment Method"
+msgstr "Método de Pagamento"
 
-#: Application/view/application/contest-categories/index.phtml:11
-#: Application/view/application/contest-range/index.phtml:11
-msgid "You will remove the Categories"
-msgstr "Você vai remover as categorias"
+#: Application/view/application/customer/history.phtml:43
+#: Application/view/application/customer/history.phtml:70
+msgid "Date"
+msgstr "Data"
 
-#: Application/view/application/contest-range/form.phtml:7
-#: Application/view/application/contest-range/index.phtml:7
-#: Application/view/application/contest/form.phtml:43
-#: Application/view/application/contest/form.phtml:44
-#: Application/view/application/contest/index.phtml:22
-#: Application/view/layout/navbar.phtml:33
-#: Application/view/layout/navbar.phtml:88
-msgid "Age range"
-msgstr "Faixa etária"
+#: Application/view/application/customer/history.phtml:48
+#: Application/view/application/shop-cart/index.phtml:41
+msgid "Item"
+msgstr "Item"
 
-#: Application/view/application/contest-range/form.phtml:23
-#: Application/view/application/contest-range/form.phtml:25
-#: Application/view/application/contest-range/index.phtml:22
-msgid "Start"
-msgstr "Início"
-
-#: Application/view/application/contest-range/form.phtml:30
-#: Application/view/application/contest-range/form.phtml:32
-#: Application/view/application/contest-range/index.phtml:23
-msgid "End"
-msgstr "Fim"
-
-#: Application/view/application/contest/form.phtml:16
-#: Application/view/application/contest/form.phtml:17
-#: Application/view/application/contest/index.phtml:19
-msgid "Title"
-msgstr "Nome"
-
-#: Application/view/application/contest/form.phtml:23
-#: Application/view/application/contest/index.phtml:20
-msgid "Type"
-msgstr "Tipo"
-
-#: Application/view/application/contest/form.phtml:24
-msgid "Contest Type"
-msgstr "Tipo"
-
-#: Application/view/application/contest/form.phtml:53
-#: Application/view/application/contest/index.phtml:18
-#: Application/view/application/contest/index.phtml:30
-msgid "Publish"
-msgstr "Publicado"
-
-#: Application/view/application/contest/form.phtml:53
-msgid ""
-"If available for publication on the Quiz App. If checked, the quiz will "
-"appear in the Quiz App list."
-msgstr ""
-"Se marcado, será publicado e exibido no aplicativo. Senão, fica salvo como "
-"rascunho."
-
-#: Application/view/application/contest/form.phtml:64
-msgid "Starting"
-msgstr "Data de início"
-
-#: Application/view/application/contest/form.phtml:65
-msgid "When the quiz should appear in the Quiz App."
-msgstr "Quando Quis deve ser exibido no aplicativo."
-
-#: Application/view/application/contest/form.phtml:65
-msgid "Starting Date"
-msgstr "Data de início"
-
-#: Application/view/application/contest/form.phtml:76
-msgid "Ending"
-msgstr "Encerramento"
-
-#: Application/view/application/contest/form.phtml:77
-msgid ""
-"Until as the user can answer the questions. After the date the contest will "
-"appear as closed."
-msgstr ""
-"Até quando o usuário pode responder uma pergunta. Depois dessa data, o "
-"concurso será exibido como encerrado."
-
-#: Application/view/application/contest/form.phtml:77
-msgid "End Date"
-msgstr "Data de encerramento"
-
-#: Application/view/application/contest/form.phtml:96
-msgid "Click"
-msgstr "Clique "
-
-#: Application/view/application/contest/form.phtml:96
-msgid ""
-"(Upload images smaller, minor 1MB, the smaller the file, the faster to load "
-"in the phone.)"
-msgstr ""
-"(Envie imagens pequenas, menores que 1MB, lembre-se, quanto menor o arquivo, "
-"mais rápido a imagem carrega nos dispositivos móveis)"
-
-#: Application/view/application/contest/form.phtml:113
-msgid "Questions"
-msgstr "Perguntas"
-
-#: Application/view/application/contest/form.phtml:115
-msgid " Question"
-msgstr "Pergunta"
-
-#: Application/view/application/contest/form.phtml:125
-msgid "Type your question here"
-msgstr "Digite sua pergunta"
-
-#: Application/view/application/contest/form.phtml:134
-msgid ""
-"Use the <strong>Select One</strong> question type to give your respondents "
-"only one choice from a list of possible choices."
-msgstr ""
-"O tipo <strong> \"Selecione Um\" </ Strong> permite apenas uma opção correta."
-
-#: Application/view/application/contest/form.phtml:144
-#: Application/view/application/contest/form.phtml:162
-msgid "Type your answer here"
-msgstr "Digite sua resposta aqui"
-
-#: Application/view/application/contest/form.phtml:148
-#: Application/view/application/contest/form.phtml:166
-msgid " Answer"
-msgstr "Resposta"
-
-#: Application/view/application/contest/form.phtml:155
-msgid ""
-"Use the <strong>Multi Choice</strong> question type to allow your "
-"respondents to choose one or more options from the list of possible choices."
-msgstr ""
-"O tipo <strong> \"Multi Escolha\" </ strong> permite um ou mais opções "
-"corretas."
-
-#: Application/view/application/contest/form.phtml:184
-msgid "Please, Select the type of questions!"
-msgstr "Por favor, selecione o tipo da Questão"
-
-#: Application/view/application/contest/index.phtml:5
-#: Application/view/layout/navbar.phtml:70
-msgid "Quizzes"
-msgstr "Quizzes"
-
-#: Application/view/application/contest/index.phtml:8
-msgid "You will remove the Quizzes"
-msgstr "Você vai remover os Quizzes"
-
-#: Application/view/application/contest/index.phtml:30
-msgid "Draft"
-msgstr "Rascunho"
-
-#: Application/view/application/prizes/form.phtml:7
-msgid "Prize"
-msgstr "Prêmio"
-
-#: Application/view/application/prizes/form.phtml:7
-msgid "Product"
-msgstr "Produto"
-
-#: Application/view/application/prizes/form.phtml:23
-#: Application/view/application/prizes/index.phtml:22
-msgid "Points"
-msgstr "Pontos"
-
-#: Application/view/application/prizes/form.phtml:39
+#: Application/view/application/customer/history.phtml:56
+#: Application/view/application/shop-cart/index.phtml:26
+#: Application/view/application/shop-checkout/complete.phtml:85
+#: Application/view/application/shop-product-details/index.phtml:79
 msgid "Description"
 msgstr "Descrição"
 
-#: Application/view/application/prizes/index.phtml:7
-#: Application/view/layout/navbar.phtml:34
-#: Application/view/layout/navbar.phtml:89
-msgid "Prizes"
-msgstr "Prêmios"
+#: Application/view/application/customer/index.phtml:5
+#: Application/view/application/customer/index.phtml:11
+msgid "Customer Dashboard"
+msgstr "Painel do Cliente"
 
-#: Application/view/application/prizes/index.phtml:11
-msgid "You will remove the Prizes"
-msgstr "Você tem certeza que deseja remover os prêmios?"
+#: Application/view/application/customer/index.phtml:22
+msgid "My Dashboard"
+msgstr "Meu Painel"
 
-#: Application/view/application/upload/upload.phtml:7
-msgid "Upload"
-msgstr "Upload"
+#: Application/view/application/customer/index.phtml:24
+msgid "Hello"
+msgstr "Oi,"
 
-#: Application/view/application/user-system/form.phtml:6
-msgid "User"
-msgstr "Usuário"
+#: Application/view/application/customer/index.phtml:25
+msgid "not Joe Doe? Sign out"
+msgstr ""
 
-#: Application/view/application/user-system/form.phtml:14
-msgid "Access"
-msgstr "Acesso"
+#: Application/view/application/customer/leftmenu.phtml:6
+#: Application/view/application/customer/leftmenu.phtml:15
+msgid "My Profile"
+msgstr "Minha conta"
 
-#: Application/view/application/user-system/form.phtml:21
-msgid "Fullname."
-msgstr "Nome completo"
+#: Application/view/application/customer/leftmenu.phtml:17
+msgid "My Dashbord"
+msgstr ""
 
-#: Application/view/application/user-system/form.phtml:28
-msgid "Choose the username"
-msgstr "Escolha um nome de usuário"
+#: Application/view/application/customer/leftmenu.phtml:18
+#: Application/view/application/customer/profile.phtml:21
+msgid "Edit Profile"
+msgstr "Editar Perfil"
 
-#: Application/view/application/user-system/form.phtml:29
-msgid "You can use letters, numbers and periods."
-msgstr "Você pode usar letras, números e pontos finais."
+#: Application/view/application/customer/profile.phtml:11
+msgid "Customer Edit Profile"
+msgstr "Editar Perfil"
 
-#: Application/view/application/user-system/form.phtml:34
-msgid "Create a password"
-msgstr "Digite uma senha"
+#: Application/view/application/customer/profile.phtml:60
+msgid "Select an option"
+msgstr "Selecione..."
 
-#: Application/view/application/user-system/form.phtml:38
-msgid "Confirm your password"
-msgstr "Confirme sua senha"
+#: Application/view/application/customer/profile.phtml:90
+msgid "Change Password"
+msgstr "Alterar Senha"
 
-#: Application/view/application/user-system/form.phtml:50
-#: Application/view/application/user-system/form.phtml:52
-msgid "Privilege"
-msgstr "Privilégio"
+#: Application/view/application/customer/profile.phtml:95
+msgid "Repeat Password"
+msgstr "Confirmar Senha"
 
-#: Application/view/application/user-system/index.phtml:6
-#: Application/view/layout/navbar.phtml:41
-#: Application/view/layout/navbar.phtml:81
-msgid "Users"
-msgstr "Usuários"
+#: Application/view/application/customer/profile.phtml:97
+msgid "Hint: The password should be at least six characters long."
+msgstr ""
 
-#: Application/view/application/user-system/index.phtml:10
-msgid "You will remove the Users"
-msgstr "Você vai remover os usuarios"
+#: Application/view/application/customer/profile.phtml:98
+msgid ""
+"To make it stronger, use upper and lower case letters, numbers, and symbols "
+"like ! \" ? $ % ^ & )."
+msgstr ""
 
-#: Application/view/application/user-system/index.phtml:24
-msgid "Last Access"
-msgstr "Último acesso"
+#: Application/view/application/customer/profile.phtml:105
+#: Application/view/application/shop-checkout/index.phtml:189
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: Application/view/application/projects/index.phtml:5
+#: Application/view/application/projects/index.phtml:11
+#: Application/view/layout/navbar.phtml:76
+msgid "Dashboard"
+msgstr "Painel"
+
+#: Application/view/application/projects/infos.phtml:5
+#: Application/view/application/projects/leftmenu.phtml:20
+msgid "Infos"
+msgstr "Infos."
+
+#: Application/view/application/projects/infos.phtml:11
+msgid "Add Info"
+msgstr "Adicionar Info."
+
+#: Application/view/application/projects/leftmenu.phtml:6
+#: Application/view/application/projects/leftmenu.phtml:15
+#: Application/view/application/projects/leftmenu.phtml:18
+#: Application/view/application/projects/products.phtml:5
+#: Application/view/layout/navbar.phtml:80
+#: Application/view/layout/navbar.phtml:90
+msgid "Projects"
+msgstr "Projetos"
+
+#: Application/view/application/projects/leftmenu.phtml:17
+msgid "Dashbord"
+msgstr ""
+
+#: Application/view/application/projects/leftmenu.phtml:19
+#: Application/view/application/projects/licenses.phtml:5
+msgid "Licenses"
+msgstr "Licenças"
+
+#: Application/view/application/projects/leftmenu.phtml:21
+#: Application/view/application/projects/promotions.phtml:5
+msgid "Promotions"
+msgstr "Promoções"
+
+#: Application/view/application/projects/licenses.phtml:11
+msgid "Add License"
+msgstr "Adicionar  Licença"
+
+#: Application/view/application/projects/products.phtml:11
+msgid "Add Project"
+msgstr "Adicionar Projeto"
+
+#: Application/view/application/projects/promotions.phtml:11
+msgid "Add Promotion"
+msgstr "Adicionar Promoção"
+
+#: Application/view/application/shop-cart/index.phtml:5
+msgid "Cart"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:11
+msgid "Shopping Cart"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:29
+#: Application/view/application/shop-cart/index.phtml:49
+msgid "SKU"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:35
+#: Application/view/application/shop-cart/index.phtml:57
+#: Application/view/application/shop-checkout/complete.phtml:91
+#: Application/view/application/shop-checkout/complete.phtml:121
+#: Application/view/application/shop-checkout/index.phtml:123
+#: Application/view/application/shop-checkout/index.phtml:146
+msgid "Total"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:46
+msgid "License Types"
+msgstr "Tipo da licença"
+
+#: Application/view/application/shop-cart/index.phtml:62
+msgid "Remove item from Cart"
+msgstr "Remove item da Cart."
+
+#: Application/view/application/shop-cart/index.phtml:98
+#: Application/view/application/shop-checkout/index.phtml:136
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: Application/view/application/shop-cart/index.phtml:110
+msgid "Shipping Fee"
+msgstr "Sem taxa de envio"
+
+#: Application/view/application/shop-cart/index.phtml:122
+msgid "Grand Total"
+msgstr "Total Geral"
+
+#: Application/view/application/shop-cart/index.phtml:131
+msgid "Continue Shopping"
+msgstr "Continue Comprando"
+
+#: Application/view/application/shop-cart/index.phtml:132
+#: Application/view/application/shop-checkout/index.phtml:5
+#: Application/view/application/shop-checkout/index.phtml:11
+#: Application/view/layout/navbar.phtml:158
+msgid "Checkout"
+msgstr "Checkout"
+
+#: Application/view/application/shop-cart/index.phtml:147
+msgid "Email shipping"
+msgstr "Envio por Email"
+
+#: Application/view/application/shop-cart/index.phtml:148
+msgid "Express delivery after payment"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:155
+msgid "Download"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:156
+msgid "Download by link email"
+msgstr ""
+
+#: Application/view/application/shop-cart/index.phtml:164
+msgid "24/7 customer care available"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:5
+#: Application/view/application/shop-checkout/complete.phtml:11
+msgid "Checkout Complete"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:21
+msgid "Checkout Completed"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:26
+msgid "Thank you. Your order has been received."
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:32
+msgid "Order Number"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:36
+msgid "Date Purchased"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:40
+msgid "Total Payable"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:45
+#: Application/view/application/shop-checkout/index.phtml:162
+msgid "Direct Bank Transfer"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:52
+msgid ""
+"Make your payment directly into our account. Please use your Order ID as the "
+"payment reference. Your order won't be shipped until the funds have cleared "
+"in our account."
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:53
+msgid "OUR BANK DETAILS"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:54
+msgid "Account Name"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:55
+msgid "Themehats"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:59
+msgid "Account Number"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:63
+msgid "Sort Code"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:67
+msgid "Bank"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:71
+msgid "BIC"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:82
+#: Application/view/application/shop-checkout/index.phtml:120
+msgid "Product"
+msgstr "Produto"
+
+#: Application/view/application/shop-checkout/complete.phtml:103
+msgid "Explore"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:116
+msgid "Lincese"
+msgstr ""
+
+#: Application/view/application/shop-checkout/complete.phtml:130
+msgid "Customer Details"
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:24
+msgid "Billing Address"
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:39
+#: Application/view/application/shop-checkout/index.phtml:40
+msgid "Company Name"
+msgstr "Nome"
+
+#: Application/view/application/shop-checkout/index.phtml:94
+msgid "Create an account?"
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:96
+msgid ""
+"Create an account by entering the information below. If you are a returning "
+"customer please login."
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:107
+msgid "Order Notes"
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:108
+msgid "Note about your order, e.g. special notes for delivery."
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:116
+msgid "Your Order"
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:163
+msgid ""
+"Make your payment directly into our bank account. Please use your Order ID "
+"as the payment reference. Your order won't be shipped until the funds have "
+"cleared in our account."
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:170
+msgid "Paypal"
+msgstr ""
+
+#: Application/view/application/shop-checkout/index.phtml:182
+msgid "I've read and accept the Terms & Conditions"
+msgstr ""
+
+#: Application/view/application/shop-product-details/index.phtml:5
+msgid "Font Details"
+msgstr ""
+
+#: Application/view/application/shop-product-details/index.phtml:11
+#: Application/view/application/shop-product-list/index.phtml:6
+msgid "Font Grid"
+msgstr ""
+
+#: Application/view/application/shop-product-details/index.phtml:66
+msgid "Add to Cart"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:12
+msgid "Product Grid"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:24
+msgid "Show"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:34
+msgid "Sort&nbsp;By:"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:36
+msgid "Default"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:37
+msgid "Name (A - Z)"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:38
+msgid "Name (Z - A)"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:39
+msgid "Price (Low &gt; High)"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:40
+msgid "Price (High &gt; Low)"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:41
+msgid "Model (A - Z)"
+msgstr ""
+
+#: Application/view/application/shop-product-list/index.phtml:42
+msgid "Model (Z - A)"
+msgstr ""
 
 #: Application/view/error/404.phtml:1
 msgid "A 404 error occurred"
@@ -1225,28 +1002,517 @@ msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
 #: Application/view/layout/copyright.phtml:1
+#: Application/view/layout/layout.phtml:113
 msgid "All Rights Reserved."
 msgstr "Todos os direitos reservados. "
 
-#: Application/view/layout/navbar.phtml:21
-msgid "Search"
-msgstr "Pesquisar"
-
-#: Application/view/layout/navbar.phtml:31
-msgid "Quiz"
+#: Application/view/layout/layout.phtml:82
+msgid "About"
 msgstr ""
 
-#: Application/view/layout/navbar.phtml:49
-msgid "Hi"
-msgstr "Olá"
+#: Application/view/layout/layout.phtml:83
+#: Application/view/layout/layout.phtml:112
+msgid "E-Font Shop"
+msgstr ""
+
+#: Application/view/layout/layout.phtml:91
+msgid "Subscribe to Newsletter"
+msgstr ""
+
+#: Application/view/layout/layout.phtml:99
+msgid "Subscribe"
+msgstr ""
+
+#: Application/view/layout/navbar.phtml:10
+msgid "Contact"
+msgstr "Contato"
+
+#: Application/view/layout/navbar.phtml:19
+msgid "English"
+msgstr ""
+
+#: Application/view/layout/navbar.phtml:20
+msgid "Portuguese"
+msgstr ""
 
 #: Application/view/layout/navbar.phtml:85
-msgid "Settings"
-msgstr "Configurações"
+#: Application/view/layout/navbar.phtml:93
+msgid "Admin"
+msgstr ""
 
-#: Application/view/layout/navbar.phtml:89
-msgid "Products"
-msgstr "Produtos"
+#: Application/view/layout/navbar.phtml:127
+msgid "item(s)"
+msgstr ""
+
+#: Application/view/layout/navbar.phtml:157
+msgid "View Cart"
+msgstr ""
+
+#~ msgid "Email."
+#~ msgstr "Email."
+
+#~ msgid "Please use only letters (a-z), numbers and full stops."
+#~ msgstr "Por favor, use apenas letras, números e ponto"
+
+#~ msgid "Username."
+#~ msgstr "Usuário"
+
+#~ msgid ""
+#~ "There is more than one registered user with this email, please enter the "
+#~ "user name and click submit again."
+#~ msgstr ""
+#~ "Há mais de um usuário registrado com esse e-mail, digite o nome de "
+#~ "usuário e clique e tente novamente."
+
+#~ msgid ""
+#~ "Could not validate your email/username, please make sure filled out "
+#~ "correctly or are a registered email/username."
+#~ msgstr ""
+#~ "Não foi possível validar seu e-mail /usuário, certifique-se de ter "
+#~ "preenchido corretamente ou se é um e-mail /usuário registrado."
+
+#~ msgid ""
+#~ "An unknown error occurred, could not send the forget email, please try "
+#~ "again."
+#~ msgstr "Ocorreu um erro desconhecido no envio do email, tente novamente."
+
+#~ msgid ""
+#~ "An email has been sent automatically to the email address associated with "
+#~ "your login. Please check the email folder and span filters for the email. "
+#~ "The link will expire in 24 hours."
+#~ msgstr ""
+#~ "Um email foi enviado automaticamente para o e-mail associado ao seu "
+#~ "login. O link irá expirar em 24 horas. Caso não receba o e-mail, por "
+#~ "favor, verifique a caixa de spam ou tente novamente."
+
+#~ msgid ""
+#~ "Your account has not been activated, please fill out the registration "
+#~ "again or confirm your registration and email."
+#~ msgstr ""
+#~ "A sua conta não foi ativada, por favor preencha o registro novamente ou "
+#~ "confirme a sua inscrição pelo e-mail utilizado no registro."
+
+#~ msgid ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [001]"
+#~ msgstr ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [001]"
+
+#~ msgid ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [002]"
+#~ msgstr ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [002]"
+
+#~ msgid ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [003]"
+#~ msgstr ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [003]"
+
+#~ msgid ""
+#~ "Your password has been updated and a new password has been sent to your "
+#~ "email. Please, check your mail."
+#~ msgstr ""
+#~ "Sua senha foi atualizado e uma nova senha foi enviada para o seu e-mail. "
+#~ "Por favor, verifique seu e-mail."
+
+#~ msgid ""
+#~ "The token for this account has expired or blocked due to several attempts "
+#~ "to change. [006]"
+#~ msgstr ""
+#~ "O token para esta conta expirou ou foi bloqueado devido a várias "
+#~ "tentativas de acesso indevido. [006]"
+
+#~ msgid ""
+#~ "An attempt has been made to operate on an impersonation token by a thread "
+#~ "that is not currently impersonating a client. [008]"
+#~ msgstr ""
+#~ "Uma tentativa foi feita para funcionar com um token de representação por "
+#~ "um thread que não está representando um cliente. [008]"
+
+#~ msgid "Unknown Error, try again, please."
+#~ msgstr "Erro desconhecido, tente novamente, por favor."
+
+#~ msgid "Id."
+#~ msgstr "Id."
+
+#~ msgid "Name."
+#~ msgstr "Nome."
+
+#~ msgid "You can't leave this empty or exceeded the number of characters."
+#~ msgstr ""
+#~ "Você não pode deixar este campo vazio ou excedeu o número de caracteres."
+
+#~ msgid "Please use only letters (a-z), address_numbers and full stops."
+#~ msgstr "Por favor, use apenas letras (a-z), números e ponto."
+
+#~ msgid "Invalid Id"
+#~ msgstr "Inválido Id."
+
+#~ msgid "Contest. You can't leave this empty."
+#~ msgstr "Quiz. Não pode ser vazio."
+
+#~ msgid "Title. You can't leave this empty."
+#~ msgstr "Titulo. Não pode ser vazio."
+
+#~ msgid "Starting Date is invalid."
+#~ msgstr "Data inicial não é válida. "
+
+#~ msgid "Voting Date is invalid."
+#~ msgstr "Data de votação não é válida."
+
+#~ msgid "End Date is invalid."
+#~ msgstr "Data de encerramento não é valida"
+
+#~ msgid "Question. You can't leave this empty."
+#~ msgstr "Quiz deve conter pelo menos uma questão."
+
+#~ msgid "Type. You can't leave this empty."
+#~ msgstr "Deve ser selecionado um Tipo."
+
+#~ msgid "Oops! You're lost."
+#~ msgstr "Oops! Você está perdido."
+
+#~ msgid "Start."
+#~ msgstr "Início"
+
+#~ msgid ""
+#~ "You can't leave this empty and it should only contain positive numbers."
+#~ msgstr ""
+#~ "Você não pode deixar este vazio e deve conter apenas números positivos."
+
+#~ msgid "End."
+#~ msgstr "Fim"
+
+#~ msgid ""
+#~ "You can't leave this empty  and it should only contain positive numbers."
+#~ msgstr ""
+#~ "Você não pode deixar este vazio e deve conter apenas números positivos."
+
+#~ msgid "\"Start\" cannot be greater than the \"End\"."
+#~ msgstr "\"Início\" não pode ser maior que o \"Fim\""
+
+#~ msgid "Points."
+#~ msgstr "Pontos"
+
+#~ msgid "Users Id."
+#~ msgstr "Código do Usuário"
+
+#~ msgid "Company."
+#~ msgstr "Empresa"
+
+#~ msgid "Confirm your password: These passwords don't match. Try again?."
+#~ msgstr "As senhas não coincidem, por favor, revise os dados digitados"
+
+#~ msgid "Someone already has that username. Try another?"
+#~ msgstr ""
+#~ "O \"Usuário\" não está disponível para registro, por favor, tente outro "
+#~ "nome"
+
+#~ msgid "Company"
+#~ msgstr "Empresa"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Headquarters, subsidiary or name, etc."
+#~ msgstr "Sede, filial ou nome do local"
+
+#~ msgid "Street Addresses"
+#~ msgstr "Logradouro"
+
+#~ msgid "Number"
+#~ msgstr "Número"
+
+#~ msgid "City"
+#~ msgstr "Cidade"
+
+#~ msgid "State"
+#~ msgstr "Estado"
+
+#~ msgid "Country"
+#~ msgstr "País"
+
+#~ msgid "Postal Code"
+#~ msgstr "CEP"
+
+#~ msgid "Contact Name"
+#~ msgstr "Nome"
+
+#~ msgid "Only numbers"
+#~ msgstr "Somente números"
+
+#~ msgid "Save"
+#~ msgstr "Salvar"
+
+#~ msgid "Go Back"
+#~ msgstr "Voltar"
+
+#~ msgid "Companies"
+#~ msgstr "Empresas"
+
+#~ msgid "Remove"
+#~ msgstr "Remover"
+
+#~ msgid "No"
+#~ msgstr "Não"
+
+#~ msgid "Are you sure?"
+#~ msgstr "Você tem certeza?"
+
+#~ msgid "You will remove the Companies"
+#~ msgstr "Você vai remover as empresas"
+
+#~ msgid ""
+#~ "Please, click inside the box and select the action. You can select one or "
+#~ "more."
+#~ msgstr ""
+#~ "Por favor, selecione um ou mais item clicando na caixa de seleção ao lado "
+#~ "do nome. Você deve selecionar um ou mais itens. "
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#~ msgid "No data to display!"
+#~ msgstr "Sem dados para exibir!"
+
+#~ msgid "Your search did not match any records."
+#~ msgstr "Sua busca não encontrou nenhum registro."
+
+#~ msgid "Suggestions:"
+#~ msgstr "Sugestões:"
+
+#~ msgid "Make sure that all words are spelled correctly."
+#~ msgstr "Certifique-se de que todas as palavras estão escritas corretamente."
+
+#~ msgid "Try different keywords."
+#~ msgstr "Tente diferente palavras-chave."
+
+#~ msgid "Try more general keywords."
+#~ msgstr "Use palavras comuns ou parcial."
+
+#~ msgid "Try fewer keywords."
+#~ msgstr "Digite menos letras no campo de busca."
+
+#~ msgid "Create a new record."
+#~ msgstr "Crie um novo registro;"
+
+#~ msgid "Answers"
+#~ msgstr "Respostas"
+
+#~ msgid "Wrong"
+#~ msgstr "Erradas"
+
+#~ msgid "Correct"
+#~ msgstr "Corretas"
+
+#~ msgid "Contest"
+#~ msgstr "Quiz"
+
+#~ msgid "Question"
+#~ msgstr "Questão"
+
+#~ msgid "Answer"
+#~ msgstr "Resposta"
+
+#~ msgid "Who"
+#~ msgstr "Quem"
+
+#~ msgid "When"
+#~ msgstr "Quando"
+
+#~ msgid "Winner"
+#~ msgstr "Vencedor"
+
+#~ msgid "By Vote"
+#~ msgstr "Por Voto"
+
+#~ msgid "By admin"
+#~ msgstr "Por admin"
+
+#~ msgid "Yes"
+#~ msgstr "Sim"
+
+#~ msgid "Are you sure you want to choose the answer as the winner?"
+#~ msgstr "Tem certeza que deseja selecionar esse usuário como vencedor?"
+
+#~ msgid "Category"
+#~ msgstr "Categoria"
+
+#~ msgid "Sector"
+#~ msgstr "Segmento"
+
+#~ msgid "Categories"
+#~ msgstr "Categorias"
+
+#~ msgid "You will remove the Categories"
+#~ msgstr "Você vai remover as categorias"
+
+#~ msgid "Age range"
+#~ msgstr "Faixa etária"
+
+#~ msgid "Start"
+#~ msgstr "Início"
+
+#~ msgid "End"
+#~ msgstr "Fim"
+
+#~ msgid "Title"
+#~ msgstr "Nome"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Contest Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Publish"
+#~ msgstr "Publicado"
+
+#~ msgid ""
+#~ "If available for publication on the Quiz App. If checked, the quiz will "
+#~ "appear in the Quiz App list."
+#~ msgstr ""
+#~ "Se marcado, será publicado e exibido no aplicativo. Senão, fica salvo "
+#~ "como rascunho."
+
+#~ msgid "Starting"
+#~ msgstr "Data de início"
+
+#~ msgid "When the quiz should appear in the Quiz App."
+#~ msgstr "Quando Quis deve ser exibido no aplicativo."
+
+#~ msgid "Starting Date"
+#~ msgstr "Data de início"
+
+#~ msgid "Ending"
+#~ msgstr "Encerramento"
+
+#~ msgid ""
+#~ "Until as the user can answer the questions. After the date the contest "
+#~ "will appear as closed."
+#~ msgstr ""
+#~ "Até quando o usuário pode responder uma pergunta. Depois dessa data, o "
+#~ "concurso será exibido como encerrado."
+
+#~ msgid "End Date"
+#~ msgstr "Data de encerramento"
+
+#~ msgid "Click"
+#~ msgstr "Clique "
+
+#~ msgid ""
+#~ "(Upload images smaller, minor 1MB, the smaller the file, the faster to "
+#~ "load in the phone.)"
+#~ msgstr ""
+#~ "(Envie imagens pequenas, menores que 1MB, lembre-se, quanto menor o "
+#~ "arquivo, mais rápido a imagem carrega nos dispositivos móveis)"
+
+#~ msgid "Questions"
+#~ msgstr "Perguntas"
+
+#~ msgid " Question"
+#~ msgstr "Pergunta"
+
+#~ msgid "Type your question here"
+#~ msgstr "Digite sua pergunta"
+
+#~ msgid ""
+#~ "Use the <strong>Select One</strong> question type to give your "
+#~ "respondents only one choice from a list of possible choices."
+#~ msgstr ""
+#~ "O tipo <strong> \"Selecione Um\" </ Strong> permite apenas uma opção "
+#~ "correta."
+
+#~ msgid "Type your answer here"
+#~ msgstr "Digite sua resposta aqui"
+
+#~ msgid " Answer"
+#~ msgstr "Resposta"
+
+#~ msgid ""
+#~ "Use the <strong>Multi Choice</strong> question type to allow your "
+#~ "respondents to choose one or more options from the list of possible "
+#~ "choices."
+#~ msgstr ""
+#~ "O tipo <strong> \"Multi Escolha\" </ strong> permite um ou mais opções "
+#~ "corretas."
+
+#~ msgid "Please, Select the type of questions!"
+#~ msgstr "Por favor, selecione o tipo da Questão"
+
+#~ msgid "Quizzes"
+#~ msgstr "Quizzes"
+
+#~ msgid "You will remove the Quizzes"
+#~ msgstr "Você vai remover os Quizzes"
+
+#~ msgid "Draft"
+#~ msgstr "Rascunho"
+
+#~ msgid "Prize"
+#~ msgstr "Prêmio"
+
+#~ msgid "Points"
+#~ msgstr "Pontos"
+
+#~ msgid "Prizes"
+#~ msgstr "Prêmios"
+
+#~ msgid "You will remove the Prizes"
+#~ msgstr "Você tem certeza que deseja remover os prêmios?"
+
+#~ msgid "Upload"
+#~ msgstr "Upload"
+
+#~ msgid "User"
+#~ msgstr "Usuário"
+
+#~ msgid "Access"
+#~ msgstr "Acesso"
+
+#~ msgid "Fullname."
+#~ msgstr "Nome completo"
+
+#~ msgid "Choose the username"
+#~ msgstr "Escolha um nome de usuário"
+
+#~ msgid "You can use letters, numbers and periods."
+#~ msgstr "Você pode usar letras, números e pontos finais."
+
+#~ msgid "Create a password"
+#~ msgstr "Digite uma senha"
+
+#~ msgid "Confirm your password"
+#~ msgstr "Confirme sua senha"
+
+#~ msgid "Privilege"
+#~ msgstr "Privilégio"
+
+#~ msgid "Users"
+#~ msgstr "Usuários"
+
+#~ msgid "You will remove the Users"
+#~ msgstr "Você vai remover os usuarios"
+
+#~ msgid "Last Access"
+#~ msgstr "Último acesso"
+
+#~ msgid "Search"
+#~ msgstr "Pesquisar"
+
+#~ msgid "Hi"
+#~ msgstr "Olá"
+
+#~ msgid "Settings"
+#~ msgstr "Configurações"
+
+#~ msgid "Products"
+#~ msgstr "Produtos"
 
 #~ msgid "Type the username"
 #~ msgstr "Tipo do usuário"

@@ -35,9 +35,10 @@ class Module {
 		$default = 'pt_BR';
 		$supported = array (
 				'US' => 'en_US',
+				'EN' => 'en_US',
 				'BR' => 'pt_BR',
+				'PT' => 'pt_BR',
 				'ES' => 'es_ES',
-				'PT' => 'pt_BR' 
 		);
 		// Zend\Session\Container
 		$Session = new \Zend\Session\Container ( 'language' );

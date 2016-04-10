@@ -79,7 +79,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="c-content-title-1 c-title-md">
-                                    <h3 class="c-font-uppercase c-font-bold">About
+                                    <h3 class="c-font-uppercase c-font-bold"><?php echo $this->translate('About');?>
                                         <span class="c-theme-font"><?php echo $this->translate('E-Font Shop');?></span>
                                     </h3>
                                     <div class="c-line-left hide"></div>
@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="c-content-title-1 c-title-md">
-                                    <h3 class="c-font-uppercase c-font-bold">Subscribe to Newsletter</h3>
+                                    <h3 class="c-font-uppercase c-font-bold"><?php echo $this->translate('Subscribe to Newsletter');?></h3>
                                     <div class="c-line-left hide"></div>
                                 </div>
                                 <div class="c-line-left hide"></div>
@@ -96,7 +96,7 @@
                                     <div class="input-group input-group-lg c-square">
                                         <input type="text" class="form-control c-square c-font-grey-3 c-border-grey c-theme" placeholder="Your Email Here" />
                                         <span class="input-group-btn">
-                                            <button class="btn c-theme-btn c-theme-border c-btn-square c-btn-uppercase c-font-16" type="button">Subscribe</button>
+                                            <button class="btn c-theme-btn c-theme-border c-btn-square c-btn-uppercase c-font-16" type="button"><?php echo $this->translate('Subscribe');?></button>
                                         </span>
                                     </div>
                                 </form>
@@ -186,6 +186,7 @@
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/app.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/directives/directive.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/services/ShopSrvc.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/HeaderCtrl.js"></script>		
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/WelcomeCtrl.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/RegisterCtrl.js"></script>
 		<!-- END ANGULAR JS -->

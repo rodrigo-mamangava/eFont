@@ -1,3 +1,6 @@
+/**
+ * Troca de View/Template
+ */
 ShopApp.directive("dynamicTemplate",function($localStorage, $timeout){
 	return {
 		restrict: 'A',
@@ -6,10 +9,9 @@ ShopApp.directive("dynamicTemplate",function($localStorage, $timeout){
 		controller: function($scope){
 			$scope.changeTemplateURL = function(where, search, tab, nav){
 				$scope.template_url = where;
-				console.log(where, search, tab, nav);
-
 				search = typeof search !== 'undefined' ? search : null;
 				$localStorage.search = search;
+				$localStorage.enterDynamicTemplate = {'where':where, 'search': search, 'tab': tab, 'nav':nav};
 
 				tab = typeof tab !== 'undefined' ? tab : null;	
 				if(tab != null && tab.length > 1){
@@ -19,18 +21,21 @@ ShopApp.directive("dynamicTemplate",function($localStorage, $timeout){
 
 				nav = typeof nav !== 'undefined' ? nav : null;
 				if(nav != null && nav.length > 1){
-					console.log(nav);
 					$timeout(function(){
 						$('.c-dropdown-menu li').removeClass('c-active');
 						$('#'+nav).addClass('c-active');
 					},200);
-				}				
+				}
+				
+				console.log(where, search, tab, nav);
 			}
 		}
 	};
 });
 
-
+/**
+ * Convertendo string para numero
+ */
 ShopApp.directive('stringToNumber', function() {
   return {
     require: 'ngModel',
@@ -45,8 +50,9 @@ ShopApp.directive('stringToNumber', function() {
   };
 });
 
-
-
+/**
+ * Resolvendo problemas de barras duplas
+ */
 ShopApp.filter('stripslashes', function () {
     return function (data) {
     	if(data != null && data.length > 1){
@@ -56,16 +62,17 @@ ShopApp.filter('stripslashes', function () {
     	}
     };
 });
-
-
-
+/**
+ * Conversao de moeda
+ */
 ShopApp.filter('comma2decimal', function () {
 	return function(input) {
 		return input.toLocaleString('de-DE');
 	};
 });
-
-
+/**
+ * Imagem de profile
+ */
 ShopApp.filter('userimage', function () {
     return function (data) {
     	if(data != null && data.length > 1){
@@ -75,7 +82,9 @@ ShopApp.filter('userimage', function () {
     	}
     };
 });
-
+/**
+ * Formatando data para padrao brasil
+ */
 ShopApp.filter('dateFormat', function($filter){
 	return function(input){
 		if(input == null){ 

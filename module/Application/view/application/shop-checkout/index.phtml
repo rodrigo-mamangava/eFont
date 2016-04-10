@@ -2,13 +2,13 @@
             <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
                 <div class="container">
                     <div class="c-page-title c-pull-left">
-                        <h3 class="c-font-uppercase c-font-sbold">Checkout</h3>
+                        <h3 class="c-font-uppercase c-font-sbold"><?php echo $this->translate('Checkout');?></h3>
                         <h4 class="">Page Sub Title Goes Here</h4>
                     </div>
                     <ul class="c-page-breadcrumbs c-theme-nav c-pull-right c-fonts-regular">
-                        <li><a href="javascript:;" ng-click="changeTemplateURL('/ef-welcome');">Shop</a></li>
+                        <li><a href="javascript:;" ng-click="changeTemplateURL('/ef-welcome');"><?php echo $this->translate('Shop');?></a></li>
                         <li>/</li>
-                        <li><a href="javascript:;">Checkout</a></li>
+                        <li><a href="javascript:;"><?php echo $this->translate('Checkout');?></a></li>
                     </ul>
                 </div>
             </div>
@@ -21,67 +21,54 @@
                             <!-- BEGIN: ADDRESS FORM -->
                             <div class="col-md-7 c-padding-20">
                                 <!-- BEGIN: BILLING ADDRESS -->
-                                <h3 class="c-font-bold c-font-uppercase c-font-24">Billing Address</h3>
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label class="control-label">Country</label>
-                                        <select class="form-control c-square c-theme">
-                                            <option value="1">Malaysia</option>
-                                            <option value="2">Singapore</option>
-                                            <option value="3">Indonesia</option>
-                                            <option value="4">Thailand</option>
-                                            <option value="5">China</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <h3 class="c-font-bold c-font-uppercase c-font-24"><?php echo $this->translate('Billing Address');?></h3>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label class="control-label">First Name</label>
-                                                <input type="text" class="form-control c-square c-theme" placeholder="First Name"> </div>
+                                                <label class="control-label"><?php echo $this->translate('First Name');?></label>
+                                                <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('First Name');?>"> </div>
                                             <div class="col-md-6">
-                                                <label class="control-label">Last Name</label>
-                                                <input type="text" class="form-control c-square c-theme" placeholder="Last Name"> </div>
+                                                <label class="control-label"><?php echo $this->translate('Last Name');?></label>
+                                                <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Last Name');?>"> </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label class="control-label">Company Name</label>
-                                        <input type="text" class="form-control c-square c-theme" placeholder="Company Name"> </div>
+                                        <label class="control-label"><?php echo $this->translate('Company Name');?></label>
+                                        <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Company Name');?>"> </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label class="control-label">Address</label>
-                                        <input type="text" class="form-control c-square c-theme" placeholder="Street Address"> </div>
+                                        <label class="control-label"><?php echo $this->translate('Address');?></label>
+                                        <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Street Address');?>"> </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <input type="text" class="form-control c-square c-theme" placeholder="Apartment, suite, unit etc. (optional)"> </div>
+                                        <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Apartment, suite, unit etc. (optional)');?>"> </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label class="control-label">Town / City</label>
-                                        <input type="text" class="form-control c-square c-theme" placeholder="Town / City"> </div>
+                                        <label class="control-label"><?php echo $this->translate('Town / City');?></label>
+                                        <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Town / City');?>"> </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label class="control-label">State / County</label>
-                                                <select class="form-control c-square c-theme">
-                                                    <option value="0">Select an option...</option>
-                                                    <option value="1">Malaysia</option>
-                                                    <option value="2">Singapore</option>
-                                                    <option value="3">Indonesia</option>
-                                                    <option value="4">Thailand</option>
-                                                    <option value="5">China</option>
+                                                    <label class="control-label"><?php echo $this->translate('State / County');?></label>
+                                                <select class="form-control c-square c-theme" ng-model="form.country">
+                                                    <option value="<?php echo $this->translate('Brazil');?>"><?php echo $this->translate('Brazil');?></option>
+                                                    <option value="<?php echo $this->translate('Singapore');?>"><?php echo $this->translate('Singapore');?></option>
+                                                    <option value="<?php echo $this->translate('Indonesia');?>"><?php echo $this->translate('Indonesia');?></option>
+                                                    <option value="<?php echo $this->translate('Thailand');?>"><?php echo $this->translate('Thailand');?></option>
+                                                    <option value="<?php echo $this->translate('China');?>"><?php echo $this->translate('China');?></option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="control-label">Postcode / Zip</label>
-                                                <input type="text" class="form-control c-square c-theme" placeholder="Postcode / Zip"> </div>
+                                                <label class="control-label"><?php echo $this->translate('Postcode / Zip');?></label>
+                                                <input type="text" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Postcode / Zip');?>"> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -89,11 +76,11 @@
                                     <div class="form-group col-md-12">
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label class="control-label">Email Address</label>
-                                                <input type="email" class="form-control c-square c-theme" placeholder="Email Address"> </div>
+                                                <label class="control-label"><?php echo $this->translate('Email Address');?></label>
+                                                <input type="email" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Email Address');?>"> </div>
                                             <div class="col-md-6">
-                                                <label class="control-label">Phone</label>
-                                                <input type="tel" class="form-control c-square c-theme" placeholder="Phone"> </div>
+                                                <label class="control-label"><?php echo $this->translate('Phone');?></label>
+                                                <input type="tel" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Phone');?>"> </div>
                                         </div>
                                     </div>
                                 </div>
@@ -104,21 +91,21 @@
                                             <label for="checkbox1-77">
                                                 <span class="inc"></span>
                                                 <span class="check"></span>
-                                                <span class="box"></span> Create an account? </label>
+                                                <span class="box"></span> <?php echo $this->translate('Create an account?');?> </label>
                                         </div>
-                                        <p class="help-block">Create an account by entering the information below. If you are a returning customer please login.</p>
+                                        <p class="help-block"><?php echo $this->translate('Create an account by entering the information below. If you are a returning customer please login.');?></p>
                                     </div>
                                 </div>
                                 <div class="row c-account">
                                     <div class="form-group col-md-12">
-                                        <label class="control-label">Account Password</label>
-                                        <input type="password" class="form-control c-square c-theme" placeholder="Password"> </div>
+                                        <label class="control-label"><?php echo $this->translate('Account Password');?></label>
+                                        <input type="password" class="form-control c-square c-theme" placeholder="<?php echo $this->translate('Password');?>"> </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label class="control-label">Order Notes</label>
-                                        <textarea class="form-control c-square c-theme" rows="3" placeholder="Note about your order, e.g. special notes for delivery."></textarea>
+                                        <label class="control-label"><?php echo $this->translate('Order Notes');?></label>
+                                        <textarea class="form-control c-square c-theme" rows="3" placeholder="<?php echo $this->translate('Note about your order, e.g. special notes for delivery.');?>"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -126,27 +113,27 @@
                             <!-- BEGIN: ORDER FORM -->
                             <div class="col-md-5">
                                 <div class="c-content-bar-1 c-align-left c-bordered c-theme-border c-shadow">
-                                    <h1 class="c-font-bold c-font-uppercase c-font-24">Your Order</h1>
+                                    <h1 class="c-font-bold c-font-uppercase c-font-24"><?php echo $this->translate('Your Order');?></h1>
                                     <ul class="c-order list-unstyled">
                                         <li class="row c-margin-b-15">
                                             <div class="col-md-6 c-font-20">
-                                                <h2>Product</h2>
+                                                <h2><?php echo $this->translate('Product');?></h2>
                                             </div>
                                             <div class="col-md-6 c-font-20">
-                                                <h2>Total</h2>
+                                                <h2><?php echo $this->translate('Total');?></h2>
                                             </div>
                                         </li>
                                         <li class="row c-border-bottom"></li>
                                         <li class="row c-margin-b-15 c-margin-t-15">
                                             <div class="col-md-6 c-font-20">
-                                                <a href="shop-product-details.html" class="c-theme-link">Font Winter J</a>
+                                                <a href="javascript:;" class="c-theme-link">Font Winter J</a>
                                             </div>
                                             <div class="col-md-6 c-font-20">
                                                 <p class="">$30.99</p>
                                             </div>
                                         </li>
                                         <li class="row c-margin-b-15 c-margin-t-15">
-                                            <div class="col-md-6 c-font-20">Subtotal</div>
+                                            <div class="col-md-6 c-font-20"><?php echo $this->translate('Subtotal');?></div>
                                             <div class="col-md-6 c-font-20">
                                                 <p class="">$
                                                     <span class="c-subtotal">61.98</span>
@@ -156,7 +143,7 @@
                                         <li class="row c-border-top c-margin-b-15"></li>
                                         <li class="row c-margin-b-15 c-margin-t-15">
                                             <div class="col-md-6 c-font-20">
-                                                <p class="c-font-30">Total</p>
+                                                <p class="c-font-30"><?php echo $this->translate('Total');?></p>
                                             </div>
                                             <div class="col-md-6 c-font-20">
                                                 <p class="c-font-bold c-font-30">$
@@ -172,15 +159,15 @@
                                                         <label for="radio1" class="c-font-bold c-font-20">
                                                             <span class="inc"></span>
                                                             <span class="check"></span>
-                                                            <span class="box"></span> Direct Bank Transfer </label>
-                                                        <p class="help-block">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.</p>
+                                                            <span class="box"></span> <?php echo $this->translate('Direct Bank Transfer');?> </label>
+                                                        <p class="help-block"><?php echo $this->translate('Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won\'t be shipped until the funds have cleared in our account.');?></p>
                                                     </div>
                                                     <div class="c-radio">
                                                         <input type="radio" id="radio3" class="c-radio" name="payment">
                                                         <label for="radio3" class="c-font-bold c-font-20">
                                                             <span class="inc"></span>
                                                             <span class="check"></span>
-                                                            <span class="box"></span> Paypal </label>
+                                                            <span class="box"></span> <?php echo $this->translate('Paypal');?> </label>
                                                         <img class="img-responsive" width="250" src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_mc_vs_ms_ae_UK.png" /> </div>
                                                 </div>
                                             </div>
@@ -192,14 +179,14 @@
                                                     <label for="checkbox1-11">
                                                         <span class="inc"></span>
                                                         <span class="check"></span>
-                                                        <span class="box"></span> I've read and accept the Terms & Conditions </label>
+                                                        <span class="box"></span> <?php echo $this->translate('I\'ve read and accept the Terms & Conditions');?> </label>
                                                 </div>
                                             </div>
                                         </li>
                                         <li class="row">
                                             <div class="form-group col-md-12" role="group">
-                                                <button type="button" ng-click="changeTemplateURL('/shop-checkout-complete');" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold">Submit</button>
-                                                <button type="button" ng-click="changeTemplateURL('/ef-welcome');" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold">Cancel</button>
+                                                <button type="button" ng-click="changeTemplateURL('/shop-checkout-complete');" class="btn btn-lg c-theme-btn c-btn-square c-btn-uppercase c-btn-bold"><?php echo $this->translate('Submit');?></button>
+                                                <button type="button" ng-click="changeTemplateURL('/ef-welcome');" class="btn btn-lg btn-default c-btn-square c-btn-uppercase c-btn-bold"><?php echo $this->translate('Cancel');?></button>
                                             </div>
                                         </li>
                                     </ul>

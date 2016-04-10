@@ -3,7 +3,7 @@
 <div class="c-layout-sidebar-menu c-theme ">
 	<!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
 	<div class="c-sidebar-menu-toggler">
-		<h3 class="c-title c-font-uppercase c-font-bold">Projects</h3>
+		<h3 class="c-title c-font-uppercase c-font-bold"><?php echo $this->translate('Projects');?></h3>
 		<a href="javascript:;" class="c-content-toggler">
 			<span class="c-line"></span>
 			<span class="c-line"></span>
@@ -12,13 +12,13 @@
 	</div>
 	<ul class="c-sidebar-menu collapse " id="sidebar-menu-1">
 		<li class="c-dropdown c-open">
-			<a href="javascript:;" class="c-toggler">Projects</a>
+			<a href="javascript:;" class="c-toggler"><?php echo $this->translate('Projects');?></a>
 			<ul class="c-dropdown-menu">
-				<li id="sidebar-menu-shop-projects-dashboard" class="c-active"><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/index',null,null,'sidebar-menu-shop-projects-dashboard');">Dashbord</a></li>
-				<li id="sidebar-menu-shop-projects-products" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/products',null,null,'sidebar-menu-shop-projects-products');">Projects</a></li>
-				<li id="sidebar-menu-shop-projects-licenses" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/licenses',null,null,'sidebar-menu-shop-projects-licenses');">Licenses</a></li>
-				<li id="sidebar-menu-shop-projects-infos" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/infos',null,null,'sidebar-menu-shop-projects-infos');">Infos</a></li>
-				<li id="sidebar-menu-shop-projects-promotions" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/promotions',null,null,'sidebar-menu-shop-projects-promotions');">Promotions</a></li>
+				<li id="sidebar-menu-shop-projects-dashboard" class="c-active"><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/index',null,null,'sidebar-menu-shop-projects-dashboard');"><?php echo $this->translate('Dashboard');?></a></li>
+				<li id="sidebar-menu-shop-projects-products" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/products',null,null,'sidebar-menu-shop-projects-products');"><?php echo $this->translate('Projects');?></a></li>
+				<li id="sidebar-menu-shop-projects-licenses" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/licenses',null,null,'sidebar-menu-shop-projects-licenses');"><?php echo $this->translate('Licenses');?></a></li>
+				<li id="sidebar-menu-shop-projects-infos" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/infos',null,null,'sidebar-menu-shop-projects-infos');"><?php echo $this->translate('Infos');?></a></li>
+				<li id="sidebar-menu-shop-projects-promotions" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/promotions',null,null,'sidebar-menu-shop-projects-promotions');"><?php echo $this->translate('Promotions');?></a></li>
 			</ul>
 		</li>
 	</ul>

@@ -1,22 +1,23 @@
 		<!-- BEGIN: LAYOUT/HEADERS/HEADER-1 -->
         <!-- BEGIN: HEADER -->
-        <header class="c-layout-header c-layout-header-4 c-layout-header-default-mobile" data-minimize-offset="80">
+        <header class="c-layout-header c-layout-header-4 c-layout-header-default-mobile" data-minimize-offset="80" ng-controller="HeaderCtrl">
             <div class="c-topbar c-topbar-light">
                 <div class="container">
                     <!-- BEGIN: INLINE NAV -->
                     <nav class="c-top-menu c-pull-right">
                         <ul class="c-links c-theme-ul">
                             <li>
-                                <a href="#">Contact</a>
+                                <a href="javascript:;" ng-click="notimplemented();"><?php echo $this->translate('Contact');?></a>
                             </li>
                             <li class="c-divider">|</li>
                         </ul>
                         <ul class="c-ext c-theme-ul">
                             <li class="c-lang dropdown c-last">
-                                <a href="#">en</a>
+                            	<?php $lang = isset($_GET['language'])?strtolower($_GET['language']):'br'; ?>
+                                <a href="javascript:;"><?php echo $lang;?></a>
                                 <ul class="dropdown-menu pull-right" role="menu">
-                                    <li class="active"> <a href="#">English</a> </li>
-                                    <li> <a href="#">Portuguese</a></li>
+                                    <li <?php if($lang == 'en'){?> class="active" <?php }?>><a href="<?php echo $this->url(null,array(),array('force_canonical' => true)); ?>?language=en"><?php echo $this->translate('English');?></a> </li>
+                                    <li <?php if($lang == 'br'){?> class="active" <?php }?>><a href="<?php echo $this->url(null,array(),array('force_canonical' => true)); ?>?language=br"><?php echo $this->translate('Portuguese');?></a></li>
                                 </ul>
                             </li>
                             <li class="c-search hide">
@@ -86,6 +87,9 @@
 								<?php }?>
 								
 								<!-- REMOVE -->
+								<li id="nav-menu-shop-projects"><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/index', '', 'nav-menu-shop-projects');" class="c-link dropdown-toggle"><?php echo $this->translate('Projects');?><span class="c-arrow c-toggler"></span></a>
+								<div class="dropdown-menu c-menu-type-mega c-menu-type-fullwidth" style="min-width: auto"></div></li>								
+								
 								<li><a href="javascript:;" class="c-link dropdown-toggle"><span class="text-muted"><?php echo $this->translate('Admin');?></span><span class="c-arrow c-toggler"></span></a>
 								<div class="dropdown-menu c-menu-type-mega c-menu-type-fullwidth" style="min-width: auto"></div></li>									
 								<!-- REMOVE -->
@@ -120,7 +124,7 @@
                     <!-- BEGIN: CART MENU -->
                     <div class="c-cart-menu">
                         <div class="c-cart-menu-title">
-                            <p class="c-cart-menu-float-l c-font-sbold">2 item(s)</p>
+                            <p class="c-cart-menu-float-l c-font-sbold">2 <?php echo $this->translate('item(s)');?></p>
                             <p class="c-cart-menu-float-r c-theme-font c-font-sbold">$79.00</p>
                         </div>
                         <ul class="c-cart-menu-items">
@@ -150,8 +154,8 @@
                             </li>
                         </ul>
                         <div class="c-cart-menu-footer">
-                            <a href="shop-cart.html" class="btn btn-md c-btn c-btn-square c-btn-grey-3 c-font-white c-font-bold c-center c-font-uppercase">View Cart</a>
-                            <a href="shop-checkout.html" class="btn btn-md c-btn c-btn-square c-theme-btn c-font-white c-font-bold c-center c-font-uppercase">Checkout</a>
+                            <a href="shop-cart.html" class="btn btn-md c-btn c-btn-square c-btn-grey-3 c-font-white c-font-bold c-center c-font-uppercase"><?php echo $this->translate('View Cart');?></a>
+                            <a href="shop-checkout.html" class="btn btn-md c-btn c-btn-square c-theme-btn c-font-white c-font-bold c-center c-font-uppercase"><?php echo $this->translate('Checkout');?></a>
                         </div>
                     </div>
                     <!-- END: CART MENU -->

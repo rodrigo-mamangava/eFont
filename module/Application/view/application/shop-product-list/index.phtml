@@ -3,13 +3,13 @@
             <div class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
                 <div class="container">
                     <div class="c-page-title c-pull-left">
-                        <h3 class="c-font-uppercase c-font-sbold">Font Grid</h3>
+                        <h3 class="c-font-uppercase c-font-sbold"><?php echo $this->translate('Font Grid');?></h3>
                         <h4 class="">Page Sub Title Goes Here</h4>
                     </div>
                     <ul class="c-page-breadcrumbs c-theme-nav c-pull-right c-fonts-regular">
-                        <li><a href="javascript:;" ng-click="changeTemplateURL('/ef-welcome');">Shop</a></li>
+                        <li><a href="javascript:;" ng-click="changeTemplateURL('/ef-welcome');"><?php echo $this->translate('Shop');?></a></li>
                         <li>/</li>
-                        <li><a href="javascript:;">Product Grid</a></li>
+                        <li><a href="javascript:;"><?php echo $this->translate('Product Grid');?></a></li>
                     </ul>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                     <!-- BEGIN: CONTENT/SHOPS/SHOP-RESULT-FILTER-1 -->
                     <div class="c-shop-result-filter-1 clearfix form-inline">
                         <div class="c-filter">
-                            <label class="control-label c-font-16">Show:</label>
+                            <label class="control-label c-font-16"><?php echo $this->translate('Show');?>:</label>
                             <select class="form-control c-square c-theme c-input">
                                 <option value="#?limit=24" selected="selected">24</option>
                                 <option value="#?limit=25">25</option>
@@ -31,15 +31,15 @@
                             </select>
                         </div>
                         <div class="c-filter">
-                            <label class="control-label c-font-16">Sort&nbsp;By:</label>
+                            <label class="control-label c-font-16"><?php echo $this->translate('Sort&nbsp;By:');?></label>
                             <select class="form-control c-square c-theme c-input">
-                                <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-                                <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-                                <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-                                <option value="#?sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-                                <option value="#?sort=p.price&amp;order=DESC" selected>Price (High &gt; Low)</option>
-                                <option value="#?sort=p.model&amp;order=ASC">Model (A - Z)</option>
-                                <option value="#?sort=p.model&amp;order=DESC">Model (Z - A)</option>
+                                <option value="#?sort=p.sort_order&amp;order=ASC" selected="selected"><?php echo $this->translate('Default');?></option>
+                                <option value="#?sort=pd.name&amp;order=ASC"><?php echo $this->translate('Name (A - Z)');?></option>
+                                <option value="#?sort=pd.name&amp;order=DESC"><?php echo $this->translate('Name (Z - A)');?></option>
+                                <option value="#?sort=p.price&amp;order=ASC"><?php echo $this->translate('Price (Low &gt; High)');?></option>
+                                <option value="#?sort=p.price&amp;order=DESC" selected><?php echo $this->translate('Price (High &gt; Low)');?></option>
+                                <option value="#?sort=p.model&amp;order=ASC"><?php echo $this->translate('Model (A - Z)');?></option>
+                                <option value="#?sort=p.model&amp;order=DESC"><?php echo $this->translate('Model (Z - A)');?></option>
                             </select>
                         </div>
                     </div>
