@@ -22,6 +22,45 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			},function (err) {
 				console.log(err);
 			});	
+		},	
+		/**
+		 * Licencas
+		 */
+		saveLicenses: function(data){
+			//POST
+			return $http.post('/ef-licenses/save', data)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},
+		getListLicenses: function(search, count, offset){
+			//GET
+			return $http.get('/ef-licenses/search?search='+search+'&count='+count+'&offset='+offset)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},
+		getLicenses: function(id){
+			//GET
+			return $http.get('/ef-licenses/edit?id='+id)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},	
+		removeLicenses: function(id){
+			//GET
+			return $http.get('/ef-licenses/remove?id='+id)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
 		},		
 		/**
 		 * Profile

@@ -1,0 +1,30 @@
+<?php echo $this->partial('shop/licenses/breadcrumbs');?>
+<!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+<div class="container">
+	<?php echo $this->partial('shop/projects/leftmenu');?>
+	<div class="c-layout-sidebar-content ">
+	<!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
+	<div class="" ng-controller="LicensesCtrl" ng-init="getLicenses();">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<div class="pull-right" ng-show="form.id > 0"># {{form.id}}</div>
+				</div>
+			</div>
+			<!-- BEGIN BODY -->
+			<div class="portlet-body form">
+				<form class="form-horizontal" role="form" name="formLicenses">
+					<!-- BUTTON -->
+					<div class="form-group margin-top-40 margin-bottom-10">
+						<a href="javascript:;" class="btn c-btn btn-lg c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="saveLicenses();" ng-disabled="formLicenses.$invalid"><?php echo $this->translate('Save');?> </a>
+						<a href="javascript:;" class="btn c-btn btn-lg c-btn-red c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="changeTemplateURL('/ef-licenses');" ><?php echo $this->translate('Go Back');?></a>
+					</div>					
+					</div>
+				</form>
+			</div>
+			<!-- END BODY -->
+		</div>
+	</div>
+	<!-- END C-LAYOUT-SIDEBAR-CONTENT-->
+</div>
+</div>

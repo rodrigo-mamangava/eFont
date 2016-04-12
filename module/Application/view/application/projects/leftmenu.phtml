@@ -1,5 +1,5 @@
 <?php if(isset($this->USER_LOGGED)){?>
-<?php if($this->USER_LOGGED === true  && ($this->USER_PRIVILEGE_TYPE == 1)){?>
+<?php if($this->USER_LOGGED === true  && ($this->USER_PRIVILEGE_TYPE == 3)){?>
 <div class="c-layout-sidebar-menu c-theme ">
 	<!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
 	<div class="c-sidebar-menu-toggler">
@@ -16,7 +16,7 @@
 			<ul class="c-dropdown-menu">
 				<li id="sidebar-menu-shop-projects-dashboard" class="c-active"><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/index',null,null,'sidebar-menu-shop-projects-dashboard');"><?php echo $this->translate('Dashboard');?></a></li>
 				<li id="sidebar-menu-shop-projects-products" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/products',null,null,'sidebar-menu-shop-projects-products');"><?php echo $this->translate('Projects');?></a></li>
-				<li id="sidebar-menu-shop-projects-licenses" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/licenses',null,null,'sidebar-menu-shop-projects-licenses');"><?php echo $this->translate('Licenses');?></a></li>
+				<li id="sidebar-menu-shop-projects-licenses" class=""><a href="javascript:;" ng-click="changeTemplateURL('/ef-licenses/index',null,null,'sidebar-menu-shop-projects-licenses');"><?php echo $this->translate('Licenses');?></a></li>
 				<li id="sidebar-menu-shop-projects-infos" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/infos',null,null,'sidebar-menu-shop-projects-infos');"><?php echo $this->translate('Infos');?></a></li>
 				<li id="sidebar-menu-shop-projects-promotions" class=""><a href="javascript:;" ng-click="changeTemplateURL('/shop-projects/promotions',null,null,'sidebar-menu-shop-projects-promotions');"><?php echo $this->translate('Promotions');?></a></li>
 			</ul>
