@@ -6,7 +6,7 @@ var FormDropzone = function () {
 				maxFilesize: 2,
 				uploadMultiple: false,
 				maxFiles: 1,
-				acceptedFiles: ".jpeg,.jpg,.png,.gif, .mp4"        		
+				acceptedFiles: ".jpeg,.jpg,.png,.gif, .pdf, .doc, .docx, .zip"        		
 			});
 
 			myDropzone.on("addedfile", function(file) {
@@ -44,8 +44,8 @@ var FormDropzone = function () {
 			myDropzone.on("success", function(file, responseText) {
 				// Handle the responseText here. For example, add the text to the preview element:
 				if(responseText.status == true){
-					$('#dropzone-to-imagem').val(responseText.data.url);
-					$('#'+$('#dropzone-to-id').val()).val(responseText.data.url).trigger('change');
+					$('#dropzone-to-imagem').val(responseText.data.short);
+					$('#'+$('#dropzone-to-id').val()).val(responseText.data.short).trigger('change');
 					$('#modal_file_upload_form_static').modal('hide');
 				}
 			});         	

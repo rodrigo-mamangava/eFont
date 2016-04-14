@@ -39,7 +39,7 @@ class CustomerController extends ApplicationController
 	 */
 	public function welcomeAction(){
 		//$this->setLayoutVariable('CHANGETEMPLATEURL', '/shop-customer/index');
-		$this->setLayoutVariable('CHANGETEMPLATEURL', '/ef-licenses');
+		$this->setLayoutVariable('CHANGETEMPLATEURL', '/ef-licenses/form');
 		return $this->viewModel;
 	}
 }

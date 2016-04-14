@@ -22,16 +22,14 @@ return array (
 				'image' => 'image' 
 		),
 		'AwsS3' => array (
-				'user' => 'S3',
-				'key' => 'AKIAJXXVFEVVLTJ2LV3Q',
-				'secret' => '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',
-				'bucket' => 'mmgv-efont',
-				'contents' => 'portal/',
-				'thumb' => 'portal/thumb/',
-				'url' => 'https://s3-sa-east-1.amazonaws.com/mmgv-efont/portal/',
-				
-				'contests' => 'contests/files/',
-				'contests_url' => 'https://s3-sa-east-1.amazonaws.com/mmgv-efont/contests/files/' 
+				'user' => 'APREPARAS3',
+				'key' => 'AKIAJ5NGHSLMOGOBUFDA',
+				'secret' => '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',
+				'bucket' => 'aprepara',
+				'contents' => 'contents/',
+				'thumb' => 'imagem/',
+				'url' => 'https://s3-us-west-2.amazonaws.com/aprepara/imagem/',
+				'url_contents' => 'https://s3-us-west-2.amazonaws.com/aprepara/contents/',				
 		),
 		'AwsSES' => array (
 				'key' => 'AKIAJTUXXPJ7FYRGRUIQ',
@@ -69,12 +67,29 @@ return array (
 		'Google' => array (
 				'maps-key' => '',
 				'maps-sensor' => 'true',
-				'gcm-key' => '',
+				'gcm-key' => 'AIzaSyDWTPdeMbkMVdLNGnCSZT-G7lf2ayjjVN0',
 				'gcm-url' => 'https://android.googleapis.com/gcm/send',
 				'place-key' => '',
 				'place-sensor' => 'true',
 				'place-url' => '',
-				'analytics' => 'UA--2' 
+				'analytics' => 'UA--2', // See footer.phtml too
+				'server-key'=>'AIzaSyClS4L3YY1LJW5vj6FI9-IhdCm9qmV5oG8',
+				'application'=>'affable-beach-118502',
+				/**
+				 * Google API settings OAuth
+				 * The client_id and client_secret can be found at https://code.google.com/apis/console
+				 * On the Google site set the Redirect URI to http://YOUR_HOSTNAME/login/google
+				 */
+				'client_id' => '',
+				'client_secret' => '',
+				'redirect_uri' => 'http://{HOST}/login/google',
+				'scope' => 'https://www.googleapis.com/auth/userinfo.email',
+				'auth_url' => 'https://accounts.google.com/o/oauth2/auth',
+				'token_url' => 'https://accounts.google.com/o/oauth2/token',
+				'grant_type' => 'authorization_code',
+				'access_type' => 'online',
+				'response_type' => 'code',
+				'display' => 'page' 
 		),
 		'Apple' => array (
 				'apns-production' => true,

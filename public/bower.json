@@ -33,6 +33,7 @@
     "angular-ipsum": "^0.0.4",
     "angular-bootstrap-switch": "^0.5.0",
     "angular-i18n": "^1.5.3",
-    "bootbox.js": "^4.4.0"
+    "bootbox.js": "^4.4.0",
+    "dropzone": "^4.3.0"
   }
 }

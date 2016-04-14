@@ -1,10 +1,11 @@
 ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStorage, ipsumService, ShopSrvc) {
 	//global
 	$scope.searchText = '';	
-	$scope.form = {};
+	$scope.form = {'formats':[0,1,2,3]};
 	//clean
 	$scope.cleanLicenses = function(){
 		$scope.licenses = [];
+		$scope.form = {'formats':[0,1,2,3]};
 		//Pag
 		$scope.totalItems = 0;
 		$scope.currentPage = 0;	
@@ -69,11 +70,13 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 				}
 			});		
 		}else{
-			$scope.form = {};
-			//$scope.form = {address: "Rua Engenheiro Agronômico Andrei Cristian Ferreira - Carvoeira", address_city: "Florianópolis", address_country: "Brasil", address_postal_code: "88040", address_state: "Santa Catarina", address_sublocality: "Carvoeira", contact: "claudio", email: "contato@bergmannsoft.com.br", map_lat: -27.6017412, map_lng: -48.52187349999997, name: guid(), phone: 489999999, route: "Rua Engenheiro Agronômico Andrei Cristian Ferreira"};
+			$scope.form = {'formats':[[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }]]};
 		}
 		$timeout(function(){ delete $localStorage.LicensesId; }, 500);
-		$timeout(function(){ isSpinnerBar(false);}, 1000);
+		$timeout(function(){ 
+			isSpinnerBar(false);
+			isDropzone();
+		}, 1000);
 	};
 	//Remover varios itens
 	$scope.removeSelected = function(y, n, t, m, err) {
@@ -125,7 +128,17 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 			}									
 		});
 	};	
-	
+	//Add Formatos
+	$scope.addFormatItem = function(id){
+		console.log($scope.form.formats);
+		$scope.form.formats[id].push({parameters: ipsumService.words(5), multiplier:getRandomInt() });
+		console.log(id);
+	};
+	//Remove uma Formato
+	$scope.removeFormatItem = function(id, cart_key){
+		console.log(cart_key, id);
+		$scope.form.formats[id].splice(cart_key, 1);
+	};
 	//Alterando paginacao
 	$scope.pageChanged = function (){ $scope.initLicenses(); }
 	//Select all
@@ -163,4 +176,14 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 	$scope.notimplemented = function(){
 		bootbox.alert('Not implemented.');
 	};
+	
+	//Sortable
+	$scope.sortableFormatDesktop = {
+			update: function(e, ui) {
+				//console.log($scope.formats[1]);
+			},
+			stop: function(e, ui) {
+				//console.log($scope.formats[1]);
+			}
+	};	
 });
