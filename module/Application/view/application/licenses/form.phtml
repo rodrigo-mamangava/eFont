@@ -64,7 +64,7 @@
 								<li ng-repeat="(cart_key, cart_item) in form.formats[1]" class="col-md-12">							
 								<p><table><tr>
 								<td class="col-md-7"><input type="text" class="form-control" ng-model="cart_item.parameters" placeholder="<?php echo $this->translate('1-2 USERS, UNLIMITED');?>"></td>
-								<td class="col-md-3"><input type="number" class="form-control" ng-model="cart_item.multiplier" placeholder="<?php echo $this->translate('Multiplier');?>"></td>
+								<td class="col-md-3"><input type="text" class="form-control" ng-model="cart_item.multiplier"  placeholder="<?php echo $this->translate('Multiplier');?>"></td>
 								<td class="col-md-2"><span class="input-group-btn"><div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>							
 								<span class="input-group-btn"><button class="btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(1, cart_key)"><i class="fa fa-minus"></i></button></span></td>
 								</tr></table></p>
@@ -84,7 +84,7 @@
 								<li ng-repeat="(cart_key, cart_item) in form.formats[2]" class="col-md-12">							
 								<p><table><tr>
 								<td class="col-md-7"><input type="text" class="form-control" ng-model="cart_item.parameters" placeholder="<?php echo $this->translate('50.0000-100.000 Pageviews/Month');?>"></td>
-								<td class="col-md-3"><input type="number" class="form-control" ng-model="cart_item.multiplier" placeholder="<?php echo $this->translate('Multiplier');?>"></td>
+								<td class="col-md-3"><input type="text" class="form-control" ng-model="cart_item.multiplier"  placeholder="<?php echo $this->translate('Multiplier');?>"></td>
 								<td class="col-md-2"><span class="input-group-btn"><div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>							
 								<span class="input-group-btn"><button class="btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(2, cart_key)"><i class="fa fa-minus"></i></button></span></td>
 								</tr></table></p>
@@ -104,7 +104,7 @@
 								<li ng-repeat="(cart_key, cart_item) in form.formats[3]" class="col-md-12">							
 								<p><table><tr>
 								<td class="col-md-7"><input type="text" class="form-control" ng-model="cart_item.parameters" placeholder="<?php echo $this->translate('1 APP, 2-5 APPS');?>"></td>
-								<td class="col-md-3"><input type="number" class="form-control" ng-model="cart_item.multiplier" placeholder="<?php echo $this->translate('Multiplier');?>"></td>
+								<td class="col-md-3"><input type="text" class="form-control" ng-model="cart_item.multiplier"  placeholder="<?php echo $this->translate('Multiplier');?>"></td>
 								<td class="col-md-2"><span class="input-group-btn"><div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>							
 								<span class="input-group-btn"><button class="btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(3, cart_key)"><i class="fa fa-minus"></i></button></span></td>
 								</tr></table></p>
@@ -131,10 +131,10 @@
 							<th><?php echo $this->translate('Real');?></th>
 							</tr></thead>
 							<tbody><tr>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-dollar"></i></span><input type="number" placeholder="1,00" class="form-control" id="form.currency_dollar"></div></td>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="number" placeholder="0,92" class="form-control" id="form.currency_euro"></div></td>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="number" placeholder="0,67" class="form-control" id="form.currency_libra"></div></td>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="number" placeholder="3,98" class="form-control" id="form.currency_real"></div></td>
+							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-dollar"></i></span><input type="text"  placeholder="1,00" class="form-control" ng-model="form.currency_dollar"></div></td>
+							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="text"  placeholder="0,92" class="form-control" ng-model="form.currency_euro"></div></td>
+							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="text"  placeholder="0,67" class="form-control" ng-model="form.currency_libra"></div></td>
+							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="text"  placeholder="3.98" class="form-control" ng-model="form.currency_real"></div></td>
 							</tr></tbody>
 							</table>
 						</div>

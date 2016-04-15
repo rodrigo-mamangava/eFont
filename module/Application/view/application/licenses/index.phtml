@@ -9,7 +9,7 @@
 			<div class="portlet-title">
 				<div class="pull-right">
 					<a href="javascript:;" class="btn green" ng-class="(licenses.length == '0')?'animated infinite bounce':''" ng-click="changeTemplateURL('/ef-licenses/form');"><i class="fa fa-plus"></i></a>
-					<a href="javascript:;" class="btn red" ng-show="licenses.length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Companies');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><i class="fa fa-trash"></i></a>
+					<a href="javascript:;" class="btn red" ng-show="licenses.length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Licenses');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><i class="fa fa-trash"></i></a>
 				</div>
 			</div>
 			<!-- BEGIN TABLE -->
@@ -20,10 +20,8 @@
 							<tr>
 								<th width="1%"><input type="checkbox" class="icheck" ng-model="selectedAll" ng-click="checkAll()"/></th>
 								<th width="1%"><?php echo $this->translate('#');?></th>
-								<th class="col-md-5"><?php echo $this->translate('Licenses Name');?></th>
-								<th class="col-md-2"><?php echo $this->translate('E-mail');?></th>
-								<th class="col-md-2"><?php echo $this->translate('Phone');?></th>
-								<th class="col-md-3"><?php echo $this->translate('Contact');?></th>
+								<th class="col-md-3"><?php echo $this->translate('Name');?></th>
+								<th class="col-md-7"><?php echo $this->translate('Font Files');?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -31,9 +29,13 @@
 								<td><input type="checkbox" class="icheck" ng-model="item.Selected" ng-change="isSelected('checkbox-{{item.id}}')" id="checkbox-{{item.id}}"/></td>
 								<td class="text-muted"><small>{{item.id}}</small></td>
 								<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td>
-								<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.email | stripslashes}}</td>
-								<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.phone | stripslashes}}</td>							
-								<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.contact | stripslashes}}</td>
+								<td ng-click="editLicenses(item.id);" class="qz-pointer">
+									<span ng-show="item.check_trial =='1'" class="col-md-2 btn c-btn"><i class="fa fa-clone"></i> Trial </span>
+									<span ng-show="item.check_desktop =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-desktop"></i> Desktop </span>
+									<span ng-show="item.check_web =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-globe"></i> Web </span>
+									<span ng-show="item.check_app =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-mobile"></i> APP </span>
+									<span ng-show="item.check_enabled =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-check"></i> Ativa </span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
