@@ -4,11 +4,14 @@ namespace Application\Controller;
 
 /**
  * Controller Projectos
+ * 
  * @author Claudio
  */
 class ProjectsController extends ApplicationController {
 	/**
+	 *
 	 * {@inheritDoc}
+	 *
 	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
 	 */
 	public function indexAction() {

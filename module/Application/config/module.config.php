@@ -58,6 +58,19 @@ return array (
 										) 
 								) 
 						),
+						'ef-products' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/ef-products[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*' 
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Products',
+												'action' => 'index' 
+										) 
+								) 
+						),
 						'ef-licenses' => array (
 								'type' => 'Segment',
 								'options' => array (
@@ -76,14 +89,14 @@ return array (
 								'options' => array (
 										'route' => '/ef-upload[/][/:action]',
 										'constraints' => array (
-												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*'
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*' 
 										),
 										'defaults' => array (
 												'controller' => 'Application\Controller\Upload',
-												'action' => 'index'
-										)
-								)
-						),						
+												'action' => 'index' 
+										) 
+								) 
+						),
 						/**
 						 * USER
 						 */
@@ -293,6 +306,7 @@ return array (
 						// View Sales
 						'Application\Controller\Projects' => 'Application\Controller\ProjectsController',
 						'Application\Controller\Licenses' => 'Application\Controller\LicensesController',
+						'Application\Controller\Products' => 'Application\Controller\ProductsController',
 						// View Logged
 						'Application\Controller\Customer' => 'Application\Controller\CustomerController',
 						'Application\Controller\Profile' => 'Application\Controller\ProfileController',
@@ -331,9 +345,11 @@ return array (
 						'shop/customer/leftmenu' => __DIR__ . '/../view/application/customer/leftmenu.phtml',
 						'shop/projects/leftmenu' => __DIR__ . '/../view/application/projects/leftmenu.phtml',
 						'shop/licenses/breadcrumbs' => __DIR__ . '/../view/application/licenses/breadcrumbs.phtml',
-						//Outras partials compartilhados
+						'shop/projects/breadcrumbs' => __DIR__ . '/../view/application/projects/breadcrumbs.phtml',
+						'shop/products/breadcrumbs' => __DIR__ . '/../view/application/products/breadcrumbs.phtml',
+						// Outras partials compartilhados
 						'no-data-to-display' => __DIR__ . '/../view/layout/partials/no-data-to-display.phtml',
-						'file-upload-form-static' => __DIR__ . '/../view/application/upload/index.phtml', 
+						'file-upload-form-static' => __DIR__ . '/../view/application/upload/index.phtml' 
 				),
 				'template_path_stack' => array (
 						__DIR__ . '/../view' 

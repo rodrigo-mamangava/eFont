@@ -80,3 +80,8 @@
 .myHandle {
 	cursor: move;
 }
+
+.not-not-border{
+	border-top: 0px !important;
+	border: 0px !important;
+}

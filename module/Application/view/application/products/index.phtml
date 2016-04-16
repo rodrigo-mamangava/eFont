@@ -1,0 +1,58 @@
+<?php echo $this->partial('shop/products/breadcrumbs');?>
+<!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+<div class="container">
+	<?php echo $this->partial('shop/projects/leftmenu');?>
+	<div class="c-layout-sidebar-content ">
+	<!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
+	<div class="row" ng-controller="ProductsCtrl" ng-init="initProducts();">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="pull-right">
+					<a href="javascript:;" class="btn green" ng-class="(products.length == '0')?'animated infinite bounce':''" ng-click="changeTemplateURL('/ef-products/form');"><i class="fa fa-plus"></i></a>
+					<a href="javascript:;" class="btn red" ng-show="products.length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Products');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><i class="fa fa-trash"></i></a>
+				</div>
+			</div>
+			<!-- BEGIN TABLE -->
+			<div class="portlet-body" ng-show="products.length > '0'">
+				<div class="table-scrollable">
+					<table class="table table-striped table-bordered table-advance table-hover" id="<?php echo uniqid();?>">
+						<thead>
+							<tr>
+								<th width="1%"><input type="checkbox" class="icheck" ng-model="selectedAll" ng-click="checkAll()"/></th>
+								<th width="1%"><?php echo $this->translate('#');?></th>
+								<th class="col-md-3"><?php echo $this->translate('Name');?></th>
+								<th class="col-md-7"><?php echo $this->translate('Font Files');?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in products" id="products-tr-{{item.id}}">
+								<td><input type="checkbox" class="icheck" ng-model="item.Selected" ng-change="isSelected('checkbox-{{item.id}}')" id="checkbox-{{item.id}}"/></td>
+								<td class="text-muted"><small>{{item.id}}</small></td>
+								<td ng-click="editProducts(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td>
+								<td ng-click="editProducts(item.id);" class="qz-pointer">
+									<span ng-show="item.check_trial =='1'" class="col-md-2 btn c-btn"><i class="fa fa-clone"></i> Trial </span>
+									<span ng-show="item.check_desktop =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-desktop"></i> Desktop </span>
+									<span ng-show="item.check_web =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-globe"></i> Web </span>
+									<span ng-show="item.check_app =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-mobile"></i> APP </span>
+									<span ng-show="item.check_enabled =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-check"></i> Ativa </span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- Pag. -->
+				<div ng-show="totalItems > 10">
+					<uib-pagination ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+				</div>			
+			</div>
+			<!-- END TABLE -->
+			<!-- BEGIN DISPLAY -->
+			<div class="portlet-body" ng-show="products.length == '0'" id="no-data-to-display">
+				<?php echo $this->partial('no-data-to-display');?>
+			</div>
+			<!-- END DISPLAY -->		
+		</div>
+	</div>
+	<!-- END C-LAYOUT-SIDEBAR-CONTENT-->
+</div>
+</div>
