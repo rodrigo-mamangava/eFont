@@ -24,6 +24,30 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			});	
 		},	
 		/**
+		 * Formatos
+		 */
+		getListFormats: function(){
+			//GET
+			return $http.get('/ef-formats/search')
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});				
+		},
+		/**
+		 * Font Files
+		 */
+		getListFontFiles: function(data){
+			//GET
+			return $http.post('/ef-font-files/uncompress', data)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});				
+		},		
+		/**
 		 * Licencas
 		 */
 		saveLicenses: function(data){
@@ -34,6 +58,15 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			},function (err) {
 				console.log(err);
 			});	
+		},
+		getListActiveLicenses: function(){
+			//GET
+			return $http.get('/ef-licenses/active')
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});				
 		},
 		getListLicenses: function(search, count, offset){
 			//GET
@@ -61,7 +94,46 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			},function (err) {
 				console.log(err);
 			});	
-		},		
+		},	
+		/**
+		 * Produtos
+		 */
+		saveProducts: function(data){
+			//POST
+			return $http.post('/ef-products/save', data)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},
+		getListProducts: function(search, count, offset){
+			//GET
+			return $http.get('/ef-products/search?search='+search+'&count='+count+'&offset='+offset)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},
+		getProducts: function(id){
+			//GET
+			return $http.get('/ef-products/edit?id='+id)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},	
+		removeProducts: function(id){
+			//GET
+			return $http.get('/ef-products/remove?id='+id)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},			
 		/**
 		 * Profile
 		 */

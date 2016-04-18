@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 /**
  * Upload de arquivos
- * 
+ *
  * @author Claudio
  */
 class UploadController extends ApplicationController {
@@ -33,8 +33,13 @@ class UploadController extends ApplicationController {
 					$Upload = new \AWS\Controller\UploadController ( $this->getMyServiceLocator () );
 					$data = $Upload->uploadDocs ( $_FILES, false );
 					if (isset ( $data ['url'] )) {
-						$Short = new \Useful\Controller\ShortURLController ( $this->getServiceLocator () );
-						$data ['short'] = $Short->shortener ( $data ['url'] );
+						$ext = isset ( $data ['extension'] ) ? $data ['extension'] : null;
+						if ($ext == 'zip') {
+							$data ['short'] = $data ['url'];
+						} else {
+							$Short = new \Useful\Controller\ShortURLController ( $this->getServiceLocator () );
+							$data ['short'] = $Short->shortener ( $data ['url'] );
+						}
 						$status = true;
 					}
 				} else {

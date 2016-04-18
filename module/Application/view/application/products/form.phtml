@@ -14,6 +14,7 @@
 			<!-- BEGIN BODY -->
 			<div class="portlet-body form">
 				<form class="form-horizontal" role="form" name="formProducts">
+					<input type="text" ng-show="false" id="accepted_file" value=".zip" />
 					<div class="form-group margin-top-40 margin-bottom-20">
 						<label class="col-md-7 uppercase bold"><?php echo $this->translate('PROJECT');?></label>
 					</div>					
@@ -25,23 +26,23 @@
 							<input type="text" ng-model="form.name" class="form-control"  maxlength="255" placeholder="<?php echo $this->translate('PROJECT NAME');?>" required="required" />
 						</div>
 						<div class="col-md-2 pull-right">
-							<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="addFamily();"><small><i class="fa fa-plus"></i>  <?php echo $this->translate('Add Family');?></small></a>						
+							<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="addFamilyItem();"><small><i class="fa fa-plus"></i>  <?php echo $this->translate('Add Family');?></small></a>						
 						</div>
 					</div>					
 					<!-- FAMILY -->
-					<section>
+					<section ng-repeat="(f_key, f_item) in families">
 						<hr />
 						<!-- FAMILY INFO -->
 						<div class="form-group margin-top-40">
-							<label class="col-md-2 control-label bold pull-left"><a href="javascript:;" class="btn c-btn btn-xs c-btn-blue c-btn-circle  c-font-white c-font-uppercase c-cart-float-l">1</a> <small><?php echo $this->translate('Family Name');?></strong></label>
+							<label class="col-md-2 control-label bold pull-left"><a href="javascript:;" class="btn c-btn btn-xs c-btn-blue c-btn-circle  c-font-white c-font-uppercase c-cart-float-l">{{f_key + 1}}</a> <small><?php echo $this->translate('Family Name');?></strong></label>
 							<div class="col-md-8">
-								<input type="text" ng-model="form.family_name" class="form-control"  maxlength="255" placeholder="<?php echo $this->translate('FAMILY NAME');?>"/>
+								<input type="text" ng-model="f_item.family_name" class="form-control"  maxlength="255" placeholder="<?php echo $this->translate('FAMILY NAME');?>"/>
 							</div>
 							<div class="col-md-2">
-							<a href="javascript:;" class="col-md-12 btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(2, cart_key)"><small><i class="fa fa-trash"></i>  <?php echo $this->translate('REMOVE');?></small></a>
+							<a href="javascript:;" class="col-md-12 btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFamilyItem(f_key, '<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the family');?> <b>'+f_item.family_name+'<b/>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><small><i class="fa fa-trash"></i>  <?php echo $this->translate('REMOVE');?></small></a>
 							</div>
 						</div>
-						
+						<!-- LICENCES -->
 						<div class="form-group margin-top-40">
 							<div class="col-md-10">
 							  <table class="table">
@@ -51,145 +52,45 @@
 										<td class="not-not-border"><label class="control-label pull-right"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></td>
 									</tr>
 									<!-- LICENSES -->
-									<tr><td class="not-not-border">
-										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox6-444" class="c-check" ng-model="reigster_now">
-                                        <label for="checkbox6-444"><span class="inc"></span><span class="check"></span><span class="box"></span><small><?php echo $this->translate('TRIAL');?></small></label></div>
+									<tr ng-repeat="(l_key, l_item) in licenses"><td class="not-not-border">
+										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox-{{f_key}}-{{l_key}}" class="c-check" ng-model="f_item.licenses[l_item.id].check_enabled">
+                                        <label for="checkbox-{{f_key}}-{{l_key}}"><span class="inc"></span><span class="check"></span><span class="box"></span><small>{{l_item.name}}</small></label></div>
                                         </td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" aria-label="..."></span><input ui-money-mask="2" ng-model="money" type="text" class="form-control" aria-label="..."></div></td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" aria-label="..."></span><input ui-money-mask="2" ng-model="money" type="text" class="form-control" aria-label="..."></div></td>
-									</tr>
-										
-									<tr><td class="not-not-border"><label class="control-label pull-right">
-										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox6-444" class="c-check" ng-model="reigster_now">
-                                        <label for="checkbox6-444"><span class="inc"></span><span class="check"></span><span class="box"></span><small><?php echo $this->translate('PROJECT');?></small></label></div>
-										</td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" aria-label="..."></span><input ui-money-mask="2" ng-model="money" type="text" class="form-control" aria-label="..."></div></td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" aria-label="..."></span><input ui-money-mask="2" ng-model="money" type="text" class="form-control" aria-label="..."></div></td>
-									</tr>
-
-									<tr><td class="not-not-border">
-										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox6-444" class="c-check" ng-model="reigster_now">
-                                        <label for="checkbox6-444"><span class="inc"></span><span class="check"></span><span class="box"></span><small><?php echo $this->translate('CLASSIC');?></small></label></div>
-										</td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" aria-label="..."></span><input ui-money-mask="2" ng-model="money" type="text" class="form-control" aria-label="..."></div></td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" aria-label="..."></span><input ui-money-mask="2" ng-model="money" type="text" class="form-control" aria-label="..."></div></td>
+										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" ng-model="f_item.licenses[l_item.id].check_weight" ></span><input ui-money-mask="2" ng-model="f_item.licenses[l_item.id].money_weight" type="text" class="form-control"></div></td>
+										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" ng-model="f_item.licenses[l_item.id].check_family" ></span><input ui-money-mask="2" ng-model="f_item.licenses[l_item.id].money_family" type="text" class="form-control"></div></td>
 									</tr>
 							</table>
 							</div>
 						</div>
+						<!-- FONTS -->
+						<hr />
+						<section ng-repeat="(t_key, t_item) in formats" id="sec-formats">
+							<!-- UPLOAD -->
+							<div class="form-group margin-top-40">
+								<label class="col-md-2 control-label bold pull-left"><a ng-show="f_item.formats[t_item.id].number_files" href="javascript:;" class="btn c-btn btn-xs" ng-model="f_item.formats[t_item.id].collapsed" ng-click="f_item.formats[t_item.id].collapsed=!f_item.formats[t_item.id].collapsed"><i class="fa" ng-class="f_item.formats[t_item.id].collapsed?'fa-minus':'fa-plus'"></i></a> {{t_item.name}}</label>
+								<div class="col-md-8">
+								<div class="input-group">
+									<input type="text" placeholder="" readonly="readonly" class="form-control" ng-model="f_item.formats[t_item.id].media_url" id="media_url{{f_key}}{{t_key}}" name="media_url{{f_key}}{{t_key}}" ng-change="getRetrieveDetails(f_key, t_key ,t_item.id);"/>
+									<span class="input-group-btn"><button class="btn blue" type="button" data-id="media_url{{f_key}}{{t_key}}" onclick="fileUploadDropzone($(this).data('id'));" ><i class="fa fa-upload"></i></button></span>
+								</div>
+								</div>
+								<div class="col-md-2 pull-right">
+									<label class="control-label bold"><i class="fa" ng-class="f_item.formats[t_item.id].number_files?'fa-check':'fa-close'"></i>&nbsp;&nbsp; {{f_item.formats[t_item.id].number_files || 0 }} &nbsp;&nbsp;<?php echo $this->translate('FILES');?></label>
+								</div>	
+							</div>	
+							<!-- ITEMS -->		
+							<div class="form-group margin-top-40" ng-show="f_item.formats[t_item.id].collapsed">
+								<div class="col-md-12">
+								<table class="table table-bordered table-striped">
+									<tr ng-repeat="(fl_key, fl_item) in f_item.formats[t_item.id].files">
+									<td class="col-md-5">{{fl_item.font_file}}</td>
+									<td class="col-md-4"><span ng-show="t_item.id == '0'">{{fl_item.font_subfamily}}</span><input ng-hide="t_item.id == '0'" type="text" class="form-control" ng-model="fl_item.font_subfamily" /></td>
+									<td class="col-md-2"><span ng-show="t_item.id == '0'">Trial</span><input ng-hide="t_item.id == '0'" type="text" class="form-control" ui-money-mask ng-model="fl_item.font_price" /></td></tr>
+								</table>
+								</div>
+							</div>											
+						</section>
 					</section>
-					
-					<!-- FONTS -->
-					<section><hr />
-					<!-- BEGIN TRIAL -->
-					<div class="form-group margin-top-40">
-						<label class="col-md-2 control-label bold pull-left"><a href="javascript:;" class="btn c-btn btn-xs" ng-model="collapsed" ng-click="collapsed=!collapsed"><i class="fa" ng-class="collapsed?'fa-minus':'fa-plus'"></i></a> <?php echo $this->translate('Trial Fonts');?></label>
-						<div class="col-md-8">
-						<div class="input-group">
-							<input type="text" placeholder="" class="form-control" readonly="readonly" ng-model="form.media_url" id="media_url" name="media_url"/>
-							<span class="input-group-btn"><button class="btn blue" type="button" onclick="fileUploadDropzone('media_url');" ><i class="fa fa-upload"></i></button></span>
-						</div>
-						</div>
-						<div class="col-md-2 pull-right">
-							<label class="control-label bold"><i class="fa fa-check"></i>&nbsp;&nbsp;	{{form.number_files || 0 }} &nbsp;&nbsp;<?php echo $this->translate('FILES');?></label>
-						</div>	
-					</div>
-					
-					<div class="form-group margin-top-40" ng-show="collapsed">
-						<div class="col-md-12">
-						<table class="table table-bordered table-striped">
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2">Trial</td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2">Trial</td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2">Trial</td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2">Trial</td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2">Trial</td></tr>
-						</table>
-						</div>
-					</div>				
-					<!-- END TRIAL -->
-					
-					<!-- BEGIN DESKTOP -->
-					<div class="form-group margin-top-40">
-						<label class="col-md-2 control-label bold pull-left"><?php echo $this->translate('Desktop');?></label>
-						<div class="col-md-8">
-						<div class="input-group">
-							<input type="text" placeholder="" class="form-control" readonly="readonly" ng-model="form.media_url" id="media_url" name="media_url"/>
-							<span class="input-group-btn"><button class="btn blue" type="button" onclick="fileUploadDropzone('media_url');" ><i class="fa fa-upload"></i></button></span>
-						</div>
-						</div>
-						<div class="col-md-2 pull-right">
-							<label class="control-label bold"><i class="fa fa-check"></i>&nbsp;&nbsp;	{{form.number_files || 0 }} &nbsp;&nbsp;<?php echo $this->translate('FILES');?></label>
-						</div>	
-					</div>
-					
-					<div class="form-group margin-top-40">
-						<div class="col-md-12">
-						<table class="table table-bordered table-striped">
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						</table>
-						</div>
-					</div>	
-					<!-- END DESKTOP -->
-					
-					<!-- BEGIN APP -->
-					<div class="form-group margin-top-40">
-						<label class="col-md-2 control-label bold pull-left"><?php echo $this->translate('App');?></label>
-						<div class="col-md-8">
-						<div class="input-group">
-							<input type="text" placeholder="" class="form-control" readonly="readonly" ng-model="form.media_url" id="media_url" name="media_url"/>
-							<span class="input-group-btn"><button class="btn blue" type="button" onclick="fileUploadDropzone('media_url');" ><i class="fa fa-upload"></i></button></span>
-						</div>
-						</div>
-						<div class="col-md-2 pull-right">
-							<label class="control-label bold"><i class="fa fa-check"></i>&nbsp;&nbsp;	{{form.number_files || 0 }} &nbsp;&nbsp;<?php echo $this->translate('FILES');?></label>
-						</div>	
-					</div>
-					
-					<div class="form-group margin-top-40">
-						<div class="col-md-12">
-						<table class="table table-bordered table-striped">
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						</table>
-						</div>
-					</div>	
-					<!-- END APP -->	
-					
-					<!-- BEGIN WEB -->
-					<div class="form-group margin-top-40">
-						<label class="col-md-2 control-label bold pull-left"><?php echo $this->translate('Web Fonts');?></label>
-						<div class="col-md-8">
-						<div class="input-group">
-							<input type="text" placeholder="" class="form-control" readonly="readonly" ng-model="form.media_url" id="media_url" name="media_url"/>
-							<span class="input-group-btn"><button class="btn blue" type="button" onclick="fileUploadDropzone('media_url');" ><i class="fa fa-upload"></i></button></span>
-						</div>
-						</div>
-						<div class="col-md-2 pull-right">
-							<label class="control-label bold"><i class="fa fa-check"></i>&nbsp;&nbsp;	{{form.number_files || 0 }} &nbsp;&nbsp;<?php echo $this->translate('FILES');?></label>
-						</div>	
-					</div>
-					
-					<div class="form-group margin-top-40">
-						<div class="col-md-12">
-						<table class="table table-bordered table-striped">
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						<tr><td class="col-md-6">ljdsakl alasjdlajslajsl</td><td class="col-md-2">lk aslkasjdlasjlças</td><td class="col-md-2"><input type="text" class="form-control" ui-money-mask ng-model="desktop" /></td></tr>
-						</table>
-						</div>
-					</div>	
-					<!-- END WEB -->									
-												
-					</section>	
 					<!-- BUTTON -->
 					<hr/>
 					<div class="form-group margin-top-40 margin-bottom-10">

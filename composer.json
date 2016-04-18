@@ -16,6 +16,7 @@
         "mailgun/mailgun-php": "^2.0",
         "zendframework/zendservice-amazon": "^2.0",
         "zendframework/zendservice-google-gcm": "^1.0",
-        "zendframework/zendservice-apple-apns": "^1.2"
+        "zendframework/zendservice-apple-apns": "^1.2",
+        "phenx/php-font-lib": "^0.4.0"
     }
 }

@@ -124,6 +124,29 @@ class LicensesTable extends AbstractTableGateway {
 		}
 	}
 	/**
+	 * Retorna as ativas
+	 * @param unknown $company_id
+	 */
+	public function fetchAllActive($company_id){
+		// SELECT
+		$select = new Select ();
+		// FROM
+		$select->from ( $this->table );
+		// WHERE
+		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.check_enabled='1'" );
+		// ORDER
+		$select->order ( "{$this->table}.name ASC" );
+		// Executando
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( 0 );
+		
+		return $paginator;		
+	}
+	/**
 	 * Consulta customizada
 	 *
 	 * @param unknown $search        	

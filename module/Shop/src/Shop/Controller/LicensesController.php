@@ -39,6 +39,13 @@ class LicensesController extends \Useful\Controller\ControlController
 		return $this->getDbTable ( '\Shop\Model\LicensesTable' )->filter($search, $count, $offset, $company_id );
 	}
 	/**
+	 * Retorna a lista de todas as licenas ativas
+	 * @param unknown $company_id
+	 */
+	public function fetchAllActive($company_id){
+		return $this->getDbTable ( '\Shop\Model\LicensesTable' )->fetchAllActive($company_id);
+	}
+	/**
 	 * Busca por chaves
 	 * @param unknown $id
 	 * @param unknown $company_id

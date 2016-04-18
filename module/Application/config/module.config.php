@@ -84,6 +84,19 @@ return array (
 										) 
 								) 
 						),
+						'ef-formats' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/ef-formats[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*' 
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\LicenseFormats',
+												'action' => 'index' 
+										) 
+								) 
+						),
 						'ef-upload' => array (
 								'type' => 'Segment',
 								'options' => array (
@@ -97,6 +110,19 @@ return array (
 										) 
 								) 
 						),
+						'ef-font-files' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/ef-font-files[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*'
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\FontFile',
+												'action' => 'index'
+										)
+								)
+						),						
 						/**
 						 * USER
 						 */
@@ -306,7 +332,9 @@ return array (
 						// View Sales
 						'Application\Controller\Projects' => 'Application\Controller\ProjectsController',
 						'Application\Controller\Licenses' => 'Application\Controller\LicensesController',
+						'Application\Controller\LicenseFormats' => 'Application\Controller\LicenseFormatsController',						
 						'Application\Controller\Products' => 'Application\Controller\ProductsController',
+						'Application\Controller\FontFile' => 'Application\Controller\FontFileController',
 						// View Logged
 						'Application\Controller\Customer' => 'Application\Controller\CustomerController',
 						'Application\Controller\Profile' => 'Application\Controller\ProfileController',
@@ -349,7 +377,8 @@ return array (
 						'shop/products/breadcrumbs' => __DIR__ . '/../view/application/products/breadcrumbs.phtml',
 						// Outras partials compartilhados
 						'no-data-to-display' => __DIR__ . '/../view/layout/partials/no-data-to-display.phtml',
-						'file-upload-form-static' => __DIR__ . '/../view/application/upload/index.phtml' 
+						'file-upload-form-static' => __DIR__ . '/../view/application/upload/index.phtml',
+						'fonts-upload-form-static' => __DIR__ . '/../view/application/upload/fonts.phtml',
 				),
 				'template_path_stack' => array (
 						__DIR__ . '/../view' 

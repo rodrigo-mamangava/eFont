@@ -26,6 +26,34 @@ class LicensesController extends ApplicationController {
 	public function formAction() {
 		return $this->viewModel->setTerminal ( true );
 	}
+	
+	/**
+	 * Ativas licenas
+	 */
+	public function activeAction(){
+		// Default
+		$data = $this->translate ( "Could not load licenses, please register one or more licenses." );
+		$outcome = $status = false;
+		// System
+		$user_id = $this->get_user_id ();
+		$company_id = $this->get_company_id ();
+		// Query
+		$LicensesController = new \Shop\Controller\LicensesController ( $this->getMyServiceLocator () );
+		$Paginator = $LicensesController->fetchAllActive ($company_id);
+		
+		if ($Paginator->count () > 0) {
+			$data = array ();
+			$data ['items'] = iterator_to_array ( $Paginator->getCurrentItems () );
+			$data ['total'] = $Paginator->getTotalItemCount ();
+			$data ['count'] = $Paginator->getTotalItemCount ();
+			$data ['offset'] = 0;
+				
+			$outcome = $status = true;
+		}
+		// Response
+		self::showResponse ( $status, $data, $outcome, true );
+		die ();		
+	}
 	/**
 	 * Busca
 	 */

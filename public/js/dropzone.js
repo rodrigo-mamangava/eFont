@@ -2,11 +2,16 @@ var FormDropzone = function () {
 	return {
 		//main function to initiate the module
 		init: function () {  
+			var acceptedFiles = ".jpeg,.jpg,.png,.gif, .pdf, .doc, .docx, .zip";
+			if ( $('#accepted_file').length){
+				acceptedFiles = $('#accepted_file').val(); 
+			}
+			console.log(acceptedFiles);
 			var myDropzone = new Dropzone("#my-dropzone", {
 				maxFilesize: 2,
 				uploadMultiple: false,
 				maxFiles: 1,
-				acceptedFiles: ".jpeg,.jpg,.png,.gif, .pdf, .doc, .docx, .zip"        		
+				acceptedFiles: acceptedFiles      		
 			});
 
 			myDropzone.on("addedfile", function(file) {

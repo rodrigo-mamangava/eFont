@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be90f9ca626b4f2cb1701b97b411f8cc",
-    "content-hash": "cfdb2ec086ba5eba17b9ba0c0a12b597",
+    "hash": "9ad3b17443e79679702d1bfde9431fc8",
+    "content-hash": "4805fa6a5c1118b238a865c20014aa77",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -250,6 +250,40 @@
             ],
             "description": "The Mailgun SDK provides methods for all API functions.",
             "time": "2016-04-02 00:58:54"
+        },
+        {
+            "name": "phenx/php-font-lib",
+            "version": "0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PhenX/php-font-lib.git",
+                "reference": "b8af0cacdc3cbf1e41a586fcb78f506f4121a088"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PhenX/php-font-lib/zipball/b8af0cacdc3cbf1e41a586fcb78f506f4121a088",
+                "reference": "b8af0cacdc3cbf1e41a586fcb78f506f4121a088",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "FontLib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Ménager",
+                    "email": "fabien.menager@gmail.com"
+                }
+            ],
+            "description": "A library to read, parse, export and make subsets of different types of font files.",
+            "homepage": "https://github.com/PhenX/php-font-lib",
+            "time": "2015-05-06 20:02:39"
         },
         {
             "name": "php-http/discovery",
