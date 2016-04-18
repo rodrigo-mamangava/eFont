@@ -29,12 +29,20 @@ class FontFileController extends ApplicationController {
 		// System
 		$user_id = $this->get_user_id ();
 		$company_id = $this->get_company_id ();
+		// Arquivos permitidos
+		$fileTypes = array (
+				'otf',
+				'ttf',
+				'eot',
+				'woff' 
+		); // File extensions
 		
 		if ($this->getRequest ()->isPost ()) {
 			try {
 				// PARAMS
 				$post = $this->postJsonp ();
 				$uploaded = isset ( $post ['uploaded'] ) ? $post ['uploaded'] : null;
+				$price = isset ( $post ['price'] ) ? $post ['price'] : '0,00';
 				/**
 				 * Download file
 				 */
@@ -59,18 +67,26 @@ class FontFileController extends ApplicationController {
 						
 						while ( false !== ($entry = readdir ( $handle )) ) {
 							if ($entry != "." && $entry != "..") {
-								$font ['font_file'] = $entry;
-								$font ['font_path'] = $folder . '/' . $entry;
-								// Infos
-								$FontInfo->setFontFile ( $font ['font_path'] );
-								$font ['font_name'] = $FontInfo->getFullFontName ();
-								$font ['font_id'] = $FontInfo->getFontId ();
-								$font ['font_subfamily'] = $FontInfo->getFontSubFamily ();
-								$font ['font_family'] = $FontInfo->getFontFamily ();
-								$font ['font_copyright'] = $FontInfo->getCopyright ();
 								
-								$files [] = $font;
-								$count++;
+								$path = $folder . '/' . $entry;
+								$path_parts = pathinfo ( $path );
+								$ext = $path_parts['extension'];
+								if (in_array ( $ext, $fileTypes )) {
+									// Infos
+									$FontInfo->setFontFile ( $path );
+									$font ['font_name'] = $FontInfo->getFullFontName ();
+									$font ['font_id'] = $FontInfo->getFontId ();
+									$font ['font_subfamily'] = $FontInfo->getFontSubFamily ();
+									$font ['font_family'] = $FontInfo->getFontFamily ();
+									$font ['font_copyright'] = $FontInfo->getCopyright ();
+									$font ['font_file'] = $entry;
+									$font ['font_path'] = $path;
+									$font ['font_price'] = $price;
+									$font ['check_price'] = false;
+									
+									$files [] = $font;
+									$count ++;
+								}
 							}
 						}
 						closedir ( $handle );

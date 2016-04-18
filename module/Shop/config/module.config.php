@@ -17,6 +17,19 @@ return array (
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\LicenseFormatsTable ( $dbAdapter );
 				},
+				'Shop\Model\ProjectsTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\ProjectsTable ( $dbAdapter );
+				},
+				'Shop\Model\FamiliesTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\FamiliesTable ( $dbAdapter );
+				},
+				'Shop\Model\FamilyHasFormatsTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\FamilyHasFormatsTable ( $dbAdapter );
+				},
+				
 				'Shop\Model\UserSystemTable' => function ($sm) {
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\UserSystemTable ( $dbAdapter );
