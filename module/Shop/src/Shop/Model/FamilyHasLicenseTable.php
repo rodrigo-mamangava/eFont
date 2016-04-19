@@ -7,12 +7,12 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Sql\Select;
 
 /**
- * Mapper FamilyHasFormatsTable
- *
+ * Mapper Family and Licencas
+ * 
  * @author Claudio
  */
-class FamilyHasFormatsTable extends AbstractTableGateway {
-	protected $table = 'family_has_formats';
+class FamilyHasLicenseTable extends AbstractTableGateway {
+	protected $table = 'family_has_license';
 	// Nome da tabela no banco
 	public function __construct(Adapter $adapter) {
 		$this->adapter = $adapter;
@@ -20,27 +20,33 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 	/**
 	 * Salva/Atualiza um item
 	 *
-	 * @param unknown $id        	
-	 * @param unknown $family_name        	
-	 * @param unknown $project_id        	
-	 * @param unknown $company_id        	
-	 * @param unknown $user_id        	
+	 * @param unknown $id
+	 * @param unknown $money_family
+	 * @param unknown $money_weight
+	 * @param unknown $check_family
+	 * @param unknown $check_weight
+	 * @param unknown $project_id
+	 * @param unknown $family_id
+	 * @param unknown $license_id
+	 * @param unknown $company_id
+	 * @param unknown $user_id
 	 */
-	public function save($id, $family_id, $license_formats_id, $media_url, $number_files, $collapsed, $company_id, $user_id, $project_id) {
+	public function save($id, $money_family, $money_weight, $check_family, $check_weight, $project_id, $family_id, $license_id, $company_id, $user_id) {
 		$data = array (
 				'company_id' => $company_id,
 				'user_id' => $user_id,
 				'project_id' => $project_id,
-				
-				'license_formats_id' => $license_formats_id,
 				'family_id' => $family_id,
-				
-				'media_url' => addslashes ( $media_url ),
-				'number_files' => $number_files,
-				'collapsed' => $collapsed,
+				'license_id' => $license_id,
+				'money_family' => addslashes ( $money_family ),
+				'money_weight' => addslashes ( $money_weight ),
+				'check_family' => ( int ) $check_family,
+				'check_weight' => ( int ) $check_weight,
 				'dt_update' => date ( 'Y-m-d H:i:s' ),
 				'removed' => 0 
 		);
+		
+		//var_dump($data);
 		$id = ( int ) $id;
 		if ($id == 0) {
 			unset ( $data ['id'] );
@@ -124,13 +130,13 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		$select->from ( $this->table );
 		if (! is_null ( $search ) && strlen ( $search ) > 1) {
 			$search = addslashes ( $search );
-			$select->where ( "({$this->table}.family_name LIKE '%$search%')" );
+			$select->where ( "({$this->table}.money_family LIKE '%$search%')" );
 		}
 		// WHERE
 		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
 		$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		// ORDER
-		$select->order ( "{$this->table}.name ASC" );
+		$select->order ( "{$this->table}.lincese_id ASC" );
 		// Executando
 		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
 		$paginator = new \Zend\Paginator\Paginator ( $adapter );
@@ -142,7 +148,7 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 	/**
 	 * Retorna todos os itens
 	 */
-	public function fetchAll($company_id, $family_id, $project_id) {
+	public function fetchAll ( $company_id, $family_id, $project_id ) {
 		// SELECT
 		$select = new Select ();
 		// FROM
@@ -153,7 +159,7 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
 		// ORDER
-		$select->order ( "{$this->table}.license_formats_id ASC" );
+		$select->order ( "{$this->table}.license_id ASC" );
 		// Executando
 		// var_dump($select->getSqlString()); exit;
 		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
@@ -163,13 +169,13 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	
+
 	/**
 	 * Remove um item
 	 *
-	 * @param unknown $company_id        	
-	 * @param unknown $project_id        	
-	 * @param unknown $family_id        	
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 * @param unknown $family_id
 	 */
 	public function cleanup($company_id, $project_id) {
 		// Update
@@ -178,6 +184,26 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		// Where
 		$where = array ();
 		$where ['project_id'] = $project_id;
+		$where ['company_id'] = $company_id;
+		// Atualizando
+		if (! $this->update ( $data, $where )) {
+			return false;
+		}
+		return $data;
+	}	
+	/**
+	 * Remove um item
+	 *
+	 * @param unknown $id
+	 * @param unknown $company_id
+	 */
+	public function removed($id, $company_id) {
+		// Update
+		$data = array ();
+		$data ['removed'] = '1';
+		// Where
+		$where = array ();
+		$where ['id'] = $id;
 		$where ['company_id'] = $company_id;
 		// Atualizando
 		if (! $this->update ( $data, $where )) {

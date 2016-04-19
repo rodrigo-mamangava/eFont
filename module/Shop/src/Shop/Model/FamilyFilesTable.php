@@ -7,12 +7,12 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Sql\Select;
 
 /**
- * Mapper FamilyHasFormatsTable
- *
+ * Mapper Family and Files
+ * 
  * @author Claudio
  */
-class FamilyHasFormatsTable extends AbstractTableGateway {
-	protected $table = 'family_has_formats';
+class FamilyFilesTable extends AbstractTableGateway {
+	protected $table = 'family_files';
 	// Nome da tabela no banco
 	public function __construct(Adapter $adapter) {
 		$this->adapter = $adapter;
@@ -20,27 +20,47 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 	/**
 	 * Salva/Atualiza um item
 	 *
-	 * @param unknown $id        	
-	 * @param unknown $family_name        	
-	 * @param unknown $project_id        	
-	 * @param unknown $company_id        	
-	 * @param unknown $user_id        	
+	 * @param unknown $id
+	 * @param unknown $font_name
+	 * @param unknown $font_id
+	 * @param unknown $font_subfamily
+	 * @param unknown $font_family
+	 * @param unknown $font_copyright
+	 * @param unknown $font_file
+	 * @param unknown $font_path
+	 * @param unknown $font_price
+	 * @param unknown $check_price
+	 * @param unknown $company_id
+	 * @param unknown $user_id
+	 * @param unknown $project_id
+	 * @param unknown $family_id
+	 * @param unknown $family_has_formats_id
+	 * @param unknown $license_formats_id
 	 */
-	public function save($id, $family_id, $license_formats_id, $media_url, $number_files, $collapsed, $company_id, $user_id, $project_id) {
+	public function save($id, $font_name, $font_id, $font_subfamily, $font_family, $font_copyright, $font_file, $font_path, $font_price, $check_price, $company_id, $user_id, $project_id, $family_id, $family_has_formats_id, $license_formats_id) {
 		$data = array (
 				'company_id' => $company_id,
 				'user_id' => $user_id,
 				'project_id' => $project_id,
 				
-				'license_formats_id' => $license_formats_id,
 				'family_id' => $family_id,
+				'license_formats_id' => $license_formats_id,
+				'family_has_formats_id' => $family_has_formats_id,
 				
-				'media_url' => addslashes ( $media_url ),
-				'number_files' => $number_files,
-				'collapsed' => $collapsed,
+				'font_name' => addslashes ( $font_name ),
+				'font_id' => addslashes ( $font_id ),
+				'font_subfamily' => addslashes ( $font_subfamily ),
+				'font_family' => addslashes ( $font_family ),
+				'font_copyright' => addslashes ( $font_copyright ),
+				'font_file' => addslashes ( $font_file ),
+				'font_path' => addslashes ( $font_path ),
+				'font_price' => addslashes ( $font_price ),
+				'check_price' => ( int ) $check_price,
 				'dt_update' => date ( 'Y-m-d H:i:s' ),
 				'removed' => 0 
 		);
+		
+		//var_dump($data);
 		$id = ( int ) $id;
 		if ($id == 0) {
 			unset ( $data ['id'] );
@@ -124,7 +144,7 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		$select->from ( $this->table );
 		if (! is_null ( $search ) && strlen ( $search ) > 1) {
 			$search = addslashes ( $search );
-			$select->where ( "({$this->table}.family_name LIKE '%$search%')" );
+			$select->where ( "({$this->table}.font_name LIKE '%$search%')" );
 		}
 		// WHERE
 		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
@@ -142,18 +162,20 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 	/**
 	 * Retorna todos os itens
 	 */
-	public function fetchAll($company_id, $family_id, $project_id) {
+	public function fetchAll($company_id, $project_id, $family_id, $family_has_formats_id, $license_formats_id) {
 		// SELECT
 		$select = new Select ();
 		// FROM
 		$select->from ( $this->table );
 		// WHERE
-		$select->where ( "{$this->table}.family_id='{$family_id}'" );
-		$select->where ( "{$this->table}.project_id='{$project_id}'" );
 		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.project_id='{$project_id}'" );
+		$select->where ( "{$this->table}.family_id='{$family_id}'" );
+		$select->where ( "{$this->table}.family_has_formats_id='{$family_has_formats_id}'" );
+		$select->where ( "{$this->table}.license_formats_id='{$license_formats_id}'" );
 		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
 		// ORDER
-		$select->order ( "{$this->table}.license_formats_id ASC" );
+		$select->order ( "{$this->table}.id ASC" );
 		// Executando
 		// var_dump($select->getSqlString()); exit;
 		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
@@ -163,13 +185,13 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	
+
 	/**
 	 * Remove um item
 	 *
-	 * @param unknown $company_id        	
-	 * @param unknown $project_id        	
-	 * @param unknown $family_id        	
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 * @param unknown $family_id
 	 */
 	public function cleanup($company_id, $project_id) {
 		// Update
@@ -178,6 +200,25 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		// Where
 		$where = array ();
 		$where ['project_id'] = $project_id;
+		$where ['company_id'] = $company_id;
+		// Atualizando
+		if (! $this->update ( $data, $where )) {
+			return false;
+		}
+		return $data;
+	}	
+	/**
+	 * Remove um item
+	 * @param unknown $id
+	 * @param unknown $company_id
+	 */
+	public function removed($id, $company_id) {
+		// Update
+		$data = array ();
+		$data ['removed'] = '1';
+		// Where
+		$where = array ();
+		$where ['id'] = $id;
 		$where ['company_id'] = $company_id;
 		// Atualizando
 		if (! $this->update ( $data, $where )) {

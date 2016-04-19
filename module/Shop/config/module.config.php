@@ -29,7 +29,14 @@ return array (
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\FamilyHasFormatsTable ( $dbAdapter );
 				},
-				
+				'Shop\Model\FamilyHasLicenseTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\FamilyHasLicenseTable ( $dbAdapter );
+				},
+				'Shop\Model\FamilyFilesTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\FamilyFilesTable ( $dbAdapter );
+				},
 				'Shop\Model\UserSystemTable' => function ($sm) {
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\UserSystemTable ( $dbAdapter );

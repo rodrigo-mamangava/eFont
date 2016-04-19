@@ -10,10 +10,8 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		$scope.formats = [];
 		$scope.price=[];
 		//Form
-//		$scope.screen_from = true;
-//		$scope.screen_summary = false;
-		$scope.screen_from = false;
-		$scope.screen_summary = true;
+		$scope.screen_from = true;
+		$scope.screen_summary = false;
 		//Pag
 		$scope.totalItems = 0;
 		$scope.currentPage = 0;	
@@ -89,7 +87,8 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 
 								ShopSrvc.getProducts(id).then(function(res){
 									if(res.status == true){
-										$scope.form = res.data;
+										$scope.form = res.data.project;
+										$scope.families = res.data.families;
 									}else{
 										bootbox.alert(res.data);
 										$scope.form = {};
@@ -102,7 +101,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 									$scope.addFamilyItem();
 								}, 500);
 							}
-							$timeout(function(){ delete $localStorage.ProductsId; }, 500);
+							//$timeout(function(){ delete $localStorage.ProductsId; }, 500);
 							$timeout(function(){ 
 								isSpinnerBar(false);
 								isDropzone();

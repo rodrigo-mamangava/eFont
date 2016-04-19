@@ -1,17 +1,19 @@
 <?php
 
 namespace Useful\Controller;
+
 /**
  * Classe de utilidades
- * @author Claudio
  *
+ * @author Claudio
+ *        
  */
 class UsefulController {
 	
 	/**
 	 * Chega se eh um paginator e se sim, retorna o array com os resultados
 	 *
-	 * @param unknown $paginator
+	 * @param unknown $paginator        	
 	 */
 	public static function paginatorToArray($paginator) {
 		if (is_a ( $paginator, 'Zend\Paginator\Paginator' )) {
@@ -21,7 +23,7 @@ class UsefulController {
 			return array ();
 		}
 		return $paginator;
-	}	
+	}
 	/**
 	 * Checa se um valor existe em um array
 	 *
@@ -40,21 +42,31 @@ class UsefulController {
 	}
 	/**
 	 * Desfaz o efeito de addslashes() nos atributos de um objeto
-	 * @param unknown $obj
+	 *
+	 * @param unknown $obj        	
 	 */
-	public static function getStripslashes($obj){
-		foreach ($obj as $key => $value) {
-			$obj->{$key} = stripslashes($value);
+	public static function getStripslashes($obj) {
+		foreach ( $obj as $key => $value ) {
+			if (is_array ( $value )) {
+				continue;
+			} elseif (strpos ( $key, 'check_' ) !== false) {
+				$obj->{$key} = $value == '1' ? true : false;
+			} elseif (strpos ( $key, 'collapsed_' ) !== false || strpos ( $key, 'collapsed' ) !== false) {
+				$obj->{$key} = $value == '1' ? true : false;
+			} else {
+				$obj->{$key} = stripslashes ( $value );
+			}
 		}
 		return $obj;
 	}
 	
 	/**
 	 * Obtem a extensao de um arquivo
-	 * @param unknown $filename
+	 *
+	 * @param unknown $filename        	
 	 */
-	public static function getFileExtesion($filename){
-		return pathinfo($filename, PATHINFO_EXTENSION);
+	public static function getFileExtesion($filename) {
+		return pathinfo ( $filename, PATHINFO_EXTENSION );
 	}
 	/**
 	 * Retorna diferena entre duas datas
@@ -207,13 +219,12 @@ class UsefulController {
 			$dt = explode ( '/', $dt );
 			$result = date ( "Y-m-d", mktime ( 0, 0, 0, $dt [1], $dt [0], $dt [2] ) );
 			return $result;
-		}elseif (! is_null ( $dt ) && strlen ( $dt ) == 19){
+		} elseif (! is_null ( $dt ) && strlen ( $dt ) == 19) {
 			$split = explode ( ' ', $dt );
-			$date = self::getSystemToDb($split [0]);
+			$date = self::getSystemToDb ( $split [0] );
 			$time = $split [1];
-			return $date.' '.$time;
+			return $date . ' ' . $time;
 		}
-		
 		
 		return $dt;
 	}
@@ -330,7 +341,7 @@ class UsefulController {
 	}
 	/**
 	 * Extrai dezenas de uma string no formato pre definido
-	 * 
+	 *
 	 * @param String $string        	
 	 * @return multitype:
 	 */
@@ -339,39 +350,53 @@ class UsefulController {
 	}
 	/**
 	 * convert/encode os Emoji
-	 * @param unknown $text
-	 * @param unknown $op
+	 *
+	 * @param unknown $text        	
+	 * @param unknown $op        	
 	 */
-	public static function convertEmoji($text,$op) {
-		if($op=="ENCODE"){
-			return preg_replace_callback('/([0-9|#][\x{20E3}])|[\x{00ae}|\x{00a9}|\x{203C}|\x{2047}|\x{2048}|\x{2049}|\x{3030}|\x{303D}|\x{2139}|\x{2122}|\x{3297}|\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u',array('self',"encodeEmoji"),$text);
-		}else{
-			return preg_replace_callback('/(\\\u[0-9a-f]{4})+/',array('self',"decodeEmoji"),$text);
+	public static function convertEmoji($text, $op) {
+		if ($op == "ENCODE") {
+			return preg_replace_callback ( '/([0-9|#][\x{20E3}])|[\x{00ae}|\x{00a9}|\x{203C}|\x{2047}|\x{2048}|\x{2049}|\x{3030}|\x{303D}|\x{2139}|\x{2122}|\x{3297}|\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', array (
+					'self',
+					"encodeEmoji" 
+			), $text );
+		} else {
+			return preg_replace_callback ( '/(\\\u[0-9a-f]{4})+/', array (
+					'self',
+					"decodeEmoji" 
+			), $text );
 		}
 	}
 	/**
 	 * Decode Emoji
-	 * @param unknown $match
+	 *
+	 * @param unknown $match        	
 	 */
 	public static function encodeEmoji($match) {
-		return str_replace(array('[',']','"'),'',json_encode($match));
+		return str_replace ( array (
+				'[',
+				']',
+				'"' 
+		), '', json_encode ( $match ) );
 	}
 	/**
 	 * Encode Emoji
-	 * @param unknown $text
+	 *
+	 * @param unknown $text        	
 	 */
 	public static function decodeEmoji($text) {
-		if(!$text) return '';
-		$text = $text[0];
-		$decode = json_decode($text,true);
-		if($decode) return $decode;
+		if (! $text)
+			return '';
+		$text = $text [0];
+		$decode = json_decode ( $text, true );
+		if ($decode)
+			return $decode;
 		$text = '["' . $text . '"]';
-		$decode = json_decode($text);
-		if(count($decode) == 1){
-			return $decode[0];
+		$decode = json_decode ( $text );
+		if (count ( $decode ) == 1) {
+			return $decode [0];
 		}
 		return $text;
-	}	
-	
+	}
 }
 

@@ -188,7 +188,7 @@ class LicensesController extends ApplicationController {
 		if (! ValidadorController::isValidDigits ( $id )) {
 			$data = $this->translate ( 'Invalid Id' );
 		} else {
-			// Remove
+			// Edit
 			$Licenses = new \Shop\Controller\LicensesController ( $this->getServiceLocator () );
 			$LicensesHasFormats = new \Shop\Controller\LicenseHasFormatsController ( $this->getServiceLocator () );
 			

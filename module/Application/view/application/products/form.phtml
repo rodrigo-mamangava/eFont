@@ -71,7 +71,7 @@
 								<div class="col-md-8">
 								<div class="input-group">
 									<!-- readonly="readonly"  -->
-									<input type="text" placeholder="" class="form-control" ng-model="f_item.formats[t_item.id].media_url" id="media_url{{f_key}}{{t_key}}" name="media_url{{f_key}}{{t_key}}" ng-change="getRetrieveDetails(f_key, t_key ,t_item.id);"/>
+									<input type="text" placeholder="" readonly="readonly" class="form-control" ng-model="f_item.formats[t_item.id].media_url" id="media_url{{f_key}}{{t_key}}" name="media_url{{f_key}}{{t_key}}" ng-change="getRetrieveDetails(f_key, t_key ,t_item.id);"/>
 									<span class="input-group-btn"><button class="btn blue" type="button" data-id="media_url{{f_key}}{{t_key}}" onclick="fileUploadDropzone($(this).data('id'));" ><i class="fa fa-upload"></i></button></span>
 								</div>
 								</div>

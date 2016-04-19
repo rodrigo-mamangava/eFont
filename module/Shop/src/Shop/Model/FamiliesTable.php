@@ -55,4 +55,49 @@ class FamiliesTable extends AbstractTableGateway {
 		}
 		return $id;
 	}
+	/**
+	 * Retorna todos os items
+	 * 
+	 * @param unknown $company_id        	
+	 * @param unknown $project_id        	
+	 */
+	public function fetchAll($company_id, $project_id) {
+		// SELECT
+		$select = new Select ();
+		// FROM
+		$select->from ( $this->table );
+		// WHERE
+		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.project_id='{$project_id}'" );
+		// ORDER
+		$select->order ( "{$this->table}.family_name ASC" );
+		// Executando
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( 0 );
+		
+		return $paginator;
+	}
+	/**
+	 * Removendo pelo project id
+	 * 
+	 * @param unknown $company_id        	
+	 * @param unknown $project_id        	
+	 */
+	public function cleanup($company_id, $project_id) {
+		// Update
+		$data = array ();
+		$data ['removed'] = '1';
+		// Where
+		$where = array ();
+		$where ['project_id'] = $project_id;
+		$where ['company_id'] = $company_id;
+		// Atualizando
+		if (! $this->update ( $data, $where )) {
+			return false;
+		}
+		return $data;
+	}
 }
