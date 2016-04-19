@@ -95,13 +95,13 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 									}
 								});		
 							}else{
-								//$scope.form = {};
-								$timeout(function(){
+								$scope.form = {};
+								/*$timeout(function(){
 									$scope.form = {name: ipsumService.words(5)};
 									$scope.addFamilyItem();
-								}, 500);
+								}, 500);*/
 							}
-							//$timeout(function(){ delete $localStorage.ProductsId; }, 500);
+							$timeout(function(){ delete $localStorage.ProductsId; }, 500);
 							$timeout(function(){ 
 								isSpinnerBar(false);
 								isDropzone();
