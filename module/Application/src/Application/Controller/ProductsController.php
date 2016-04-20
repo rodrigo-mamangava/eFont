@@ -185,7 +185,7 @@ class ProductsController extends ApplicationController {
 					$data = $this->translate ( "Project Name" ) . ' ' . $this->translate ( "You can't leave this empty or exceeded the number of characters." );
 				} else {
 					// Controller
-					$Products = new \Shop\controller\ProjectsController ( $this->getServiceLocator () );
+					$Products = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
 					$Family = new \Shop\Controller\FamiliesController ( $this->getServiceLocator () );
 					$Formats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
 					$Fonts = new \Shop\Controller\FamilyFilesController ( $this->getServiceLocator () );
