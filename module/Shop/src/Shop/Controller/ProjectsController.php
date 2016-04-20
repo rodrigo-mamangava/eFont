@@ -8,6 +8,7 @@ namespace Shop\Controller;
  */
 class ProjectsController extends \Useful\Controller\ControlController
 {
+	
 	/**
 	 * Salva /Atualiza
 	 * @param unknown $id
