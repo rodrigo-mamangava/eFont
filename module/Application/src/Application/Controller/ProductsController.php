@@ -288,7 +288,7 @@ class ProductsController extends ApplicationController {
 			$Family = new \Shop\Controller\FamiliesController ( $this->getServiceLocator () );
 			$Licenses = new \Shop\Controller\FamilyHasLicenseController ( $this->getServiceLocator () );
 			$Formats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
-			$Files = new \Shop\controller\FamilyFilesController ( $this->getServiceLocator () );
+			$Files = new \Shop\Controller\FamilyFilesController ( $this->getServiceLocator () );
 			
 			$rs = $Products->find ( $id, $company_id );
 			// Exists?
