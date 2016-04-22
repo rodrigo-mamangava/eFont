@@ -81,6 +81,7 @@ class FontFileController extends ApplicationController {
 									$font ['font_copyright'] = $FontInfo->getCopyright ();
 									$font ['font_file'] = $entry;
 									$font ['font_path'] = $path;
+									$font ['font_folder'] = $folder;
 									$font ['font_price'] = $price;
 									$font ['check_price'] = false;
 									

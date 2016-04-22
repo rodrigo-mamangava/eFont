@@ -38,6 +38,15 @@ class ProjectsController extends \Useful\Controller\ControlController
 		return $this->getDbTable ( '\Shop\Model\ProjectsTable' )->filter ( $search, $count, $offset, $company_id );
 	}
 	/**
+	 * Atualizando um item
+	 * @param unknown $id
+	 * @param unknown $data
+	 * @param unknown $company_id
+	 */
+	public function updated($id, $data, $company_id){
+		return $this->getDbTable ( '\Shop\Model\ProjectsTable' )->updated($id, $data, $company_id); 
+	}
+	/**
 	 * Removendo
 	 * @param unknown $id
 	 * @param unknown $company_id

@@ -198,17 +198,18 @@ class ProductsController extends ApplicationController {
 					$ok_license = false;
 					// Auxiliares
 					$count = 0;
+					$ok_logo = false;
 					// PROJETOS
 					$id = $Products->save ( $project_id, $project_name, $company_id, $user_id );
 					if ($id) {
 						
 						$ok_project = true;
 						$project_id = $id;
-						//Clean
-						$Family->cleanup($company_id, $project_id);
-						$Formats->cleanup($company_id, $project_id);
-						$Fonts->cleanup($company_id, $project_id);
-						$License->cleanup($company_id, $project_id);
+						// Clean
+						$Family->cleanup ( $company_id, $project_id );
+						$Formats->cleanup ( $company_id, $project_id );
+						$Fonts->cleanup ( $company_id, $project_id );
+						$License->cleanup ( $company_id, $project_id );
 						// FAMILIAS
 						foreach ( $families_data as $f_item ) {
 							// FAMILIA
@@ -226,13 +227,34 @@ class ProductsController extends ApplicationController {
 									if ($family_has_formats_id) {
 										
 										$ok_formats = true;
-										$files = $t_item ['files'];
+										$files = isset($t_item ['files'])?$t_item ['files']:array();
 										foreach ( $files as $fs_item ) {
 											try {
 												$font_id = $Fonts->save ( $fs_item ['id'], $fs_item ['font_name'], $fs_item ['font_id'], $fs_item ['font_subfamily'], $fs_item ['font_family'], $fs_item ['font_copyright'], $fs_item ['font_file'], $fs_item ['font_path'], $fs_item ['font_price'], $fs_item ['check_price'], $company_id, $user_id, $project_id, $family_id, $family_has_formats_id, $t_item ['format_id'] );
 												
 												if ($font_id) {
 													$ok_fonts = true;
+													
+													try {
+														$path_parts = pathinfo ( $fs_item ['font_file'] );
+														if ($ok_logo == false && $path_parts ['extension'] == 'ttf') {
+															$banner = \Useful\Controller\FontImageController::banner ( $fs_item ['font_path'], $f_item ['family_name'] );
+															
+															if ($banner) {
+																
+																$ok_logo = true;
+																$Image = new \AWS\Controller\UploadController ( $this->getServiceLocator () );
+																$img = $Image->uploadPathFile ( $banner );
+																
+																if (isset ( $img ['url'] )) {
+																	$Products->updated ( $id, array (
+																			'banner' => $img ['url'] 
+																	), $company_id );
+																}
+															}
+														}
+													} catch ( Exception $e ) {
+													}
 												}
 											} catch ( \Exception $e ) {
 												// var_dump ( $font_id );
@@ -305,7 +327,7 @@ class ProductsController extends ApplicationController {
 						$licenses = UsefulController::paginatorToArray ( $Licenses->fetchAll ( $company_id, $f_item->id, $projects->id ) );
 						if (count ( $licenses ) > 0) {
 							foreach ( $licenses as $lc_key => $lc_item ) {
-								$licenses[$lc_key] =  UsefulController::getStripslashes ( $lc_item );
+								$licenses [$lc_key] = UsefulController::getStripslashes ( $lc_item );
 							}
 						} else {
 							$licenses = array ();

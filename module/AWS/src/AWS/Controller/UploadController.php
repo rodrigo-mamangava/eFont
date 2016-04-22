@@ -8,7 +8,7 @@ use Zend\Math\Rand;
 class UploadController extends ControlController {
 	/**
 	 * Salva o arquivo na S3 na pasta de conteudos
-	 * 
+	 *
 	 * @param unknown $FILES        	
 	 * @param string $contests        	
 	 * @throws \Exception
@@ -64,7 +64,7 @@ class UploadController extends ControlController {
 	}
 	/**
 	 * Salva um documento de texto na S3
-	 * 
+	 *
 	 * @param unknown $FILES        	
 	 * @param string $easy_name        	
 	 * @throws \Exception
@@ -114,7 +114,7 @@ class UploadController extends ControlController {
 	}
 	/**
 	 * Carrega um arquivo de imagem para a S3
-	 * 
+	 *
 	 * @param unknown $FILES        	
 	 * @throws \Exception
 	 */
@@ -158,7 +158,7 @@ class UploadController extends ControlController {
 				// $s3->putBucket ( $bucket, S3Controller::ACL_PUBLIC_READ );
 				if ($s3->putObjectFile ( $tempFile, $bucket, $targetFile, S3Controller::ACL_PUBLIC_READ )) {
 					// Se chegar aqui � porque o upload foi um sucesso
-					$url = $config ["AwsS3"] ["url"] . $filename;
+					$url = $config ["AwsS3"] ["url_contents"] . $filename;
 					return array (
 							'filename' => $filename,
 							'url' => $url,
@@ -175,84 +175,41 @@ class UploadController extends ControlController {
 		}
 		throw new \Exception ( 'Invalid upload file in the system, check permission administrator.' );
 	}
-	
 	/**
-	 * Upload com Engyte
+	 * Upload file
 	 *
-	 * @param unknown $domain        	
-	 * @param unknown $folder        	
-	 * @param unknown $FILE        	
+	 * @param unknown $filename        	
 	 */
-	public function egnyte($folder, $FILE, $method = 'upload') {
+	public function uploadPathFile($filename) {
+		$fileParts = pathinfo ( $filename );
+		
 		// pegando as configuracoes
 		$config = $this->getConfig ();
-		$domain = $config ["Egnyte"] ["domain"];
-		$oauthToken = $config ["Egnyte"] ["access_token"];
-		$path = $config ["Egnyte"] ["path"];
-		$subfolders = $config ["Egnyte"] ["add_folder"];
-		
-		try {
-			if ($method == 'upload') {
-				
-				$folder = $path . $folder;
-				if (is_uploaded_file ( $FILE ['file'] ['tmp_name'] )) {
-					// get the file contents and name from the upload (where the name of the file input posted to the page is 'filedata')
-					$fileBinaryContents = file_get_contents ( $FILE ['file'] ['tmp_name'] );
-					// $fileName = $FILE ['file'] ['name'];
-					$fileParts = pathinfo ( $FILE ['file'] ['name'] );
-					$fileName = str_replace ( array (
-							'\s',
-							' ',
-							'\t' 
-					), '-', $fileParts ['filename'] ) . '-' . date ( 'YmdHis' ) . '.' . $fileParts ['extension'];
-					// instantiate an Egnyte Client with the domain and oAuth token for the user with which the upload will be performed
-					$egnyte = new \AWS\Controller\EgnyteClient ( $domain, $oauthToken );
-					// perform the upload and get the response from the server
-					$response = $egnyte->uploadFile ( $folder, $fileName, $fileBinaryContents );
-					// errors are HTTP status codes 400 and greater
-					if ($response->isError ()) {
-						$data = ('The Egnyte denied access to your account. Make sure the credentials are correct.');
-						$data .= ('Error uploading file.  Here\'s the detailed output from the API request:');
-						$data .= $response->body;
-						throw new \Exception ( $data );
-					} else {
-						$EgnyteResponse = $egnyte->getFileDetails ( $folder . $fileName )->getDecodedJSON ();
-						return array (
-								'filename' => $EgnyteResponse->path,
-								'url' => $EgnyteResponse->path,
-								'thumb' => $EgnyteResponse->path,
-								'dirname' => $EgnyteResponse->path,
-								'uuid' => uniqid () 
-						);
-					}
-				} else {
-					throw new \Exception ( "Failure on file loading, try again.." );
-				}
-			} elseif ($method == 'download') {
-				$Egnyte = new \AWS\Controller\EgnyteClient ( $domain, $oauthToken );
-				return $Egnyte->downloadFile ( $folder );
-			} elseif ($method == 'create_folder') {
-				// Criando pasta
-				$Egnyte = new \AWS\Controller\EgnyteClient ( $domain, $oauthToken );
-				$response = $Egnyte->createFolder ( $path, $folder );
-				if ($response->isError () && $response->statusCode != 403) {
-					throw new \Exception ( $response->body );
-				} else {
-					foreach ( $subfolders as $i ) {
-						$Egnyte->createFolder ( $path . '/' . $folder . '/', $i );
-					}
-				}
-			} else {
-				throw new \Exception ( 'Opss!' );
-			}
-		} catch ( \Exception $e ) {
-			throw new \Exception ( $e->getMessage () );
+		// pegando a imagem para fazer upload
+		$tempFile = $filename;
+		// Setando o destino do arquivo dentro do bucket
+		$filename = Rand::getString ( 32, 'abcdefghijklmnopqrstuvwxyz123456789', true ) . '.' . $fileParts ['extension'];
+		$targetFile = $config ["AwsS3"] ["contents"] . $filename;
+		// setando o nome do bucket
+		$bucket = $config ["AwsS3"] ["bucket"];
+		// Enviando a imagem para o s3
+		$s3 = new S3Controller ( $config ["AwsS3"] ["key"], $config ["AwsS3"] ["secret"] );
+		// $s3->putBucket ( $bucket, S3Controller::ACL_PUBLIC_READ );
+		if ($s3->putObjectFile ( $tempFile, $bucket, $targetFile, S3Controller::ACL_PUBLIC_READ )) {
+			$url = $config ["AwsS3"] ["url_contents"] . $filename;
+			return array (
+					'filename' => $filename,
+					'url' => $url 
+			);
+		} else {
+			// Se chegar aqui � porque ocorreu um erro ao fazer o upload
+			throw new \Exception ( 'Ocorreu um erro ao fazer o upload para a AWS' );
 		}
 		return false;
 	}
 	/**
 	 * Save uma base64 na S3
-	 * 
+	 *
 	 * @param string $base64Image        	
 	 */
 	public function uploadBase64($base64Image) {

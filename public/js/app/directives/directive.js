@@ -54,6 +54,15 @@ ShopApp.directive('stringToNumber', function() {
   };
 });
 
+ShopApp.directive('backgroundImageDirective', function () {
+    return function (scope, element, attrs) {
+        element.css({
+            'background-image': 'url(' + attrs.backgroundImageDirective + ')',
+            'background-repeat': 'no-repeat',
+        });
+    };
+});
+
 /**
  * Resolvendo problemas de barras duplas
  */

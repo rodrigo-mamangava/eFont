@@ -369,6 +369,7 @@ return array (
 						'message' => __DIR__ . '/../view/layout/message.phtml',
 						'upload/file' => __DIR__ . '/../view/application/upload/upload.phtml',
 						'shop/product/list' => __DIR__ . '/../view/application/example/product-grid.phtml',
+						'shop/product/search' => __DIR__ . '/../view/application/shop-product-list/list.phtml',
 						'shop/customer/account' => __DIR__ . '/../view/application/customer/account.phtml',
 						'shop/customer/leftmenu' => __DIR__ . '/../view/application/customer/leftmenu.phtml',
 						'shop/projects/leftmenu' => __DIR__ . '/../view/application/projects/leftmenu.phtml',

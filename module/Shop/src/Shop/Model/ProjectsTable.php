@@ -120,7 +120,9 @@ class ProjectsTable extends AbstractTableGateway {
 		}
 		// WHERE
 		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
-		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		if ($company_id != null && $company_id > 0) {
+			$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		}
 		// ORDER
 		$select->order ( "{$this->table}.name ASC" );
 		// Executando

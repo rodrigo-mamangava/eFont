@@ -23,6 +23,19 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 				console.log(err);
 			});	
 		},	
+		
+		/**
+		 * Shopping
+		 */
+		getListProductList: function(search, count, offset){
+			//GET
+			return $http.get('/shop-product-list/search?search='+search+'&count='+count+'&offset='+offset)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});	
+		},
 		/**
 		 * Formatos
 		 */
