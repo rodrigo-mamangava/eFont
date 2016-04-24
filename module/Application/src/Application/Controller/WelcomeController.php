@@ -15,5 +15,5 @@ class WelcomeController extends ApplicationController
     public function indexAction()
     {
         return $this->viewModel->setTerminal ( true );
-    }
+    }    
 }

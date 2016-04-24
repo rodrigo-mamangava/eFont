@@ -248,7 +248,8 @@ class ProductsController extends ApplicationController {
 																
 																if (isset ( $img ['url'] )) {
 																	$Products->updated ( $id, array (
-																			'banner' => $img ['url'] 
+																			'banner' => $img ['url'],
+																			'ddig'=>$fs_item ['font_path']
 																	), $company_id );
 																}
 															}

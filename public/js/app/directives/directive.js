@@ -53,7 +53,9 @@ ShopApp.directive('stringToNumber', function() {
     }
   };
 });
-
+/**
+ * Imagem de funto
+ */
 ShopApp.directive('backgroundImageDirective', function () {
     return function (scope, element, attrs) {
         element.css({
@@ -62,7 +64,17 @@ ShopApp.directive('backgroundImageDirective', function () {
         });
     };
 });
-
+/**
+ * URL Encode
+ */
+ShopApp.filter('escape', function() {
+    return function(input) {
+        if(input) {
+            return window.encodeURIComponent(input); 
+        }
+        return "";
+    }
+});
 /**
  * Resolvendo problemas de barras duplas
  */
