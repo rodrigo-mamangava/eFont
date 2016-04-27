@@ -1,6 +1,6 @@
 ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumService) {
 	var deferred = $q.defer();
-	var debug = true;
+	var debug = false;
 	return {
 		/**
 		 * Register/Login
