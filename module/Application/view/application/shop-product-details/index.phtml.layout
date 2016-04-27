@@ -1,0 +1,170 @@
+
+<!-- BEGIN: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+<div
+	class="c-layout-breadcrumbs-1 c-subtitle c-fonts-uppercase c-fonts-bold c-bordered c-bordered-both">
+	<div class="container">
+		<div class="c-page-title c-pull-left">
+			<h3 class="c-font-uppercase c-font-sbold"><?php echo $this->translate('Font Details');?></h3>
+			<h4 class="">Page Sub Title Goes Here</h4>
+		</div>
+		<ul
+			class="c-page-breadcrumbs c-theme-nav c-pull-right c-fonts-regular">
+			<li><a href="javascript:;"
+				ng-click="changeTemplateURL('/ef-welcome');"><?php echo $this->translate('Shop');?></a></li>
+			<li>/</li>
+			<li><a href="javascript:;"
+				ng-click="changeTemplateURL('/shop-product-list');"><?php echo $this->translate('Font Grid');?></a></li>
+		</ul>
+	</div>
+</div>
+<!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+<!-- BEGIN: PAGE CONTENT -->
+<!-- BEGIN: CONTENT/SHOPS/SHOP-PRODUCT-DETAILS-4 -->
+<div class="c-content-box c-size-lg c-overflow-hide c-bg-white">
+	<div class="container">
+		<div class="c-shop-product-details-4">
+			<div class="c-product-meta">
+				<div class="row c-theme-border">
+					<div class="col-sm-10 col-xs-9">
+						<div class="c-product-short-desc c-bg-grey">Lorem ipsum dolor ut
+							sit ame dolore adipiscing elit, sed nonumy nibh sed euismod
+							laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie
+							at dolore.</div>
+					</div>
+					<div class="col-sm-2 col-xs-3">
+						<div class="c-product-price c-theme-font">$99.00</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3 col-xs-4 c-product-variant">
+						<p
+							class="c-product-meta-label c-product-margin-1 c-font-uppercase c-font-bold">License
+							Types:</p>
+						<div class="c-product-size">
+							<select>
+								<option value="D">Desktop Fonts</option>
+								<option value="W">Web Fonts</option>
+								<option value="M">Mobile App Fonts</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-4 c-product-variant">
+						<div class="c-product-color">
+							<p class="c-product-meta-label c-font-uppercase c-font-bold">Collections:</p>
+							<select>
+								<option value="Red">Family</option>
+								<option value="Black">Romans</option>
+								<option value="Beige">Italics</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-4 ">
+						<div class="c-input-group c-spinner">
+							<p
+								class="c-product-meta-label c-product-margin-2 c-font-uppercase c-font-bold">QTY:</p>
+							<input type="text" class="form-control c-item-1" value="1">
+							<div class="c-input-group-btn-vertical">
+								<button class="btn btn-default" type="button"
+									data_input="c-item-1">
+									<i class="fa fa-caret-up"></i>
+								</button>
+								<button class="btn btn-default" type="button"
+									data_input="c-item-1">
+									<i class="fa fa-caret-down"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-2 col-sm-offset-1 col-xs-12">
+						<button
+							class="btn c-btn btn-lg c-font-bold c-font-white c-theme-btn c-btn-square c-font-uppercase c-add-cart"
+							ng-click="changeTemplateURL('/shop-cart');"><?php echo $this->translate('Add to Cart');?></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: CONTENT/SHOPS/SHOP-PRODUCT-DETAILS-4 -->
+<!-- BEGIN: CONTENT/SHOPS/SHOP-PRODUCT-TAB-1 -->
+<div class="c-content-box c-size-md c-no-padding">
+	<div class="c-shop-product-tab-1" role="tabpanel">
+		<div class="container">
+			<ul class="nav nav-justified" role="tablist">
+				<li role="presentation" class="active"><a
+					class="c-font-uppercase c-font-bold" href="#tab-1" role="tab"
+					data-toggle="tab"><?php echo $this->translate('Description');?></a></li>
+			</ul>
+		</div>
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="tab-1">
+				<div class="c-product-desc c-center">
+					<div class="container">
+						<!-- BEGIN FONT -->
+
+						<div>
+							<div class="family-specimen" data-bind="style: { fontFamily: selectedCssFontStack, fontWeight: 'normal', fontStyle: 'normal' }">
+								<table>
+									<tbody>
+										<tr>
+											<th>36</th>
+											<td><div style="font-size: 36px"><img ng-src="{{'/ef-ddig/?lorem=1&font='+p_item.ddig}}" class="img-responsive" /</div></td>
+										</tr>
+										<tr>
+											<th>30</th>
+											<td><div style="font-size: 30px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>24</th>
+											<td><div style="font-size: 24px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>21</th>
+											<td><div style="font-size: 21px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>18</th>
+											<td><div style="font-size: 18px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>16</th>
+											<td><div style="font-size: 16px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>14</th>
+											<td><div style="font-size: 14px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>13</th>
+											<td><div style="font-size: 13px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>12</th>
+											<td><div style="font-size: 12px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>11</th>
+											<td><div style="font-size: 11px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>10</th>
+											<td><div style="font-size: 10px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+										<tr>
+											<th>9</th>
+											<td><div style="font-size: 9px">The five boxing wizards jump quickly.</div></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- END FONT -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: CONTENT/SHOPS/SHOP-PRODUCT-TAB-1 -->
+<!-- END: PAGE CONTENT -->

@@ -216,7 +216,7 @@ class LicensesController extends ApplicationController {
 						$font = array ();
 						$font ['id'] = isset ( $w_item ['id'] ) ? $w_item ['id'] : null;
 						$font ['parameters'] = isset ( $w_item ['parameters'] ) ? $w_item ['parameters'] : null;
-						$font ['multiplier'] = isset ( $w_item ['multiplier'] ) ? $w_item ['multiplier'] : null;
+						$font ['multiplier'] = isset ( $w_item ['multiplier'] ) ? $w_item ['multiplier'] : 1;
 						$seq = $font ['sequence'] = isset ( $w_item ['sequence'] ) ? $w_item ['sequence'] : 0;
 						
 						$f_key = isset ( $w_item ['license_formats_id'] ) ? $w_item ['license_formats_id'] : 0;

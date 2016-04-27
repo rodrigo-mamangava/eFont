@@ -57,8 +57,6 @@ class ShopProductDetailsController extends ApplicationController {
 			$LicenseHasFormats = new \Shop\Controller\LicenseHasFormatsController ( $this->getServiceLocator () );
 			$FamilyHasFormats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
 			$FamilyFiles = new \Shop\Controller\FamilyFilesController ( $this->getServiceLocator () );
-			$Families = new \Shop\Controller\FamiliesController ( $this->getServiceLocator () );
-			$Formats = new \Shop\Controller\LicenseFormatsController ( $this->getServiceLocator () );
 			
 			$rs = $Products->find ( $id, null );
 			// Exists?
@@ -69,16 +67,15 @@ class ShopProductDetailsController extends ApplicationController {
 				$licenses = array ();
 				$families = array ();
 				$styles = array ();
-				$formats = array ();
 				
 				// LICENCAS
+				// Licenses
 				$licenses = UsefulController::paginatorToArray ( $LicenseUser->fetchAllActive ( $project->company_id ) );
 				if (count ( $licenses ) > 0) {
 					foreach ( $licenses as $lu_key => $lu_item ) {
 						$licenses [$lu_key] = UsefulController::getStripslashes ( $lu_item );
 						$licenses [$lu_key] ['formats'] = array ();
-						//$licenses [$lu_key] ['families'] = array ();
-						//Opcoes
+						
 						$lu_formats = $LicenseHasFormats->fetchAll ( $lu_item->id, $project->company_id );
 						if ($lu_formats->count () > 0) {
 							$arr = iterator_to_array ( $lu_formats->getCurrentItems () );
@@ -90,6 +87,32 @@ class ShopProductDetailsController extends ApplicationController {
 								$license_formats_id = isset ( $w_item ['license_formats_id'] ) ? $w_item ['license_formats_id'] : 0;
 								$font ['license_formats_id'] = $license_formats_id;
 								$font ['collection'] = 0;
+								// FAMILIAS
+								$family_has_license = $FamilyHasLicense->fetchAllByProject ( $project->company_id, $project->id, $lu_item->id, $license_formats_id );
+								if ($family_has_license->count () > 0) {
+									foreach ( $family_has_license as $f_h_l_key => $f_h_l__item ) {
+										$family = UsefulController::getStripslashes ( $f_h_l__item );
+										
+										if ($license_formats_id != 0) {
+											$font ['collection'] = floatval ( $font ['collection'] ) + floatval ( $family ['money_family'] );
+										}
+										// ESTILOS
+										$family_files = $FamilyFiles->fetchAllByProject ( $project->company_id, $project->id, $family->f_id, $family->f_h_f_id, $license_formats_id );
+										$family ['styles'] = array ();
+										if ($family_files->count () > 0) {
+											foreach ( $family_files as $f_s_key => $f_s_item ) {
+												$style = UsefulController::getStripslashes ( $f_s_item );
+												$style ['font_price'] = isset ( $style ['font_price'] ) ? $style ['font_price'] : 0;
+												$style ['font_weight'] = $style ['font_price'] > 0 ? $style ['font_price'] * $font ['multiplier'] : 0;
+												
+												$family ['styles'] [$f_s_item->id] = $style;
+											}
+										}
+										
+										$font ['families'] [$f_h_l_key] = $family;
+									}
+								}
+								unset ( $collection );
 								// RESULTADO
 								$licenses [$lu_key] ['formats'] [$license_formats_id] [$w_item->id] = $font;
 								$styles [$w_item->id] = $font;
@@ -98,51 +121,11 @@ class ShopProductDetailsController extends ApplicationController {
 					}
 				}
 				
-				// FORMATOS
-				$formats = UsefulController::paginatorToArray ( $Formats->fetchAll () );
-				
-				// FAMILIAS
-				$families_project = $Families->fetchAll ( $project->company_id, $project->id );
-				if ($families_project->count () > 0) {
-					foreach ( $families_project as $f_key => $f_item ) {
-						$family = UsefulController::getStripslashes ( $f_item );
-						$family ['collection'] = floatval ( $family ['collection'] ) + floatval ( $family ['money_family'] );
-						$family ['collapsed'] =  false;
-						//Formatos
-						foreach ( $formats as $f_t_key => $f_t_item ) {
-							if ($f_t_item->id > 0) {
-								// ESTILOS
-								$family_files = $FamilyFiles->fetchAllFamily ( $project->company_id, $project->id, $f_item->id, $f_t_item->id );
-								if ($family_files->count () > 0) {
-									foreach ( $family_files as $f_s_key => $f_s_item ) {
-										$style = UsefulController::getStripslashes ( $f_s_item );
-										$style ['font_price'] = isset ( $style ['font_price'] ) ? $style ['font_price'] : 0;
-										$style ['font_weight'] = $style ['font_price'] > 0 ? $style ['font_price'] * 1 : 0;
-										$family ['styles'] [$f_t_item->id] [$f_s_item->id] = $style;
-										$style ['selected'] =  false;
-									}
-								}
-							}
-						}
-						//Params
-						//Pesos/Valor
-						$family_has_license = $FamilyHasLicense->fetchAll($project->company_id,  $f_item->id, $project->id);
-						if ($family_has_license->count () > 0) {
-							foreach ( $family_has_license as $f_h_l_key => $f_h_l_item ) {
-								$family ['licenses'][$f_h_l_item->license_id] = UsefulController::getStripslashes ( $f_h_l_item );
-							}
-						}						
-						
-						$families [$f_item->id] = $family;
-					}
-				}
 				// Retorno
 				$outcome = $status = true;
 				$data = array (
 						'project' => $project,
-						'licenses' => $licenses,
-						'families' => $families,
-						'formats' => $formats,
+						'licenses' => $licenses 
 				);
 			} else {
 				$data = $this->translate ( 'Invalid Id' );

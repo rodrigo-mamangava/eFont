@@ -47,7 +47,8 @@ class ApplicationController extends AbstractActionController {
 				|| $controller == 'Application\Controller\ShopProductDetails'
 				|| $controller == 'Application\Controller\ShopProductList'
 				|| $controller == 'Application\Controller\ShopProductUsers'					
-				|| $controller == 'Application\Controller\Welcome') { // Liberado sem sessao
+				|| $controller == 'Application\Controller\Welcome'
+				|| $controller == 'Application\Controller\DDIG') { // Liberado sem sessao
 				return parent::onDispatch ( $e );
 			} else {
 				self::getSessionTimeout();

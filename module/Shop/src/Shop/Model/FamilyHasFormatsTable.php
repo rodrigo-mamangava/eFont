@@ -163,7 +163,48 @@ class FamilyHasFormatsTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	
+	/**
+	 * Busca por projeto
+	 *
+	 * @param unknown $company_id        	
+	 * @param unknown $license_formats_id        	
+	 * @param unknown $project_id        	
+	 */
+	public function fetchAllByProject($company_id, $license_formats_id, $project_id) {
+		// SELECT
+		$select = new Select ();
+		// FROM
+		$select->from ( $this->table );
+		// COLS
+		$select->columns ( array (
+				'id',
+				'license_formats_id',
+				'family_id',
+				'number_files',
+				'project_id',
+				'company_id',
+		) );
+		// JOIN
+		$select->join ( 'family', "family.id = {$this->table}.family_id", array (
+				'family_name' 
+		), 'inner' );
+		
+		// WHERE
+		$select->where ( "{$this->table}.license_formats_id='{$license_formats_id}'" );
+		$select->where ( "{$this->table}.project_id='{$project_id}'" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
+		// ORDER
+		$select->order ( "{$this->table}.license_formats_id ASC" );
+		// Executando
+		// var_dump($select->getSqlString()); exit;
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( null );
+		
+		return $paginator;
+	}
 	/**
 	 * Remove um item
 	 *

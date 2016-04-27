@@ -99,6 +99,9 @@ if ($this->text) {
 // $fontsize = max(min($width/strlen($text), $height/strlen($text)),5); //scale the text size based on the smaller of width/8 or hieght/2 with a minimum size of 5.
 
 $fontsize = max ( min ( $width / strlen ( $text ) * 1.15, $height * 0.5 ), 5 );
+if(is_numeric( $this->fontsize) &&  $this->fontsize > 0){
+	$fontsize = $this->fontsize;
+}
 
 $textBox = imagettfbbox_t ( $fontsize, $text_angle, $font, $text ); // Pass these variable to a function that calculates the position of the bounding box.
 

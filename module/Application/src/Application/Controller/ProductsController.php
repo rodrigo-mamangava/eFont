@@ -159,8 +159,10 @@ class ProductsController extends ApplicationController {
 								$license ['family_id'] = isset ( $lc_item ['family_id'] ) ? $lc_item ['family_id'] : null;
 								$license ['check_family'] = isset ( $lc_item ['check_family'] ) ? $lc_item ['check_family'] : null;
 								$license ['check_weight'] = isset ( $lc_item ['check_weight'] ) ? $lc_item ['check_weight'] : null;
+								$license ['check_enabled'] = isset ( $lc_item ['check_enabled'] ) ? $lc_item ['check_enabled'] : false;
 								$license ['money_family'] = isset ( $lc_item ['money_family'] ) ? $lc_item ['money_family'] : null;
 								$license ['money_weight'] = isset ( $lc_item ['money_weight'] ) ? $lc_item ['money_weight'] : null;
+								
 								// Set/Unset
 								$family ['licenses'] [$lc_key] = $license;
 								unset ( $license );
@@ -268,7 +270,7 @@ class ProductsController extends ApplicationController {
 								$licenses = $f_item ['licenses'];
 								foreach ( $licenses as $lc_item ) {
 									// var_dump($lc_item);
-									$lc_id = $License->save ( $lc_item ['id'], $lc_item ['money_family'], $lc_item ['money_weight'], $lc_item ['check_family'], $lc_item ['check_weight'], $project_id, $family_id, $lc_item ['lincese_id'], $company_id, $user_id );
+									$lc_id = $License->save ( $lc_item ['id'], $lc_item ['money_family'], $lc_item ['money_weight'], $lc_item ['check_family'], $lc_item ['check_weight'], $lc_item ['check_enabled'], $project_id, $family_id, $lc_item ['lincese_id'], $company_id, $user_id );
 									
 									if ($lc_id) {
 										$ok_license = true;

@@ -22,8 +22,8 @@ class FamilyHasLicenseController extends \Useful\Controller\ControlController {
 	 * @param unknown $company_id        	
 	 * @param unknown $user_id        	
 	 */
-	public function save($id, $money_family, $money_weight, $check_family, $check_weight, $project_id, $family_id, $license_id, $company_id, $user_id) {
-		return $this->getDbTable ( '\Shop\Model\FamilyHasLicenseTable' )->save ( $id, $money_family, $money_weight, $check_family, $check_weight, $project_id, $family_id, $license_id, $company_id, $user_id );
+	public function save($id, $money_family, $money_weight, $check_family, $check_weight, $check_enabled,  $project_id, $family_id, $license_id, $company_id, $user_id) {
+		return $this->getDbTable ( '\Shop\Model\FamilyHasLicenseTable' )->save ( $id, $money_family, $money_weight, $check_family, $check_weight, $check_enabled,  $project_id, $family_id, $license_id, $company_id, $user_id );
 	}
 	/**
 	 * Retorna todas as familias
@@ -33,6 +33,14 @@ class FamilyHasLicenseController extends \Useful\Controller\ControlController {
 	 */
 	public function fetchAll ( $company_id, $family_id, $project_id ){
 		return $this->getDbTable ( '\Shop\Model\FamilyHasLicenseTable' )->fetchAll ( $company_id, $family_id, $project_id );
+	}
+	/**
+	 * Busca pelo Projeto
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 */
+	public function fetchAllByProject($company_id, $project_id){
+		return $this->getDbTable ( '\Shop\Model\FamilyHasLicenseTable' )->fetchAllByProject($company_id, $project_id);
 	}
 	
 	/**

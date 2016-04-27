@@ -33,7 +33,15 @@ ShopApp.controller('ShopProductListCtrl', function($scope, $timeout, $http, $loc
 			$timeout(function(){ isSpinnerBar(false);}, 500);
 		});
 	};	
-
+	//Shop Product Details
+	$scope.goDetails = function(id){
+		isSpinnerBar(true);	
+		$localStorage.ProductDetailsId = id;
+		console.log(id);
+		$timeout(function(){
+			$scope.changeTemplateURL('/shop-product-details');
+		}, 500);		
+	};
 	/**
 	 * Default
 	 */

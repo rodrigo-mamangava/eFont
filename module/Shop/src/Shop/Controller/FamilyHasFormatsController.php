@@ -33,6 +33,15 @@ class FamilyHasFormatsController extends \Useful\Controller\ControlController
 		return $this->getDbTable ( '\Shop\Model\FamilyHasFormatsTable' )->fetchAll ( $company_id, $family_id, $project_id );
 	}
 	/**
+	 * Todos os itens por projeto
+	 * @param unknown $company_id
+	 * @param unknown $license_formats_id
+	 * @param unknown $project_id
+	 */
+	public function fetchAllByProject($company_id, $license_formats_id, $project_id){
+		return $this->getDbTable ( '\Shop\Model\FamilyHasFormatsTable' )->fetchAllByProject($company_id, $license_formats_id, $project_id);
+	}
+	/**
 	 * Limpando pelas chaves principais
 	 * @param unknown $company_id
 	 * @param unknown $project_id

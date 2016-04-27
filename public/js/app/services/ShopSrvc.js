@@ -37,6 +37,18 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			});	
 		},
 		/**
+		 * Details
+		 */
+		getProductDetails : function(id){
+			//GET
+			return $http.get('/shop-product-details/edit?id='+id)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});				
+		},
+		/**
 		 * Formatos
 		 */
 		getListFormats: function(){

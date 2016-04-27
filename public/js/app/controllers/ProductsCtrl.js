@@ -45,6 +45,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	$scope.saveProducts = function (){
 		//console.log(angular.toJson($scope.families));
 		isSpinnerBar(true);	
+		$scope.form.number_families = $scope.families.length;
 		var data = {'project':$scope.form, 'families':$scope.families};data
 		ShopSrvc.saveProducts(data).then(function(res){
 			if(res.status == true){

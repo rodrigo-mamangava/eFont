@@ -65,6 +65,24 @@ ShopApp.directive('backgroundImageDirective', function () {
     };
 });
 /**
+ * @see https://docs.angularjs.org/error/filter/notarray
+ */
+ShopApp.filter('selectedFilter', function() {
+	return function(input, search) {
+		if (!input) return input;
+		if (!search) return input;
+		var expected = ('' + search).toLowerCase();
+		var result = {};
+		
+		angular.forEach(input, function(value, key) {
+			if(value.selected){
+				result[key] = value;
+			}
+		});
+		return result;
+	}
+});
+/**
  * URL Encode
  */
 ShopApp.filter('escape', function() {

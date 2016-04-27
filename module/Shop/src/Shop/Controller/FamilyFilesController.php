@@ -41,7 +41,26 @@ class FamilyFilesController extends \Useful\Controller\ControlController
 	public function fetchAll($company_id, $project_id, $family_id, $family_has_formats_id, $license_formats_id){
 		return $this->getDbTable ( '\Shop\Model\FamilyFilesTable' )->fetchAll($company_id, $project_id, $family_id, $family_has_formats_id, $license_formats_id);
 	}
-	
+	/**
+	 * Consulta por familia
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 * @param unknown $family_id
+	 */
+	public function fetchAllFamily($company_id, $project_id, $family_id, $license_formats_id){
+		return $this->getDbTable ( '\Shop\Model\FamilyFilesTable' )->fetchAllFamily($company_id, $project_id, $family_id, $license_formats_id);
+	}
+	/**
+	 * Retorna todos os itens customizado
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 * @param unknown $family_id
+	 * @param unknown $family_has_formats_id
+	 * @param unknown $license_formats_id
+	 */
+	public function fetchAllByProject($company_id, $project_id, $family_id, $family_has_formats_id, $license_formats_id){
+		return $this->getDbTable ( '\Shop\Model\FamilyFilesTable' )->fetchAllByProject($company_id, $project_id, $family_id, $family_has_formats_id, $license_formats_id);
+	}
 	/**
 	 * Limpando pelas chaves principais
 	 * @param unknown $company_id

@@ -32,11 +32,19 @@ class ShopProductListController extends ApplicationController
 		$search = $Params->fromQuery ( 'search', null );
 		// Query
 		$ProductsController = new \Shop\Controller\ProjectsController( $this->getMyServiceLocator () );
+		$Family = new \Shop\Controller\FamiliesController($this->getServiceLocator());
+		
 		$Paginator = $ProductsController->filter ( $search, $count, $offset, null );
 		
 		if ($Paginator->count () > 0) {
+			$arr = iterator_to_array ( $Paginator->getCurrentItems () );
+			foreach($arr as $p_key=>$p_item){
+				$arr[$p_key]['families'] =  \Useful\Controller\UsefulController::paginatorToArray($Family->fetchAll($p_item->company_id, $p_item->id));
+				$arr[$p_key]['number_families'] = count($arr[$p_key]['families']);
+			}
+			
 			$data = array ();
-			$data ['items'] = iterator_to_array ( $Paginator->getCurrentItems () );
+			$data ['items'] = $arr;
 			$data ['total'] = $Paginator->getTotalItemCount ();
 			$data ['count'] = $count;
 			$data ['offset'] = $offset;

@@ -77,7 +77,7 @@ class ProjectsTable extends AbstractTableGateway {
 	 * @throws Exception
 	 * @return boolean|multitype:
 	 */
-	public function find($id, $company_id) {
+	public function find($id, $company_id = null) {
 		try {
 			// SELECT
 			$select = new Select ();
@@ -85,7 +85,9 @@ class ProjectsTable extends AbstractTableGateway {
 			$select->from ( $this->table );
 			// WHERE
 			$select->where ( "$this->table.id = '{$id}'" );
-			$select->where ( "{$this->table}.company_id='{$company_id}'" );
+			if($company_id != null && $company_id > 0){
+				$select->where ( "{$this->table}.company_id='{$company_id}'" );
+			}
 			// ORDER
 			$resultSet = $this->selectWith ( $select );
 			if (! $resultSet) {

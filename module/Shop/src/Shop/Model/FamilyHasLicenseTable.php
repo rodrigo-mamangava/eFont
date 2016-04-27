@@ -8,7 +8,7 @@ use Zend\Db\Sql\Select;
 
 /**
  * Mapper Family and Licencas
- * 
+ *
  * @author Claudio
  */
 class FamilyHasLicenseTable extends AbstractTableGateway {
@@ -20,18 +20,18 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 	/**
 	 * Salva/Atualiza um item
 	 *
-	 * @param unknown $id
-	 * @param unknown $money_family
-	 * @param unknown $money_weight
-	 * @param unknown $check_family
-	 * @param unknown $check_weight
-	 * @param unknown $project_id
-	 * @param unknown $family_id
-	 * @param unknown $license_id
-	 * @param unknown $company_id
-	 * @param unknown $user_id
+	 * @param unknown $id        	
+	 * @param unknown $money_family        	
+	 * @param unknown $money_weight        	
+	 * @param unknown $check_family        	
+	 * @param unknown $check_weight        	
+	 * @param unknown $project_id        	
+	 * @param unknown $family_id        	
+	 * @param unknown $license_id        	
+	 * @param unknown $company_id        	
+	 * @param unknown $user_id        	
 	 */
-	public function save($id, $money_family, $money_weight, $check_family, $check_weight, $project_id, $family_id, $license_id, $company_id, $user_id) {
+	public function save($id, $money_family, $money_weight, $check_family, $check_weight, $check_enabled, $project_id, $family_id, $license_id, $company_id, $user_id) {
 		$data = array (
 				'company_id' => $company_id,
 				'user_id' => $user_id,
@@ -42,11 +42,12 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 				'money_weight' => addslashes ( $money_weight ),
 				'check_family' => ( int ) $check_family,
 				'check_weight' => ( int ) $check_weight,
+				'check_enabled' => ( int ) $check_enabled,
 				'dt_update' => date ( 'Y-m-d H:i:s' ),
 				'removed' => 0 
 		);
 		
-		//var_dump($data);
+		// var_dump($data);
 		$id = ( int ) $id;
 		if ($id == 0) {
 			unset ( $data ['id'] );
@@ -148,7 +149,7 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 	/**
 	 * Retorna todos os itens
 	 */
-	public function fetchAll ( $company_id, $family_id, $project_id ) {
+	public function fetchAll($company_id, $family_id, $project_id) {
 		// SELECT
 		$select = new Select ();
 		// FROM
@@ -169,13 +170,74 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-
+	/**
+	 * Busca das familias pelo projeto
+	 *
+	 * @param unknown $company_id        	
+	 * @param unknown $project_id        	
+	 */
+	public function fetchAllByProject($company_id, $project_id, $license_id, $license_formats_id) {
+		// SELECT
+		$select = new Select ();
+		// FROM
+		$select->from ( $this->table );
+		// COLS
+		$select->columns ( array (
+				'id',
+				'money_family',
+				'money_weight',
+				'check_family',
+				'check_weight',
+				'project_id',
+				'family_id',
+				'license_id',
+				'company_id',
+				'user_id',
+				'check_enabled' 
+		) );
+		
+		// JOIN
+		$select->join ( 'family', "family.id = {$this->table}.family_id", array (
+				'f_id' => 'id',
+				'f_family_name' => 'family_name' 
+		), 'inner' );
+		
+		$select->join ( 'family_has_formats', new \Zend\Db\Sql\Expression ( "family_has_formats.license_formats_id={$license_formats_id} AND family_has_formats.family_id={$this->table}.family_id AND family_has_formats.project_id={$project_id}" ), array (
+				'f_h_f_id'=>'id',
+				'f_h_f_family_id'=>'family_id',
+				'f_h_f_license_formats_id'=>'license_formats_id',
+				'f_h_f_number_files'=>'number_files',
+				'f_h_f_company_id'=>'company_id',
+				'f_h_f_user_id'=>'user_id',
+				'f_h_f_project_id'=>'project_id' 
+		), 'inner' );
+		
+		// WHERE
+		$select->where ( "{$this->table}.project_id='{$project_id}'" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.license_id='{$license_id}'" );
+		
+		// $select->where ( "{$this->table}.check_enabled='1'" );
+		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
+		$select->where ( "family.removed='0' OR family.removed IS NULL" );
+		// ORDER
+		$select->order ( "{$this->table}.license_id ASC" );
+		// Executando
+		// var_dump($select->getSqlString()); exit;
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( null );
+		
+		return $paginator;
+	}
+	
 	/**
 	 * Remove um item
 	 *
-	 * @param unknown $company_id
-	 * @param unknown $project_id
-	 * @param unknown $family_id
+	 * @param unknown $company_id        	
+	 * @param unknown $project_id        	
+	 * @param unknown $family_id        	
 	 */
 	public function cleanup($company_id, $project_id) {
 		// Update
@@ -190,12 +252,12 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 			return false;
 		}
 		return $data;
-	}	
+	}
 	/**
 	 * Remove um item
 	 *
-	 * @param unknown $id
-	 * @param unknown $company_id
+	 * @param unknown $id        	
+	 * @param unknown $company_id        	
 	 */
 	public function removed($id, $company_id) {
 		// Update

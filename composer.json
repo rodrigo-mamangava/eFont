@@ -19,6 +19,7 @@
         "zendframework/zendservice-apple-apns": "^1.2",
         "phenx/php-font-lib": "^0.4.0",
         "intervention/image": "^2.3",
-        "phpixie/image": "^3.1"
+        "phpixie/image": "^3.1",
+        "joshtronic/php-loremipsum": "^1.0"
     }
 }
