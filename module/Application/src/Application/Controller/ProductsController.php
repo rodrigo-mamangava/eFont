@@ -79,13 +79,21 @@ class ProductsController extends ApplicationController {
 			try {
 				// PARAMS
 				$post = $this->postJsonp ();
+				// Para controle
+				// Chegando se enviou tudo certo
+				$alright_project = true;
 				
+				$alright_family = true;
+				$alright_formats = false;
+				$alright_fonts = true;
+				$alright_files = false;
+				$alright_license = false;
+				$alright_families = array();
 				// Projeto/Produto
 				$projects = isset ( $post ['project'] ) ? $post ['project'] : null;
 				$project_id = isset ( $projects ['id'] ) ? $projects ['id'] : 0;
 				$project_name = isset ( $projects ['name'] ) ? $projects ['name'] : null;
 				// var_dump($projects, $project_id, $project_name );
-				
 				// Familias
 				$families = isset ( $post ['families'] ) ? $post ['families'] : null;
 				$families_number = is_array ( $families ) ? count ( $families ) : 0;
@@ -93,14 +101,29 @@ class ProductsController extends ApplicationController {
 				if ($families_number > 0) {
 					// Familia
 					foreach ( $families as $f_key => $f_item ) {
+						//Conferencia
+						$alright_families [$f_key] = array (
+								'alright_family' => $alright_family,
+								'alright_formats' => $alright_formats,
+								'alright_fonts' => $alright_fonts,
+								'alright_files' => $alright_files,
+								'alright_license' => $alright_license,
+						);
+						// Familia
 						$family = array ();
 						$family ['id'] = isset ( $f_item ['id'] ) ? $f_item ['id'] : null;
 						$family ['family_name'] = isset ( $f_item ['family_name'] ) ? $f_item ['family_name'] : null;
+						
+						if (! ValidadorController::isValidNotEmpty ( $family ['family_name'] )) {
+							$alright_families [$f_key]['alright_family'] = false;
+						}
 						
 						// Formatos
 						$formats = isset ( $f_item ['formats'] ) ? $f_item ['formats'] : null;
 						$formats_number = is_array ( $formats ) ? count ( $formats ) : 0;
 						if ($formats_number > 0) {
+							
+							$alright_families [$f_key]['alright_formats'] = false; // Vamos trocar depois se tiver tudo certo
 							
 							foreach ( $formats as $t_key => $t_item ) {
 								// Formato
@@ -111,11 +134,17 @@ class ProductsController extends ApplicationController {
 								$formats_data ['collapsed'] = isset ( $t_item ['collapsed'] ) ? $t_item ['collapsed'] : null;
 								$formats_data ['format_id'] = isset ( $t_item ['format_id'] ) ? $t_item ['format_id'] : null;
 								
+								if ($formats_data ['number_files'] != null && ValidadorController::isValidDigits ( $formats_data ['number_files'] ) && $formats_data ['number_files'] > 0) {
+									$alright_families [$f_key]['alright_formats'] = true;
+								}
+								
 								// Arquivos/Fontes
 								$files = isset ( $t_item ['files'] ) ? $t_item ['files'] : null;
 								$files_number = is_array ( $files ) ? count ( $files ) : 0;
 								$files_data = array ();
 								if ($files_number > 0) {
+									
+									$alright_families [$f_key]['alright_files'] = true;
 									
 									foreach ( $files as $file_key => $file_item ) {
 										// Fonte
@@ -130,6 +159,9 @@ class ProductsController extends ApplicationController {
 										$family_files ['font_path'] = isset ( $file_item ['font_path'] ) ? $file_item ['font_path'] : null;
 										$family_files ['font_price'] = isset ( $file_item ['font_price'] ) ? $file_item ['font_price'] : null;
 										$family_files ['check_price'] = isset ( $file_item ['check_price'] ) ? $file_item ['check_price'] : null;
+										if (! ValidadorController::isValidNotEmpty ( $family_files ['font_price'] )) {
+											$alright_families [$f_key]['alright_fonts'] = false;
+										}
 										// DB
 										$family_files ['formats_id'] = isset ( $file_item ['formats_id'] ) ? $file_item ['formats_id'] : null;
 										$family_files ['family_id'] = isset ( $file_item ['family_id'] ) ? $file_item ['family_id'] : null;
@@ -147,6 +179,7 @@ class ProductsController extends ApplicationController {
 						}
 						
 						// Licencas
+						$alright_license = false;
 						$licenses = isset ( $f_item ['licenses'] ) ? $f_item ['licenses'] : null;
 						$licenses_number = is_array ( $licenses ) ? count ( $licenses ) : 0;
 						if ($licenses_number > 0) {
@@ -163,6 +196,9 @@ class ProductsController extends ApplicationController {
 								$license ['money_family'] = isset ( $lc_item ['money_family'] ) ? $lc_item ['money_family'] : null;
 								$license ['money_weight'] = isset ( $lc_item ['money_weight'] ) ? $lc_item ['money_weight'] : null;
 								
+								if($license ['check_enabled'] == true && ValidadorController::isValidNotEmpty($license ['money_family'])){
+									$alright_families [$f_key]['alright_license'] = true;
+								}
 								// Set/Unset
 								$family ['licenses'] [$lc_key] = $license;
 								unset ( $license );
@@ -178,7 +214,35 @@ class ProductsController extends ApplicationController {
 				} else {
 					throw new \Exception ( $this->translate ( 'Please, add one or more Family.' ) );
 				}
-				
+				//Pendencias?
+				$issues = array();
+				foreach($alright_families as $alright_itens){
+					foreach($alright_itens as $alright_key=>$alright_item){
+						if(!$alright_item){
+							$alright_project = false;
+							if($alright_key == 'alright_family'){
+								array_unshift($issues, $this->translate('Check if family name was filled correctly.'));
+							}elseif($alright_key == 'alright_formats'){
+								array_unshift($issues, $this->translate('Check if at least one file has been uploaded.'));
+							}elseif($alright_key == 'alright_fonts'){
+								array_unshift($issues, $this->translate('Check if all fonts with price.'));
+							}elseif($alright_key == 'alright_files'){
+								array_unshift($issues, $this->translate('Check if all uploaded files have at least one valid file.'));
+							}elseif($alright_key == 'alright_license'){
+								array_unshift($issues, $this->translate('Check if there is at least one active license and has set the price of the family.'));
+							}
+						}
+					}
+				}
+				//Tudo ok por aqui?
+				if($alright_project == false){
+					$issues = array_unique($issues);
+					$data = $this->translate('You cannot publish your project because there are pending:');
+					foreach($issues as $issue){
+						$data .= '<br/>'.$issue;
+					}
+					throw new \Exception ($data);
+				}
 				// echo json_encode($families_data); exit;
 				// var_dump($families_data); exit;
 				if (! ValidadorController::isValidDigits ( $project_id )) {
@@ -229,7 +293,7 @@ class ProductsController extends ApplicationController {
 									if ($family_has_formats_id) {
 										
 										$ok_formats = true;
-										$files = isset($t_item ['files'])?$t_item ['files']:array();
+										$files = isset ( $t_item ['files'] ) ? $t_item ['files'] : array ();
 										foreach ( $files as $fs_item ) {
 											try {
 												$font_id = $Fonts->save ( $fs_item ['id'], $fs_item ['font_name'], $fs_item ['font_id'], $fs_item ['font_subfamily'], $fs_item ['font_family'], $fs_item ['font_copyright'], $fs_item ['font_file'], $fs_item ['font_path'], $fs_item ['font_price'], $fs_item ['check_price'], $company_id, $user_id, $project_id, $family_id, $family_has_formats_id, $t_item ['format_id'] );
@@ -251,7 +315,7 @@ class ProductsController extends ApplicationController {
 																if (isset ( $img ['url'] )) {
 																	$Products->updated ( $id, array (
 																			'banner' => $img ['url'],
-																			'ddig'=>$fs_item ['font_path']
+																			'ddig' => $fs_item ['font_path'] 
 																	), $company_id );
 																}
 															}
@@ -286,6 +350,7 @@ class ProductsController extends ApplicationController {
 					}
 				}
 			} catch ( \Exception $e ) {
+				$data = $e->getMessage();
 			}
 		}
 		// Response

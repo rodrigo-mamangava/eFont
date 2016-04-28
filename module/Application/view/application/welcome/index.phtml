@@ -1,12 +1,12 @@
 <section ng-controller="WelcomeCtrl">
-			<?php //require_once ('slider.phtml');?>
+			<?php require_once ('slider.phtml');?>
 
             <!-- BEGIN: CONTENT/SHOPS/SHOP-2-1 -->
             <div class="c-content-box c-size-md c-overflow-hide c-bs-grid-small-space c-bg-grey-1">
                 <div class="container">
                     <div class="c-content-title-4">
                         <h3 class="c-font-uppercase c-center c-font-bold c-line-strike">
-                            <span class="c-bg-grey-1">Most Popular</span>
+                            <span class="c-bg-grey-1"><?php echo $this->translate('Recent Fonts');?></span>
                         </h3>
                     </div>
 						<?php echo $this->partial('shop/product/search');?>	

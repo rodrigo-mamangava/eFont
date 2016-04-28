@@ -6,7 +6,7 @@ var FormDropzone = function () {
 			if ( $('#accepted_file').length){
 				acceptedFiles = $('#accepted_file').val(); 
 			}
-			console.log(acceptedFiles);
+			//console.log(acceptedFiles);
 			var myDropzone = new Dropzone("#my-dropzone", {
 				maxFilesize: 2,
 				uploadMultiple: false,

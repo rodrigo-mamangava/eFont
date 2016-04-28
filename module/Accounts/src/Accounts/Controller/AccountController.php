@@ -35,9 +35,9 @@ class AccountController extends \Application\Controller\ApplicationController {
 				$fullname = isset ( $post ['fullname'] ) ? $post ['fullname'] : $firstname . ' ' . $lastname;
 				$phone = isset ( $post ['tel'] ) ? $post ['tel'] : null;
 				
-				$email = isset ( $post ['email'] ) ? strtolower ( ValidadorController::removeBlank ( $post ['email'] ) ) : null;
+				$email = isset ( $post ['remail'] ) ? strtolower ( ValidadorController::removeBlank ( $post ['remail'] ) ) : null;
 				$username = isset ( $post ['username'] ) ? strtolower ( ValidadorController::removeBlank ( $post ['username'] ) ) : $email;
-				$password = isset ( $post ['password'] ) ? $post ['password'] : null;
+				$password = isset ( $post ['rpassword'] ) ? $post ['rpassword'] : null;
 				
 				$address = isset ( $post ['address'] ) ? $post ['address'] : '';
 				$address_complement = isset ( $post ['complement'] ) ? $post ['complement'] : '';

@@ -42,7 +42,7 @@ class FontFileController extends ApplicationController {
 				// PARAMS
 				$post = $this->postJsonp ();
 				$uploaded = isset ( $post ['uploaded'] ) ? $post ['uploaded'] : null;
-				$price = isset ( $post ['price'] ) ? $post ['price'] : '0,00';
+				$price = isset ( $post ['price'] ) ? $post ['price'] : 0;
 				/**
 				 * Download file
 				 */

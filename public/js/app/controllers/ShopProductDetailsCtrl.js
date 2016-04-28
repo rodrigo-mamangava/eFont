@@ -38,7 +38,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 							$scope.families = res.data.families;
 							$scope.data = res.data;
 							
-							console.log(res.data);
+							//console.log(res.data);
 							$timeout(function(){ isSpinnerBar(false);}, 500);
 						});
 					});
@@ -66,7 +66,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	
 	//Alterando formato da licenca
 	$scope.onChangeLicenseFormats= function(ll_key, ll_id, type){
-		console.log('onChangeLicenseFormats');
+		//console.log('onChangeLicenseFormats');
 		//Restaura valores originais	
 		$scope.onChangeTypes(ll_key, ll_id, type);
 		//Calculando
@@ -86,7 +86,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	};
 	//Alterando tipos de licencas
 	$scope.onChangeTypes = function(ll_key, ll_id, type){
-		console.log('onChangeTypes');
+		//console.log('onChangeTypes');
 		
 		if($scope.licenses[ll_key].types_desktop == true && type == 1){
 			$scope.onChangeStyles(ll_key, ll_id, type);
@@ -103,7 +103,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	};
 	//Collection
 	$scope.onChangeCollection = function(){
-		console.log($scope.collection);
+		//console.log($scope.collection);
 		if($scope.collection == true){
 			$scope.cart = $scope.form.collection;
 		}else{
@@ -132,7 +132,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	};
 	//SetStyles
 	$scope.onChangeStyles = function(ll_key, ll_id, type){
-		console.log('onChangeTypes');
+		//console.log('onChangeTypes');
 		$scope.cleanStyles(type);
 		
 		$timeout(function(){
@@ -146,7 +146,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	};
 	//CleanStyles
 	$scope.cleanStyles = function(type){
-		console.log('cleanStyles');
+		//console.log('cleanStyles');
 		//$scope.styles.length = 0; 
 		angular.forEach($scope.families, function(f, k) {
 			delete $scope.styles[k][type];
@@ -154,7 +154,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	};
 	//Default Styles
 	$scope.defaultStyles = function(type){
-		console.log('defaultStyles');
+		//console.log('defaultStyles');
 		$scope.styles.length = 0; 
 		angular.forEach($scope.families, function(f, k) {
 			$scope.styles[k] = [[],[],[],[]];

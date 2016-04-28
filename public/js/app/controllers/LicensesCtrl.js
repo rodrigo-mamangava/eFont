@@ -70,7 +70,8 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 				}
 			});		
 		}else{
-			$scope.form = {'formats':[[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }]]};
+			//$scope.form = {'formats':[[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }]]};
+			$scope.form = {'formats':[[{parameters:null, multiplier: null }],[{parameters:null, multiplier: null }],[{parameters:null, multiplier: null }],[{parameters:null, multiplier: null }]]};
 		}
 		$timeout(function(){ delete $localStorage.LicensesId; }, 500);
 		$timeout(function(){ 
@@ -131,7 +132,8 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 	//Add Formatos
 	$scope.addFormatItem = function(id){
 		console.log($scope.form.formats);
-		$scope.form.formats[id].push({parameters: ipsumService.words(5), multiplier:getRandomInt() });
+		//$scope.form.formats[id].push({parameters: ipsumService.words(5), multiplier:getRandomInt() });
+		$scope.form.formats[id].push({parameters:null, multiplier:null });
 		console.log(id);
 	};
 	//Remove uma Formato
