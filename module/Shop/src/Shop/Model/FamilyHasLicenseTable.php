@@ -137,7 +137,7 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
 		$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		// ORDER
-		$select->order ( "{$this->table}.lincese_id ASC" );
+		$select->order ( "{$this->table}.license_id ASC" );
 		// Executando
 		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
 		$paginator = new \Zend\Paginator\Paginator ( $adapter );
@@ -160,6 +160,34 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 		$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
 		// ORDER
+		$select->order("{$this->table}.license_id ASC");
+		// Executando
+		//var_dump($select->getSqlString()); 
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( null );
+		
+		return $paginator;
+	}
+	/**
+	 * Somente os ativos e selecionados
+	 * @param unknown $company_id
+	 * @param unknown $family_id
+	 * @param unknown $project_id
+	 */
+	public function fetchAllToShop($company_id, $family_id, $project_id){
+		// SELECT
+		$select = new Select ();
+		// FROM
+		$select->from ( $this->table );
+		// WHERE
+		$select->where ( "{$this->table}.family_id='{$family_id}'" );
+		$select->where ( "{$this->table}.project_id='{$project_id}'" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.check_enabled='1'" );
+		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
+		// ORDER
 		$select->order ( "{$this->table}.license_id ASC" );
 		// Executando
 		// var_dump($select->getSqlString()); exit;
@@ -168,7 +196,7 @@ class FamilyHasLicenseTable extends AbstractTableGateway {
 		$paginator->setItemCountPerPage ( null );
 		$paginator->setCurrentPageNumber ( null );
 		
-		return $paginator;
+		return $paginator;		
 	}
 	/**
 	 * Busca das familias pelo projeto

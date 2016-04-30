@@ -88,7 +88,7 @@ class ProductsController extends ApplicationController {
 				$alright_fonts = true;
 				$alright_files = false;
 				$alright_license = false;
-				$alright_families = array();
+				$alright_families = array ();
 				// Projeto/Produto
 				$projects = isset ( $post ['project'] ) ? $post ['project'] : null;
 				$project_id = isset ( $projects ['id'] ) ? $projects ['id'] : 0;
@@ -101,13 +101,13 @@ class ProductsController extends ApplicationController {
 				if ($families_number > 0) {
 					// Familia
 					foreach ( $families as $f_key => $f_item ) {
-						//Conferencia
+						// Conferencia
 						$alright_families [$f_key] = array (
 								'alright_family' => $alright_family,
 								'alright_formats' => $alright_formats,
 								'alright_fonts' => $alright_fonts,
 								'alright_files' => $alright_files,
-								'alright_license' => $alright_license,
+								'alright_license' => $alright_license 
 						);
 						// Familia
 						$family = array ();
@@ -115,7 +115,7 @@ class ProductsController extends ApplicationController {
 						$family ['family_name'] = isset ( $f_item ['family_name'] ) ? $f_item ['family_name'] : null;
 						
 						if (! ValidadorController::isValidNotEmpty ( $family ['family_name'] )) {
-							$alright_families [$f_key]['alright_family'] = false;
+							$alright_families [$f_key] ['alright_family'] = false;
 						}
 						
 						// Formatos
@@ -123,7 +123,7 @@ class ProductsController extends ApplicationController {
 						$formats_number = is_array ( $formats ) ? count ( $formats ) : 0;
 						if ($formats_number > 0) {
 							
-							$alright_families [$f_key]['alright_formats'] = false; // Vamos trocar depois se tiver tudo certo
+							$alright_families [$f_key] ['alright_formats'] = false; // Vamos trocar depois se tiver tudo certo
 							
 							foreach ( $formats as $t_key => $t_item ) {
 								// Formato
@@ -135,7 +135,11 @@ class ProductsController extends ApplicationController {
 								$formats_data ['format_id'] = isset ( $t_item ['format_id'] ) ? $t_item ['format_id'] : null;
 								
 								if ($formats_data ['number_files'] != null && ValidadorController::isValidDigits ( $formats_data ['number_files'] ) && $formats_data ['number_files'] > 0) {
-									$alright_families [$f_key]['alright_formats'] = true;
+									$alright_families [$f_key] ['alright_formats'] = true;
+								}
+								
+								if (! ValidadorController::isValidDigits ( $formats_data ['number_files'] )) {
+									$formats_data ['number_files'] = 0;
 								}
 								
 								// Arquivos/Fontes
@@ -144,7 +148,7 @@ class ProductsController extends ApplicationController {
 								$files_data = array ();
 								if ($files_number > 0) {
 									
-									$alright_families [$f_key]['alright_files'] = true;
+									$alright_families [$f_key] ['alright_files'] = true;
 									
 									foreach ( $files as $file_key => $file_item ) {
 										// Fonte
@@ -160,7 +164,7 @@ class ProductsController extends ApplicationController {
 										$family_files ['font_price'] = isset ( $file_item ['font_price'] ) ? $file_item ['font_price'] : null;
 										$family_files ['check_price'] = isset ( $file_item ['check_price'] ) ? $file_item ['check_price'] : null;
 										if (! ValidadorController::isValidNotEmpty ( $family_files ['font_price'] )) {
-											$alright_families [$f_key]['alright_fonts'] = false;
+											$alright_families [$f_key] ['alright_fonts'] = false;
 										}
 										// DB
 										$family_files ['formats_id'] = isset ( $file_item ['formats_id'] ) ? $file_item ['formats_id'] : null;
@@ -187,8 +191,8 @@ class ProductsController extends ApplicationController {
 							foreach ( $licenses as $lc_key => $lc_item ) {
 								// Licensa
 								$license = array ();
+								$license ['license_id'] = isset ( $lc_item ['license_id'] ) ? $lc_item ['license_id'] : null;
 								$license ['id'] = isset ( $lc_item ['id'] ) ? $lc_item ['id'] : null;
-								$license ['lincese_id'] = isset ( $lc_item ['lincese_id'] ) ? $lc_item ['lincese_id'] : null;
 								$license ['family_id'] = isset ( $lc_item ['family_id'] ) ? $lc_item ['family_id'] : null;
 								$license ['check_family'] = isset ( $lc_item ['check_family'] ) ? $lc_item ['check_family'] : null;
 								$license ['check_weight'] = isset ( $lc_item ['check_weight'] ) ? $lc_item ['check_weight'] : null;
@@ -196,8 +200,12 @@ class ProductsController extends ApplicationController {
 								$license ['money_family'] = isset ( $lc_item ['money_family'] ) ? $lc_item ['money_family'] : null;
 								$license ['money_weight'] = isset ( $lc_item ['money_weight'] ) ? $lc_item ['money_weight'] : null;
 								
-								if($license ['check_enabled'] == true && ValidadorController::isValidNotEmpty($license ['money_family'])){
-									$alright_families [$f_key]['alright_license'] = true;
+								if ($license ['check_enabled'] == true && ValidadorController::isValidNotEmpty ( $license ['money_family'] )) {
+									$alright_families [$f_key] ['alright_license'] = true;
+								}
+								
+								if (! ValidadorController::isValidDigits ( $license ['license_id'] ) || $license ['check_enabled'] == false) {
+									continue;
 								}
 								// Set/Unset
 								$family ['licenses'] [$lc_key] = $license;
@@ -214,34 +222,34 @@ class ProductsController extends ApplicationController {
 				} else {
 					throw new \Exception ( $this->translate ( 'Please, add one or more Family.' ) );
 				}
-				//Pendencias?
-				$issues = array();
-				foreach($alright_families as $alright_itens){
-					foreach($alright_itens as $alright_key=>$alright_item){
-						if(!$alright_item){
+				// Pendencias?
+				$issues = array ();
+				foreach ( $alright_families as $alright_itens ) {
+					foreach ( $alright_itens as $alright_key => $alright_item ) {
+						if (! $alright_item) {
 							$alright_project = false;
-							if($alright_key == 'alright_family'){
-								array_unshift($issues, $this->translate('Check if family name was filled correctly.'));
-							}elseif($alright_key == 'alright_formats'){
-								array_unshift($issues, $this->translate('Check if at least one file has been uploaded.'));
-							}elseif($alright_key == 'alright_fonts'){
-								array_unshift($issues, $this->translate('Check if all fonts with price.'));
-							}elseif($alright_key == 'alright_files'){
-								array_unshift($issues, $this->translate('Check if all uploaded files have at least one valid file.'));
-							}elseif($alright_key == 'alright_license'){
-								array_unshift($issues, $this->translate('Check if there is at least one active license and has set the price of the family.'));
+							if ($alright_key == 'alright_family') {
+								array_unshift ( $issues, $this->translate ( 'Check if family name was filled correctly.' ) );
+							} elseif ($alright_key == 'alright_formats') {
+								array_unshift ( $issues, $this->translate ( 'Check if at least one file has been uploaded.' ) );
+							} elseif ($alright_key == 'alright_fonts') {
+								array_unshift ( $issues, $this->translate ( 'Check if all fonts with price.' ) );
+							} elseif ($alright_key == 'alright_files') {
+								array_unshift ( $issues, $this->translate ( 'Check if all uploaded files have at least one valid file.' ) );
+							} elseif ($alright_key == 'alright_license') {
+								array_unshift ( $issues, $this->translate ( 'Check if there is at least one active license and has set the price of the family.' ) );
 							}
 						}
 					}
 				}
-				//Tudo ok por aqui?
-				if($alright_project == false){
-					$issues = array_unique($issues);
-					$data = $this->translate('You cannot publish your project because there are pending:');
-					foreach($issues as $issue){
-						$data .= '<br/>'.$issue;
+				// Tudo ok por aqui?
+				if ($alright_project == false) {
+					$issues = array_unique ( $issues );
+					$data = $this->translate ( 'You cannot publish your project because there are pending:' );
+					foreach ( $issues as $issue ) {
+						$data .= '<br/>' . $issue;
 					}
-					throw new \Exception ($data);
+					throw new \Exception ( $data );
 				}
 				// echo json_encode($families_data); exit;
 				// var_dump($families_data); exit;
@@ -334,7 +342,7 @@ class ProductsController extends ApplicationController {
 								$licenses = $f_item ['licenses'];
 								foreach ( $licenses as $lc_item ) {
 									// var_dump($lc_item);
-									$lc_id = $License->save ( $lc_item ['id'], $lc_item ['money_family'], $lc_item ['money_weight'], $lc_item ['check_family'], $lc_item ['check_weight'], $lc_item ['check_enabled'], $project_id, $family_id, $lc_item ['lincese_id'], $company_id, $user_id );
+									$lc_id = $License->save ( $lc_item ['id'], $lc_item ['money_family'], $lc_item ['money_weight'], $lc_item ['check_family'], $lc_item ['check_weight'], $lc_item ['check_enabled'], $project_id, $family_id, $lc_item ['license_id'], $company_id, $user_id );
 									
 									if ($lc_id) {
 										$ok_license = true;
@@ -381,56 +389,58 @@ class ProductsController extends ApplicationController {
 			$Files = new \Shop\Controller\FamilyFilesController ( $this->getServiceLocator () );
 			
 			$rs = $Products->find ( $id, $company_id );
+			$rs_families = array();
+			$rs_projects = array();
+			$rs_license = array();
+			$rs_formats = array();
+			$rs_files = array();
 			// Exists?
 			if ($rs) {
 				// Projeto
-				$projects = UsefulController::getStripslashes ( $rs );
+				$rs_projects = UsefulController::getStripslashes ( $rs );
 				// Familia
-				$families = UsefulController::paginatorToArray ( $Family->fetchAll ( $company_id, $projects->id ) );
+				$families = UsefulController::paginatorToArray ( $Family->fetchAll ( $company_id, $rs_projects->id ) );
 				if (count ( $families ) > 0) {
 					foreach ( $families as $f_key => $f_item ) {
-						$families [$f_key] = UsefulController::getStripslashes ( $f_item );
-						
-						// Licenas
-						$licenses = UsefulController::paginatorToArray ( $Licenses->fetchAll ( $company_id, $f_item->id, $projects->id ) );
+						$rs_families [$f_key] = UsefulController::getStripslashes ( $f_item );
+						// Licencas
+						$licenses = UsefulController::paginatorToArray ( $Licenses->fetchAll ( $company_id, $f_item->id, $rs_projects->id ) );
+						$rs_license = array();
 						if (count ( $licenses ) > 0) {
 							foreach ( $licenses as $lc_key => $lc_item ) {
-								$licenses [$lc_key] = UsefulController::getStripslashes ( $lc_item );
+								if (! isset ( $rs_license [$lc_item->license_id] )) {
+									$rs_license [$lc_item->license_id] = UsefulController::getStripslashes ( $lc_item );
+								}
 							}
-						} else {
-							$licenses = array ();
-						}
-						
-						$families [$f_key] ['licenses'] = $licenses;
-						
+						}						$rs_families [$f_key] ['licenses'] = $rs_license;
 						// Formatos
-						$formats = UsefulController::paginatorToArray ( $Formats->fetchAll ( $company_id, $f_item->id, $projects->id ) );
+						$formats = UsefulController::paginatorToArray ( $Formats->fetchAll ( $company_id, $f_item->id, $rs_projects->id ) );
+						$rs_formats = array ();
 						if (count ( $formats ) > 0) {
 							foreach ( $formats as $t_key => $t_item ) {
-								$formats [$t_key] = UsefulController::getStripslashes ( $t_item );
+								$rs_formats [$t_key] = UsefulController::getStripslashes ( $t_item );
 								// Fontes
-								$files = UsefulController::paginatorToArray ( $Files->fetchAll ( $company_id, $projects->id, $f_item->id, $t_item->id, $t_item->license_formats_id ) );
+								$files = UsefulController::paginatorToArray ( $Files->fetchAll ( $company_id, $rs_projects->id, $f_item->id, $t_item->id, $t_item->license_formats_id ) );
 								if (count ( $files )) {
 									foreach ( $files as $fs_key => $fs_item ) {
-										$files [$fs_key] = UsefulController::getStripslashes ( $fs_item );
+										$rs_files [$fs_key] = UsefulController::getStripslashes ( $fs_item );
 									}
 								} else {
-									$files = array ();
+									$rs_files = array ();
 								}
 								
-								$formats [$t_key] ['files'] = $files;
+								$rs_formats [$t_key] ['files'] = $rs_files;
 							}
-						} else {
-							$formats = array ();
-						}
-						
-						$families [$f_key] ['formats'] = $formats;
+						}						
+						$rs_families [$f_key] ['formats'] = $rs_formats;
 					}
 				}
+				
+				
 				$outcome = $status = true;
 				$data = array (
-						'project' => $projects,
-						'families' => $families 
+						'project' => $rs_projects,
+						'families' => $rs_families 
 				);
 			} else {
 				$data = $this->translate ( 'Invalid Id' );

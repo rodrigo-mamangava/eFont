@@ -35,6 +35,15 @@ class FamilyHasLicenseController extends \Useful\Controller\ControlController {
 		return $this->getDbTable ( '\Shop\Model\FamilyHasLicenseTable' )->fetchAll ( $company_id, $family_id, $project_id );
 	}
 	/**
+	 * Retorna todos os itens para o shop
+	 * @param unknown $company_id
+	 * @param unknown $family_id
+	 * @param unknown $project_id
+	 */
+	public function fetchAllToShop( $company_id, $family_id, $project_id ){
+		return $this->getDbTable ( '\Shop\Model\FamilyHasLicenseTable' )->fetchAllToShop( $company_id, $family_id, $project_id );
+	}
+	/**
 	 * Busca pelo Projeto
 	 * @param unknown $company_id
 	 * @param unknown $project_id

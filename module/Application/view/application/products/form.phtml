@@ -52,7 +52,7 @@
 										<td class="not-not-border"><label class="control-label pull-right"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></td>
 									</tr>
 									<!-- LICENSES -->
-									<tr ng-repeat="(l_key, l_item) in licenses"><td class="not-not-border" ng-init="f_item.licenses[l_key].lincese_id = l_item.id">
+									<tr ng-repeat="(l_key, l_item) in licenses"><td class="not-not-border" ng-init="f_item.licenses[l_key].license_id = l_item.id">
 										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox-{{f_key}}-{{l_key}}" class="c-check" ng-model="f_item.licenses[l_key].check_enabled">
                                         <label for="checkbox-{{f_key}}-{{l_key}}"><span class="inc"></span><span class="check"></span><span class="box"></span><small ng-class="f_item.licenses[l_key].check_enabled?'c-font-green':'c-font-red'">{{l_item.name}}</small></label></div>
                                         </td>

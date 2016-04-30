@@ -137,6 +137,31 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 		
 		return ($paginator);
 	}
+	
+	/**
+	 * Todos os items
+	 *
+	 * @param unknown $license_id
+	 * @param unknown $company_id
+	 */
+	public function fetchAllToShop($license_id, $company_id) {
+		// SELECT
+		$select = new Select ();
+		$select->from ( $this->table );
+		// WHERE
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.license_id = {$license_id}" );
+		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
+		// ORDER
+		$select->order ( "{$this->table}.sequence ASC" );
+		// Executando
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( null );
+	
+		return ($paginator);
+	}	
 	/**
 	 * Remove um item
 	 *

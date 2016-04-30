@@ -42,8 +42,14 @@ class LicensesController extends ApplicationController {
 		$Paginator = $LicensesController->fetchAllActive ($company_id);
 		
 		if ($Paginator->count () > 0) {
+			$arr = iterator_to_array ( $Paginator->getCurrentItems () );
+			$items = array();
+			foreach($arr as $i){
+				$items[$i->id] = $i;
+			}
+			
 			$data = array ();
-			$data ['items'] = iterator_to_array ( $Paginator->getCurrentItems () );
+			$data ['items'] = $items;
 			$data ['total'] = $Paginator->getTotalItemCount ();
 			$data ['count'] = $Paginator->getTotalItemCount ();
 			$data ['offset'] = 0;

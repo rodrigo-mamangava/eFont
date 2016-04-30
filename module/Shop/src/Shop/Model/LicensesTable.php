@@ -147,6 +147,36 @@ class LicensesTable extends AbstractTableGateway {
 		return $paginator;		
 	}
 	/**
+	 * Retorna as ativas para o shopping
+	 * @param unknown $company_id
+	 */
+	public function fetchAllToShop($company_id, $project_id){
+		// SELECT
+		$select = new Select ();
+		//COLS
+		$select->columns(array('*'));
+		//JOIN
+		$select->join('family_has_license', new \Zend\Db\Sql\Expression ("family_has_license.license_id={$this->table}.id AND family_has_license.check_enabled='1' AND family_has_license.project_id='{$project_id}'"), null, 'inner');
+		// FROM
+		$select->from ( $this->table );
+		// WHERE
+		$select->where ( "({$this->table}.removed='0' OR {$this->table}.removed IS NULL)" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		$select->where ( "{$this->table}.check_enabled='1'" );
+		//GROUP BY
+		$select->group("{$this->table}.id");
+		// ORDER
+		$select->order ( "{$this->table}.name ASC" );
+		//var_dump($select->getSqlString()); exit;
+		// Executando
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( 0 );
+	
+		return $paginator;
+	}
+	/**
 	 * Consulta customizada
 	 *
 	 * @param unknown $search        	

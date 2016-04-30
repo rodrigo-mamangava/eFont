@@ -70,16 +70,25 @@ class ShopProductDetailsController extends ApplicationController {
 				$families = array ();
 				$styles = array ();
 				$formats = array ();
+				$preload = array (
+						'license' => 0,
+						'formats' => array (),
+						'multiplier'=>array(),
+						'collection'=>array(),
+				);
 				
 				// LICENCAS
-				$licenses = UsefulController::paginatorToArray ( $LicenseUser->fetchAllActive ( $project->company_id ) );
+				$licenses = UsefulController::paginatorToArray ( $LicenseUser->fetchAllToShop ( $project->company_id, $project->id ));
 				if (count ( $licenses ) > 0) {
 					foreach ( $licenses as $lu_key => $lu_item ) {
 						$licenses [$lu_key] = UsefulController::getStripslashes ( $lu_item );
 						$licenses [$lu_key] ['formats'] = array ();
-						//$licenses [$lu_key] ['families'] = array ();
-						//Opcoes
-						$lu_formats = $LicenseHasFormats->fetchAll ( $lu_item->id, $project->company_id );
+						$licenses [$lu_key] ['types_desktop'] = $licenses [$lu_key]['check_desktop'];
+						$licenses [$lu_key] ['types_web'] = $licenses [$lu_key]['check_web'];
+						$licenses [$lu_key] ['types_app'] = $licenses [$lu_key]['check_app'];
+						// $licenses [$lu_key] ['families'] = array ();
+						// Opcoes
+						$lu_formats = $LicenseHasFormats->fetchAllToShop ( $lu_item->id, $project->company_id );
 						if ($lu_formats->count () > 0) {
 							$arr = iterator_to_array ( $lu_formats->getCurrentItems () );
 							foreach ( $arr as $w_key => $w_item ) {
@@ -90,6 +99,11 @@ class ShopProductDetailsController extends ApplicationController {
 								$license_formats_id = isset ( $w_item ['license_formats_id'] ) ? $w_item ['license_formats_id'] : 0;
 								$font ['license_formats_id'] = $license_formats_id;
 								$font ['collection'] = 0;
+								
+								if (! isset ( $preload ['formats'] [$lu_key] [$license_formats_id] )) {
+									$preload ['formats'] [$lu_key] [$license_formats_id] = $font ['id'];
+								}
+								$preload ['multiplier'] [$lu_key] [$license_formats_id][$font ['id']] = $font ['multiplier'];
 								// RESULTADO
 								$licenses [$lu_key] ['formats'] [$license_formats_id] [$w_item->id] = $font;
 								$styles [$w_item->id] = $font;
@@ -107,8 +121,9 @@ class ShopProductDetailsController extends ApplicationController {
 					foreach ( $families_project as $f_key => $f_item ) {
 						$family = UsefulController::getStripslashes ( $f_item );
 						$family ['collection'] = floatval ( $family ['collection'] ) + floatval ( $family ['money_family'] );
-						$family ['collapsed'] =  false;
-						//Formatos
+						$family ['check_collection'] = false;
+						$family ['collapsed'] = false;
+						// Formatos
 						foreach ( $formats as $f_t_key => $f_t_item ) {
 							if ($f_t_item->id > 0) {
 								// ESTILOS
@@ -119,19 +134,20 @@ class ShopProductDetailsController extends ApplicationController {
 										$style ['font_price'] = isset ( $style ['font_price'] ) ? $style ['font_price'] : 0;
 										$style ['font_weight'] = $style ['font_price'] > 0 ? $style ['font_price'] * 1 : 0;
 										$family ['styles'] [$f_t_item->id] [$f_s_item->id] = $style;
-										$style ['selected'] =  false;
+										$style ['selected'] = false;
 									}
 								}
 							}
 						}
-						//Params
-						//Pesos/Valor
-						$family_has_license = $FamilyHasLicense->fetchAll($project->company_id,  $f_item->id, $project->id);
+						// Params
+						// Pesos/Valor
+						$family_has_license = $FamilyHasLicense->fetchAllToShop ( $project->company_id, $f_item->id, $project->id );
 						if ($family_has_license->count () > 0) {
 							foreach ( $family_has_license as $f_h_l_key => $f_h_l_item ) {
-								$family ['licenses'][$f_h_l_item->license_id] = UsefulController::getStripslashes ( $f_h_l_item );
+								$family ['licenses'] [$f_h_l_item->license_id] = UsefulController::getStripslashes ( $f_h_l_item );								
+								$preload['collection'][$f_item->id][$f_h_l_item->license_id] = $f_h_l_item->money_family;
 							}
-						}						
+						}
 						
 						$families [$f_item->id] = $family;
 					}
@@ -143,6 +159,7 @@ class ShopProductDetailsController extends ApplicationController {
 						'licenses' => $licenses,
 						'families' => $families,
 						'formats' => $formats,
+						'preload' => $preload 
 				);
 			} else {
 				$data = $this->translate ( 'Invalid Id' );

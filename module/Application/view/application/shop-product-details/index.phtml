@@ -34,7 +34,7 @@
 					<h3 class="c-font-uppercase"><?php echo $this->translate('License Options');?></h3>
 					<hr />
 					
-					<div class="radio" ng-repeat="(lu_key, lu_item) in licenses"><label><input type="radio" name="optradio" ng-model="license" ng-click="onChangeLicense(lu_key, lu_item.id);">{{lu_item.name}}</label></div>
+					<div class="radio" ng-repeat="(lu_key, lu_item) in licenses"><label><input type="radio" name="optradio" ng-value="lu_key" ng-model="license" ng-click="onChangeLicense(lu_key, lu_item.id);">{{lu_item.name}}</label></div>
 					<hr />
 					
 					<section ng-repeat="(ll_key, ll_item) in licenses" ng-show="license == ll_key">
@@ -42,24 +42,24 @@
 					<!-- DESKTOP -->
 					<div class="col-md-12" ng-show="licenses[ll_key].types_desktop">
 						<small><?php echo $this->translate('DESKTOP');?>:</small>
-						<select class="form-control c-square c-theme" ng-model="formats[ll_key][1]" ng-init="formats[ll_key][1]=0" ng-change="onChangeLicenseFormats(ll_key, ll_item.id, 1);">
-							<option ng-repeat="(d_key, d_item) in ll_item.formats[1]" ng-value="{{d_key}}" value="{{d_key}}">{{d_item.parameters}}</option>
+						<select class="form-control c-square c-theme" ng-model="formats[ll_key][1]" ng-change="onChangeLicenseFormats(ll_key, ll_item.id, 1);">
+							<option ng-repeat="(d_key, d_item) in ll_item.formats[1]" value="{{d_key}}">  {{d_item.parameters}}</option>
 						</select>						
 					</div>
 
 					<!-- WEB -->
 					<div class="col-md-12" ng-show="licenses[ll_key].types_web">
 						<small><?php echo $this->translate('WEB');?>:</small>
-						<select class="form-control c-square c-theme" ng-model="formats[ll_key][2]" ng-init="formats[ll_key][2]=0" ng-change="onChangeLicenseFormats(ll_key, ll_item.id, 2);">
-							<option ng-repeat="(d_key, d_item) in ll_item.formats[2]" ng-value="{{d_key}}" value="{{d_key}}">{{d_item.parameters}}</option>
+						<select class="form-control c-square c-theme" ng-model="formats[ll_key][2]" ng-change="onChangeLicenseFormats(ll_key, ll_item.id, 2);">
+							<option ng-repeat="(d_key, d_item) in ll_item.formats[2]" value="{{d_key}}">{{d_item.parameters}}</option>
 						</select>						
 					</div>
 
 					<!-- APP -->
 					<div class="col-md-12" ng-show="licenses[ll_key].types_app">
 						<small><?php echo $this->translate('APP');?>:</small>
-						<select class="form-control c-square c-theme" ng-model="formats[ll_key][3]" ng-init="formats[ll_key][3]=0" ng-change="onChangeLicenseFormats(ll_key, ll_item.id, 3);">
-							<option ng-repeat="(d_key, d_item) in ll_item.formats[3]" ng-value="{{d_key}}" value="{{d_key}}">{{d_item.parameters}}</option>
+						<select class="form-control c-square c-theme" ng-model="formats[ll_key][3]" ng-change="onChangeLicenseFormats(ll_key, ll_item.id, 3);">
+							<option ng-repeat="(d_key, d_item) in ll_item.formats[3]" value="{{d_key}}">{{d_item.parameters}}</option>
 						</select>						
 					</div>
 					
@@ -84,9 +84,17 @@
 					<h3 class="c-font-uppercase"><?php echo $this->translate('Collection');?></h3>
 					<hr />
 					<table class="table table-condensed table-bordered"><tbody><tr>
-						<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="collection" ng-change="onChangeCollection();"/></button></td>
+						<td width="1%"><a href="javascript:;" class="btn c-btn btn-xs" ng-model="form.collapsed" ng-click="form.collapsed=!form.collapsed"><i class="fa" ng-class="form.collapsed?'fa-minus':'fa-plus'"></i></a></td>
 						<td class="c-bg-dark c-bg-dark-font">&nbsp;<small>{{form.name}}&nbsp; &#8226; &nbsp; {{families.length}} <?php echo $this->translate('Families');?> &nbsp;</small></td>
-						<td class="c-bg-dark c-bg-dark-font col-md-2"><small >&nbsp;{{form.collection | currency }}</small></td></tr></tbody></table>
+						<td class="c-bg-dark c-bg-dark-font col-md-2"><small >&nbsp;{{form.collection  * multiplier_c | currency }}</small></td></tr>
+						
+						<tr ng-repeat="(c_key, c_item) in families" ng-show="form.collapsed">
+							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="c_item.check_collection" ng-change="onChangeSelectedCollection(c_key, c_item.id);" /></button></td>
+							<td>&nbsp;<small>{{c_item.family_name}}</small></td>
+							<td class="col-md-2"><small >&nbsp;{{c_item.licenses[current].money_family * multiplier_c | currency}}</small></td>						
+						</tr>
+												
+					</tbody></table>
 					
 					<!-- MONEY_WEIGHT -->
 					<h3 class="c-font-uppercase"><?php echo $this->translate('Family');?></h3>
@@ -97,25 +105,25 @@
 						<tr>
 							<td width="1%"><a href="javascript:;" class="btn c-btn btn-xs" ng-model="f_item.collapsed" ng-click="f_item.collapsed=!f_item.collapsed"><i class="fa" ng-class="f_item.collapsed?'fa-minus':'fa-plus'"></i></a></td>
 							<td class="c-bg-dark c-bg-dark-font">&nbsp;<small>{{f_item.family_name}}</small></td>
-							<td class="c-bg-dark c-bg-dark-font col-md-2"><small>{{f_item.licenses[current].money_family | currency}}</small></td>
+							<td class="c-bg-dark c-bg-dark-font col-md-2"><small>{{f_item.licenses[current].money_family * multiplier_c | currency}}</small></td>
 						</tr>
 						
 						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key][1]" ng-show="f_item.collapsed">
-							<td width="1%"><input type="checkbox" ng-model="f_item.styles[1][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 1 );" /></td>
+							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_item.styles[1][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 1 );" /></button></td>
 							<td>&nbsp;<small>{{f_s_item.font_name}}</small></td>
-							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[1] | currency }}</small></td>						
+							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[license][1][formats[license][1]] | currency }}</small></td>						
 						</tr>
 						
 						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key][2]" ng-show="f_item.collapsed">
-							<td width="1%"><input type="checkbox" ng-model="f_item.styles[2][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 2 );"/></td>
+							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_item.styles[2][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 2 );"/></button></td>
 							<td>&nbsp;<small>{{f_s_item.font_name}}</small></td>
-							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[2] | currency }}</small></td>						
+							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[license][2][formats[license][2]] | currency }}</small></td>						
 						</tr>
 						
 						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key][3]" ng-show="f_item.collapsed">
-							<td width="1%"><input type="checkbox" ng-model="f_item.styles[3][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 3 );"/></td>
+							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_item.styles[3][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 3 );"/></button></td>
 							<td>&nbsp;<small>{{f_s_item.font_name}}</small></td>
-							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[3] | currency }}</small></td>						
+							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[license][3][formats[license][3]] | currency }}</small></td>						
 						</tr>
 					</tbody></table>
 					</div>
