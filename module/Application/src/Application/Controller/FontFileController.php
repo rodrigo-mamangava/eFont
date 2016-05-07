@@ -2,6 +2,8 @@
 
 namespace Application\Controller;
 
+use Validador\Controller\ValidadorController;
+
 /**
  * Obtem informacoes de uma fonte
  *
@@ -21,10 +23,12 @@ class FontFileController extends ApplicationController {
 	 * Extra as informacoes de um arquivo zipado
 	 */
 	public function uncompressAction() {
+		set_time_limit ( 180 );
 		// Default
-		$data = $this->translate ( "Unknown Error, try again, please." );
+		$data = $this->translate ( "No files have been processed, please check if the file name is within the expected pattern." );
 		$outcome = $status = false;
 		$files = array ();
+		$styles = array ();
 		$count = 0;
 		// System
 		$user_id = $this->get_user_id ();
@@ -34,7 +38,9 @@ class FontFileController extends ApplicationController {
 				'otf',
 				'ttf',
 				'eot',
-				'woff' 
+				'woff',
+				'svg',
+				/*'html'*/ 
 		); // File extensions
 		
 		if ($this->getRequest ()->isPost ()) {
@@ -43,6 +49,7 @@ class FontFileController extends ApplicationController {
 				$post = $this->postJsonp ();
 				$uploaded = isset ( $post ['uploaded'] ) ? $post ['uploaded'] : null;
 				$price = isset ( $post ['price'] ) ? $post ['price'] : 0;
+				$format = isset ( $post ['format_id'] ) ? $post ['format_id'] : 0;
 				/**
 				 * Download file
 				 */
@@ -51,6 +58,7 @@ class FontFileController extends ApplicationController {
 				$folder = $uploadDirectory . $destination;
 				$outputfile = $uploadDirectory . $destination . '.zip';
 				file_put_contents ( $outputfile, fopen ( $uploaded, 'r' ) );
+				$default = null;
 				/**
 				 * Descompactando o arquivo
 				 */
@@ -63,39 +71,90 @@ class FontFileController extends ApplicationController {
 					
 					// Font Info
 					if ($handle = opendir ( $folder )) {
-						$FontInfo = new \Useful\Controller\FontFileController ();
+						$FontFile = new \Shop\Controller\FontFilesController ( $this->getServiceLocator () );
 						
 						while ( false !== ($entry = readdir ( $handle )) ) {
 							if ($entry != "." && $entry != "..") {
 								
 								$path = $folder . '/' . $entry;
 								$path_parts = pathinfo ( $path );
-								$ext = $path_parts['extension'];
+								
+								$filename = $path_parts ['filename'];
+								$ext = $path_parts ['extension'];
+								
 								if (in_array ( $ext, $fileTypes )) {
 									// Infos
-									$FontInfo->setFontFile ( $path );
-									$font ['font_name'] = $FontInfo->getFullFontName ();
-									$font ['font_id'] = $FontInfo->getFontId ();
-									$font ['font_subfamily'] = $FontInfo->getFontSubFamily ();
-									$font ['font_family'] = $FontInfo->getFontFamily ();
-									$font ['font_copyright'] = $FontInfo->getCopyright ();
+									$pieces = explode ( '-', $filename );
+									$font_family = isset ( $pieces [0] ) ? $pieces [0] : null;
+									$font_subfamily = isset ( $pieces [1] ) ? $pieces [1] : null;
+									
+									if (ValidadorController::isValidNotEmpty ( $font_family ) && ValidadorController::isValidNotEmpty ( $font_subfamily )) {
+										$font_family = ltrim ( preg_replace ( '/[A-Z]/', ' $0', $font_family ) );
+										$font_subfamily = ltrim ( preg_replace ( '/[A-Z]/', ' $0', $font_subfamily ) );
+										
+										$font ['font_name'] = $filename;
+										$font ['font_id'] = '';
+										$font ['font_subfamily'] = $font_subfamily;
+										$font ['font_family'] = $font_family;
+										$font ['font_copyright'] = $this->getUserSession ()->getEmail ();
+									} else {
+										continue;
+									}
+									
 									$font ['font_file'] = $entry;
 									$font ['font_path'] = $path;
 									$font ['font_folder'] = $folder;
-									$font ['font_price'] = $price;
-									$font ['check_price'] = false;
+									$font ['uploadkey'] = $destination;
 									
-									$files [] = $font;
-									$count ++;
+									$font ['company_id'] = $company_id;
+									$font ['user_id'] = $user_id;
+									$font ['family_id'] = null;
+									$font ['formats_id'] = $format;
+									$font ['project_id'] = 0;
+									$font ['linked'] = 0;
+									$id = $font ['id'] = $FontFile->save ( null, $font ['uploadkey'], $font ['font_name'], $font ['font_id'], $font ['font_subfamily'], $font ['font_family'], $font ['font_copyright'], $font ['font_file'], $font ['font_path'], $font ['company_id'], $font ['user_id'], $font ['linked'], $font ['formats_id'] );
+									if ($id) {
+										$files [$font_family . ' ' . $font_subfamily] [$id] = $font;
+										
+										if ($default == null && $ext == 'ttf') {
+											$default = $path;
+										}
+										
+										$count ++;
+									}
 								}
 							}
 						}
 						closedir ( $handle );
 						// Contem registros
 						if (count ( $files ) > 0) {
+							// Styles
+							$FontStyles = new \Shop\Controller\FontStylesController ( $this->getServiceLocator () );
+							foreach ( $files as $s_key => $s_item ) {
+								$id = $FontStyles->save ( null, $s_key, $user_id, $company_id, $destination, 0, $format, 0, 0 );
+								if ($id) {
+									foreach ( $s_item as $f_key => $f_item ) {
+										$FontFile->updated ( $f_item ['id'], $company_id, $user_id, array (
+												'linked' => 1,
+												'font_styles_id' => $id 
+										) );
+									}
+									// Resultado
+									$styles [$id] = array (
+											'id' => $id,
+											'font_file' => $s_key,
+											'font_subfamily' => $s_key,
+											'check_price' => false,
+											'font_price' => 0.00,
+											'uploadkey' => $destination 
+									);
+								}
+							}
+							
 							$data = array (
-									'files' => $files,
-									'total' => $count 
+									'files' => $styles,
+									'total' => $count,
+									'ddig' => $default 
 							);
 							$status = $outcome = true;
 						}

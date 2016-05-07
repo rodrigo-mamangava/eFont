@@ -42,15 +42,15 @@ class ProductsController extends ApplicationController {
 		$offset = $Params->fromQuery ( 'offset', 0 );
 		$search = $Params->fromQuery ( 'search', null );
 		// Query
-		$Products = new \Shop\Controller\ProjectsController ( $this->getMyServiceLocator () );
-		$Paginator = $Products->filter ( $search, $count, $offset, $company_id );
+		$Projects = new \Shop\Controller\ProjectsController ( $this->getMyServiceLocator () );
+		$Paginator = $Projects->filter ( $search, $count, $offset, $company_id );
 		
 		if ($Paginator->count () > 0) {
 			
-			$Family = new \Shop\Controller\FamiliesController ( $this->getServiceLocator () );
+			$ProjectHasFamily = new \Shop\Controller\ProjectHasFamilyController ( $this->getServiceLocator () );
 			$projects = iterator_to_array ( $Paginator->getCurrentItems () );
 			foreach ( $projects as $key => $item ) {
-				$projects [$key] ['families'] = UsefulController::paginatorToArray ( $Family->fetchAll ( $company_id, $item ['id'] ) );
+				$projects [$key] ['families'] = UsefulController::paginatorToArray ( $ProjectHasFamily->fetchAll ( $company_id, $item ['id'] ) );
 			}
 			
 			$data = array ();
@@ -93,13 +93,42 @@ class ProductsController extends ApplicationController {
 				$projects = isset ( $post ['project'] ) ? $post ['project'] : null;
 				$project_id = isset ( $projects ['id'] ) ? $projects ['id'] : 0;
 				$project_name = isset ( $projects ['name'] ) ? $projects ['name'] : null;
-				// var_dump($projects, $project_id, $project_name );
+				$project_ddig = isset ( $projects ['ddig'] ) ? $projects ['ddig'] : null;
+				// Licencas
+				$alright_license = false;
+				$licenses = isset ( $projects ['licenses'] ) ? $projects ['licenses'] : null;
+				$licenses_number = is_array ( $licenses ) ? count ( $licenses ) : 0;
+				$licenses_data = array ();
+				if ($licenses_number > 0) {
+					foreach ( $licenses as $lc_key => $lc_item ) {
+						// Licensa
+						$license = array ();
+						$license ['license_id'] = isset ( $lc_item ['license_id'] ) ? $lc_item ['license_id'] : null;
+						$license ['id'] = isset ( $lc_item ['id'] ) ? $lc_item ['id'] : null;
+						$license ['check_family'] = isset ( $lc_item ['check_family'] ) ? $lc_item ['check_family'] : null;
+						$license ['check_weight'] = isset ( $lc_item ['check_weight'] ) ? $lc_item ['check_weight'] : null;
+						$license ['check_enabled'] = isset ( $lc_item ['check_enabled'] ) ? $lc_item ['check_enabled'] : false;
+						$license ['money_family'] = isset ( $lc_item ['money_family'] ) ? $lc_item ['money_family'] : null;
+						$license ['money_weight'] = isset ( $lc_item ['money_weight'] ) ? $lc_item ['money_weight'] : null;
+						$license ['sequence'] = isset ( $lc_item ['sequence'] ) ? $lc_item ['sequence'] : $lc_key;
+						
+						if (! ValidadorController::isValidDigits ( $license ['license_id'] ) || $license ['check_enabled'] == false) {
+							continue;
+						}
+						// Set/Unset
+						$licenses_data [$lc_key] = $license;
+						unset ( $license );
+						$alright_license = true;
+					}
+				} else {
+					throw new \Exception ( $this->translate ( 'Please, add one or more License.' ) );
+				}
 				// Familias
+				$alright_family = true;
 				$families = isset ( $post ['families'] ) ? $post ['families'] : null;
 				$families_number = is_array ( $families ) ? count ( $families ) : 0;
 				$families_data = array ();
 				if ($families_number > 0) {
-					// Familia
 					foreach ( $families as $f_key => $f_item ) {
 						// Conferencia
 						$alright_families [$f_key] = array (
@@ -109,15 +138,27 @@ class ProductsController extends ApplicationController {
 								'alright_files' => $alright_files,
 								'alright_license' => $alright_license 
 						);
+						// BEGIN FAMILY
 						// Familia
 						$family = array ();
 						$family ['id'] = isset ( $f_item ['id'] ) ? $f_item ['id'] : null;
 						$family ['family_name'] = isset ( $f_item ['family_name'] ) ? $f_item ['family_name'] : null;
+						$family ['check_weight'] = isset ( $f_item ['check_weight'] ) ? $f_item ['check_weight'] : null;
+						$family ['check_enabled'] = isset ( $f_item ['check_enabled'] ) ? $f_item ['check_enabled'] : false;
+						$family ['check_family'] = isset ( $f_item ['check_family'] ) ? $f_item ['check_family'] : false;
+						$family ['money_family'] = isset ( $f_item ['money_family'] ) ? $f_item ['money_family'] : null;
+						$family ['money_weight'] = isset ( $f_item ['money_weight'] ) ? $f_item ['money_weight'] : null;
+						$family ['sequence'] = isset ( $f_item ['sequence'] ) ? $f_item ['sequence'] : $f_key;
 						
-						if (! ValidadorController::isValidNotEmpty ( $family ['family_name'] )) {
+						if (! ValidadorController::isValidStringLength ( $family ['family_name'], 1, 150 )) {
 							$alright_families [$f_key] ['alright_family'] = false;
+							break;
 						}
 						
+						if (! ValidadorController::isValidNotEmpty ( $family ['money_weight'] )) {
+							$alright_families [$f_key] ['alright_family'] = false;
+							break;
+						}
 						// Formatos
 						$formats = isset ( $f_item ['formats'] ) ? $f_item ['formats'] : null;
 						$formats_number = is_array ( $formats ) ? count ( $formats ) : 0;
@@ -126,6 +167,7 @@ class ProductsController extends ApplicationController {
 							$alright_families [$f_key] ['alright_formats'] = false; // Vamos trocar depois se tiver tudo certo
 							
 							foreach ( $formats as $t_key => $t_item ) {
+								// BEGIN FORMAT
 								// Formato
 								$formats_data = array ();
 								$formats_data ['id'] = isset ( $t_item ['id'] ) ? $t_item ['id'] : null;
@@ -141,7 +183,7 @@ class ProductsController extends ApplicationController {
 								if (! ValidadorController::isValidDigits ( $formats_data ['number_files'] )) {
 									$formats_data ['number_files'] = 0;
 								}
-								
+								// BEGIN FILES/STYLES
 								// Arquivos/Fontes
 								$files = isset ( $t_item ['files'] ) ? $t_item ['files'] : null;
 								$files_number = is_array ( $files ) ? count ( $files ) : 0;
@@ -152,76 +194,38 @@ class ProductsController extends ApplicationController {
 									
 									foreach ( $files as $file_key => $file_item ) {
 										// Fonte
-										$family_files = array ();
-										$family_files ['id'] = isset ( $file_item ['id'] ) ? $file_item ['id'] : null;
-										$family_files ['font_name'] = isset ( $file_item ['font_name'] ) ? $file_item ['font_name'] : null;
-										$family_files ['font_id'] = isset ( $file_item ['font_id'] ) ? $file_item ['font_id'] : null;
-										$family_files ['font_subfamily'] = isset ( $file_item ['font_subfamily'] ) ? $file_item ['font_subfamily'] : null;
-										$family_files ['font_family'] = isset ( $file_item ['font_family'] ) ? $file_item ['font_family'] : null;
-										$family_files ['font_copyright'] = isset ( $file_item ['font_copyright'] ) ? $file_item ['font_copyright'] : null;
-										$family_files ['font_file'] = isset ( $file_item ['font_file'] ) ? $file_item ['font_file'] : null;
-										$family_files ['font_path'] = isset ( $file_item ['font_path'] ) ? $file_item ['font_path'] : null;
-										$family_files ['font_price'] = isset ( $file_item ['font_price'] ) ? $file_item ['font_price'] : null;
-										$family_files ['check_price'] = isset ( $file_item ['check_price'] ) ? $file_item ['check_price'] : null;
-										if (! ValidadorController::isValidNotEmpty ( $family_files ['font_price'] )) {
+										$file = array ();
+										$file ['id'] = isset ( $file_item ['id'] ) ? $file_item ['id'] : null;
+										$file ['font_subfamily'] = isset ( $file_item ['font_subfamily'] ) ? $file_item ['font_subfamily'] : null;
+										$file ['font_file'] = isset ( $file_item ['font_file'] ) ? $file_item ['font_file'] : null;
+										$file ['font_price'] = isset ( $file_item ['font_price'] ) ? $file_item ['font_price'] : null;
+										$file ['check_price'] = isset ( $file_item ['check_price'] ) ? $file_item ['check_price'] : null;
+										if (! ValidadorController::isValidNotEmpty ( $file ['font_price'] )) {
 											$alright_families [$f_key] ['alright_fonts'] = false;
 										}
-										// DB
-										$family_files ['formats_id'] = isset ( $file_item ['formats_id'] ) ? $file_item ['formats_id'] : null;
-										$family_files ['family_id'] = isset ( $file_item ['family_id'] ) ? $file_item ['family_id'] : null;
 										// Set/Unset
-										$formats_data ['files'] [$file_key] = $family_files;
-										unset ( $family_files );
+										$formats_data ['files'] [$file_key] = $file;
+										unset ( $file );
 									}
 								}
 								// Set/Unset
 								$family ['formats'] [$t_key] = $formats_data;
 								unset ( $formats_data );
+								// END FILES/STYLES
+								// END FORMAT
 							}
 						} else {
 							throw new \Exception ( $this->translate ( 'Please, add one or more Format.' ) );
 						}
-						
-						// Licencas
-						$alright_license = false;
-						$licenses = isset ( $f_item ['licenses'] ) ? $f_item ['licenses'] : null;
-						$licenses_number = is_array ( $licenses ) ? count ( $licenses ) : 0;
-						if ($licenses_number > 0) {
-							
-							foreach ( $licenses as $lc_key => $lc_item ) {
-								// Licensa
-								$license = array ();
-								$license ['license_id'] = isset ( $lc_item ['license_id'] ) ? $lc_item ['license_id'] : null;
-								$license ['id'] = isset ( $lc_item ['id'] ) ? $lc_item ['id'] : null;
-								$license ['family_id'] = isset ( $lc_item ['family_id'] ) ? $lc_item ['family_id'] : null;
-								$license ['check_family'] = isset ( $lc_item ['check_family'] ) ? $lc_item ['check_family'] : null;
-								$license ['check_weight'] = isset ( $lc_item ['check_weight'] ) ? $lc_item ['check_weight'] : null;
-								$license ['check_enabled'] = isset ( $lc_item ['check_enabled'] ) ? $lc_item ['check_enabled'] : false;
-								$license ['money_family'] = isset ( $lc_item ['money_family'] ) ? $lc_item ['money_family'] : null;
-								$license ['money_weight'] = isset ( $lc_item ['money_weight'] ) ? $lc_item ['money_weight'] : null;
-								
-								if ($license ['check_enabled'] == true && ValidadorController::isValidNotEmpty ( $license ['money_family'] )) {
-									$alright_families [$f_key] ['alright_license'] = true;
-								}
-								
-								if (! ValidadorController::isValidDigits ( $license ['license_id'] ) || $license ['check_enabled'] == false) {
-									continue;
-								}
-								// Set/Unset
-								$family ['licenses'] [$lc_key] = $license;
-								unset ( $license );
-							}
-						} else {
-							throw new \Exception ( $this->translate ( 'Please, add one or more License.' ) );
-						}
-						
+						// END FAMILY
 						// Set/Unset
-						$families_data [] = $family;
+						$families_data [$f_key] = $family;
 						unset ( $family );
 					}
 				} else {
 					throw new \Exception ( $this->translate ( 'Please, add one or more Family.' ) );
 				}
+				
 				// Pendencias?
 				$issues = array ();
 				foreach ( $alright_families as $alright_itens ) {
@@ -229,7 +233,7 @@ class ProductsController extends ApplicationController {
 						if (! $alright_item) {
 							$alright_project = false;
 							if ($alright_key == 'alright_family') {
-								array_unshift ( $issues, $this->translate ( 'Check if family name was filled correctly.' ) );
+								array_unshift ( $issues, $this->translate ( 'Check if family name was filled correctly and and prices (WEIGHT AND FAMILY) were filled.' ) );
 							} elseif ($alright_key == 'alright_formats') {
 								array_unshift ( $issues, $this->translate ( 'Check if at least one file has been uploaded.' ) );
 							} elseif ($alright_key == 'alright_fonts') {
@@ -251,105 +255,112 @@ class ProductsController extends ApplicationController {
 					}
 					throw new \Exception ( $data );
 				}
-				// echo json_encode($families_data); exit;
-				// var_dump($families_data); exit;
+				
+				//exit ();
+				// Validando
 				if (! ValidadorController::isValidDigits ( $project_id )) {
 					$data = $this->translate ( "Id." ) . ' ' . $this->translate ( "You can't leave this empty." );
 				} elseif (! ValidadorController::isValidStringLength ( $project_name, 1, 100 )) {
 					$data = $this->translate ( "Project Name" ) . ' ' . $this->translate ( "You can't leave this empty or exceeded the number of characters." );
 				} else {
 					// Controller
-					$Products = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
-					$Family = new \Shop\Controller\FamiliesController ( $this->getServiceLocator () );
-					$Formats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
-					$Fonts = new \Shop\Controller\FamilyFilesController ( $this->getServiceLocator () );
-					$License = new \Shop\Controller\FamilyHasLicenseController ( $this->getServiceLocator () );
+					$Projects = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
+					$ProjectHasLicense = new \Shop\Controller\ProjectHasLicenseController ( $this->getServiceLocator () );
+					$ProjectHasFamily = new \Shop\Controller\ProjectHasFamilyController ( $this->getServiceLocator () );
+					$FamilyHasFormats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
+					$FontStyles = new \Shop\Controller\FontStylesController ( $this->getServiceLocator () );
+					$FontFiles = new \Shop\Controller\FontFilesController ( $this->getServiceLocator () );
 					// Chegando de salvou tudo
 					$ok_project = false;
 					$ok_family = false;
+					$ok_license = false;
 					$ok_formats = false;
 					$ok_fonts = false;
-					$ok_license = false;
 					// Auxiliares
 					$count = 0;
 					$ok_logo = false;
+					$project_banner = '';
+					// BANNER
+					try {
+						$path_parts = pathinfo ( $project_ddig );
+						if ($ok_logo == false && $path_parts ['extension'] == 'ttf') {
+							$banner = \Useful\Controller\FontImageController::banner ( $project_ddig, $project_name );
+							if ($banner) {
+								$ok_logo = true;
+								$Image = new \AWS\Controller\UploadController ( $this->getServiceLocator () );
+								$img = $Image->uploadPathFile ( $banner );
+								$project_banner = isset ( $img ['url'] ) ? $img ['url'] : '';
+							}
+						}
+					} catch ( Exception $e ) {
+					}
 					// PROJETOS
-					$id = $Products->save ( $project_id, $project_name, $company_id, $user_id );
+					$id = $Projects->save ( $project_id, $project_name, $company_id, $user_id, $project_ddig, $project_banner );
 					if ($id) {
-						
 						$ok_project = true;
 						$project_id = $id;
-						// Clean
-						$Family->cleanup ( $company_id, $project_id );
-						$Formats->cleanup ( $company_id, $project_id );
-						$Fonts->cleanup ( $company_id, $project_id );
-						$License->cleanup ( $company_id, $project_id );
+						// LIMPEZA PARA DEPOIS ATUALIZAR
+						$ProjectHasLicense->cleanup ( $company_id, $project_id );
+						$ProjectHasFamily->cleanup ( $company_id, $project_id );
+						$FamilyHasFormats->cleanup ( $company_id, $project_id );
+						$FontStyles->cleanup ( $company_id, $project_id );
+						$FontFiles->cleanup ( $company_id, $project_id );
+						// LICENCAS
+						foreach ( $licenses_data as $lc_item ) {
+							$lc_id = $ProjectHasLicense->save ( $lc_item ['id'], $lc_item ['money_family'], $lc_item ['money_weight'], $lc_item ['check_family'], $lc_item ['check_weight'], $lc_item ['license_id'], $company_id, $user_id, $lc_item ['check_enabled'], $project_id, $lc_item ['sequence'] );
+							if ($lc_id) {
+								$ok_license = true;
+							}
+						}
+						// BEGIN FAMILY
 						// FAMILIAS
 						foreach ( $families_data as $f_item ) {
-							// FAMILIA
-							$family_id = $Family->saved ( $f_item ['id'], $f_item ['family_name'], $project_id, $company_id, $user_id );
+							$family_id = $ProjectHasFamily->save ( $f_item ['id'], $f_item ['family_name'], $f_item ['money_family'], $f_item ['money_weight'], $f_item ['check_family'], $f_item ['check_weight'], $f_item ['sequence'], $company_id, $user_id, $project_id );
 							if ($family_id) {
-								
 								$ok_family = true;
+								// BEGIN FORMAT
 								// FORMATOS
 								$formats = $f_item ['formats'];
 								foreach ( $formats as $t_item ) {
-									$family_has_formats_id = $Formats->save ( $t_item ['id'], $family_id, $t_item ['format_id'], $t_item ['media_url'], $t_item ['number_files'], $t_item ['collapsed'], $company_id, $user_id, $project_id );
-									// var_dump($t_item ['format_id']);
-									// FONTS
-									// var_dump($family_has_formats_id);
+									$family_has_formats_id = $FamilyHasFormats->save ( $t_item ['id'], $family_id, $t_item ['format_id'], $t_item ['media_url'], $t_item ['number_files'], $t_item ['collapsed'], $company_id, $user_id, $project_id );
 									if ($family_has_formats_id) {
-										
 										$ok_formats = true;
+										// BEGIN FILES/STYLES
+										// ARQUIVOS
 										$files = isset ( $t_item ['files'] ) ? $t_item ['files'] : array ();
-										foreach ( $files as $fs_item ) {
+										foreach ( $files as $fs_key => $fs_item ) {
+											$fs_id = $fs_item ['id'];
 											try {
-												$font_id = $Fonts->save ( $fs_item ['id'], $fs_item ['font_name'], $fs_item ['font_id'], $fs_item ['font_subfamily'], $fs_item ['font_family'], $fs_item ['font_copyright'], $fs_item ['font_file'], $fs_item ['font_path'], $fs_item ['font_price'], $fs_item ['check_price'], $company_id, $user_id, $project_id, $family_id, $family_has_formats_id, $t_item ['format_id'] );
+												$FontStyles->updated ( $fs_id, $company_id, $user_id, array (
+														'project_id' => $project_id,
+														'family_id' => $family_id,
+														'family_has_formats_id' => $family_has_formats_id,
+														'linked' => 1,
+														'removed' => 0,
+														'font_subfamily' => $fs_item ['font_subfamily'],
+														'font_price' => $fs_item ['font_price'],
+														'check_price' => $fs_item ['check_price'] 
+												) );
 												
-												if ($font_id) {
-													$ok_fonts = true;
-													
-													try {
-														$path_parts = pathinfo ( $fs_item ['font_file'] );
-														if ($ok_logo == false && $path_parts ['extension'] == 'ttf') {
-															$banner = \Useful\Controller\FontImageController::banner ( $fs_item ['font_path'], $f_item ['family_name'] );
-															
-															if ($banner) {
-																
-																$ok_logo = true;
-																$Image = new \AWS\Controller\UploadController ( $this->getServiceLocator () );
-																$img = $Image->uploadPathFile ( $banner );
-																
-																if (isset ( $img ['url'] )) {
-																	$Products->updated ( $id, array (
-																			'banner' => $img ['url'],
-																			'ddig' => $fs_item ['font_path'] 
-																	), $company_id );
-																}
-															}
-														}
-													} catch ( Exception $e ) {
-													}
-												}
+												$FontFiles->synchronize ( $fs_id, $company_id, $user_id, array (
+														'project_id' => $project_id,
+														'family_id' => $family_id,
+														'removed' => 0 
+												) );
+												
+												$ok_fonts = true;
 											} catch ( \Exception $e ) {
 												// var_dump ( $font_id );
 											}
 											$count ++;
 										}
+										// END FILES/STYLES
 									}
 								}
-								// LICENCAS
-								$licenses = $f_item ['licenses'];
-								foreach ( $licenses as $lc_item ) {
-									// var_dump($lc_item);
-									$lc_id = $License->save ( $lc_item ['id'], $lc_item ['money_family'], $lc_item ['money_weight'], $lc_item ['check_family'], $lc_item ['check_weight'], $lc_item ['check_enabled'], $project_id, $family_id, $lc_item ['license_id'], $company_id, $user_id );
-									
-									if ($lc_id) {
-										$ok_license = true;
-									}
-								}
+								// END FORMAT
 							}
 						}
+						// END FAMILY
 						// Salvou tudo?
 						if ($ok_project && $ok_family && $ok_formats && $ok_fonts && $ok_license) {
 							$status = true;
@@ -358,7 +369,7 @@ class ProductsController extends ApplicationController {
 					}
 				}
 			} catch ( \Exception $e ) {
-				$data = $e->getMessage();
+				$data = $e->getMessage ();
 			}
 		}
 		// Response
@@ -382,45 +393,62 @@ class ProductsController extends ApplicationController {
 			$data = $this->translate ( 'Invalid Id' );
 		} else {
 			// Edit
-			$Products = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
-			$Family = new \Shop\Controller\FamiliesController ( $this->getServiceLocator () );
-			$Licenses = new \Shop\Controller\FamilyHasLicenseController ( $this->getServiceLocator () );
-			$Formats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
-			$Files = new \Shop\Controller\FamilyFilesController ( $this->getServiceLocator () );
+			$Projects = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
+			$ProjectHasFamily = new \Shop\Controller\ProjectHasFamilyController ( $this->getServiceLocator () );
+			$ProjetHasLicense = new \Shop\Controller\ProjectHasLicenseController ( $this->getServiceLocator () );
+			$FamilyHasFormats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
+			$FontStyles = new \Shop\Controller\FontStylesController ( $this->getServiceLocator () );
+			$Licences = new \Shop\Controller\LicensesController ( $this->getServiceLocator () );
 			
-			$rs = $Products->find ( $id, $company_id );
-			$rs_families = array();
-			$rs_projects = array();
-			$rs_license = array();
-			$rs_formats = array();
-			$rs_files = array();
+			$rs = $Projects->find ( $id, $company_id );
+			$rs_families = array ();
+			$rs_projects = array ();
+			$rs_license = array ();
+			$rs_formats = array ();
+			$rs_files = array ();
 			// Exists?
 			if ($rs) {
 				// Projeto
 				$rs_projects = UsefulController::getStripslashes ( $rs );
+				// Licencas
+				$licenses = UsefulController::paginatorToArray ( $ProjetHasLicense->fetchAll ( $company_id, $rs_projects->id ) );
+				$rs_license = array ();
+				if (count ( $licenses ) > 0) {
+					foreach ( $licenses as $lc_key => $lc_item ) {
+						if (! isset ( $rs_license [$lc_item->license_id] )) {
+							$rs_license [$lc_item->license_id] = UsefulController::getStripslashes ( $lc_item );
+						}
+					}
+				}
+				// Outras Licencas
+				$Paginator = $Licences->fetchAllActive ( $company_id );
+				if ($Paginator->count () > 0) {
+					$arr = iterator_to_array ( $Paginator->getCurrentItems () );
+					foreach ( $arr as $i ) {
+						if (! isset ( $rs_license [$i->id] )) {
+							$rs_license [$i->id] = array (
+									'license_id' => $i->id,
+									'check_enabled' => false 
+							);
+						}
+					}
+				}
+				
+				$rs_projects ['licenses'] = $rs_license;
+				
 				// Familia
-				$families = UsefulController::paginatorToArray ( $Family->fetchAll ( $company_id, $rs_projects->id ) );
+				$families = UsefulController::paginatorToArray ( $ProjectHasFamily->fetchAll ( $company_id, $rs_projects->id ) );
 				if (count ( $families ) > 0) {
 					foreach ( $families as $f_key => $f_item ) {
 						$rs_families [$f_key] = UsefulController::getStripslashes ( $f_item );
-						// Licencas
-						$licenses = UsefulController::paginatorToArray ( $Licenses->fetchAll ( $company_id, $f_item->id, $rs_projects->id ) );
-						$rs_license = array();
-						if (count ( $licenses ) > 0) {
-							foreach ( $licenses as $lc_key => $lc_item ) {
-								if (! isset ( $rs_license [$lc_item->license_id] )) {
-									$rs_license [$lc_item->license_id] = UsefulController::getStripslashes ( $lc_item );
-								}
-							}
-						}						$rs_families [$f_key] ['licenses'] = $rs_license;
 						// Formatos
-						$formats = UsefulController::paginatorToArray ( $Formats->fetchAll ( $company_id, $f_item->id, $rs_projects->id ) );
+						$formats = UsefulController::paginatorToArray ( $FamilyHasFormats->fetchAll ( $company_id, $f_item->id, $rs_projects->id ) );
 						$rs_formats = array ();
 						if (count ( $formats ) > 0) {
 							foreach ( $formats as $t_key => $t_item ) {
 								$rs_formats [$t_key] = UsefulController::getStripslashes ( $t_item );
 								// Fontes
-								$files = UsefulController::paginatorToArray ( $Files->fetchAll ( $company_id, $rs_projects->id, $f_item->id, $t_item->id, $t_item->license_formats_id ) );
+								$files = UsefulController::paginatorToArray ( $FontStyles->fetchAll ( $company_id, $rs_projects->id, $f_item->id, $t_item->id, $t_item->license_formats_id ) );
 								if (count ( $files )) {
 									foreach ( $files as $fs_key => $fs_item ) {
 										$rs_files [$fs_key] = UsefulController::getStripslashes ( $fs_item );
@@ -431,11 +459,10 @@ class ProductsController extends ApplicationController {
 								
 								$rs_formats [$t_key] ['files'] = $rs_files;
 							}
-						}						
+						}
 						$rs_families [$f_key] ['formats'] = $rs_formats;
 					}
 				}
-				
 				
 				$outcome = $status = true;
 				$data = array (
@@ -468,8 +495,8 @@ class ProductsController extends ApplicationController {
 			$data = 'Permission denied';
 		} else {
 			// Remove
-			$Products = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
-			$rs = $Products->removed ( $id, $company_id );
+			$Projects = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
+			$rs = $Projects->removed ( $id, $company_id );
 			if ($rs) {
 				// Success
 				$outcome = $status = true;

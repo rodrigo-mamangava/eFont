@@ -5,6 +5,10 @@ return array (
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\CompanyTable ( $dbAdapter );
 				},
+				'Shop\Model\UserSystemTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\UserSystemTable ( $dbAdapter );
+				},
 				'Shop\Model\LicensesTable' => function ($sm) {
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\LicensesTable ( $dbAdapter );
@@ -21,6 +25,23 @@ return array (
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\ProjectsTable ( $dbAdapter );
 				},
+				'Shop\Model\ProjectHasLicenseTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\ProjectHasLicenseTable ( $dbAdapter );
+				},
+				'Shop\Model\ProjectHasFamilyTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\ProjectHasFamilyTable ( $dbAdapter );
+				},
+				'Shop\Model\FontStylesTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\FontStylesTable ( $dbAdapter );
+				},
+				'Shop\Model\FontFilesTable' => function ($sm) {
+					$dbAdapter = $sm->get ( 'Adapter' );
+					return new \Shop\Model\FontFilesTable ( $dbAdapter );
+				},
+				/**/
 				'Shop\Model\FamiliesTable' => function ($sm) {
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\FamiliesTable ( $dbAdapter );
@@ -29,17 +50,11 @@ return array (
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\FamilyHasFormatsTable ( $dbAdapter );
 				},
-				'Shop\Model\FamilyHasLicenseTable' => function ($sm) {
-					$dbAdapter = $sm->get ( 'Adapter' );
-					return new \Shop\Model\FamilyHasLicenseTable ( $dbAdapter );
-				},
 				'Shop\Model\FamilyFilesTable' => function ($sm) {
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\FamilyFilesTable ( $dbAdapter );
-				},
-				'Shop\Model\UserSystemTable' => function ($sm) {
-					$dbAdapter = $sm->get ( 'Adapter' );
-					return new \Shop\Model\UserSystemTable ( $dbAdapter );
 				} 
 		) 
-);
+);/**
+ */
+

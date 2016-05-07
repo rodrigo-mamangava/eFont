@@ -273,9 +273,12 @@ function isDropzone(){
  * Carrega um arquivo e retorna para o input informado
  * @param id
  */
-function fileUploadDropzone(id){
+function fileUploadDropzone(id, uuid){
+	uuid = typeof uuid !== 'undefined' ?  uuid : false;
+	
 	$('#dropzone-to-imagem').val('');
 	$('#dropzone-to-id').val(id);
+	$('#uuid-to-id').val(uuid);
 	$('#modal_file_upload_form_static').modal('show');
 }
 /**

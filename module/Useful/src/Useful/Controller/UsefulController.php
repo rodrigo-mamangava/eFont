@@ -53,6 +53,8 @@ class UsefulController {
 				$obj->{$key} = $value == '1' ? true : false;
 			} elseif (strpos ( $key, 'collapsed_' ) !== false || strpos ( $key, 'collapsed' ) !== false) {
 				$obj->{$key} = $value == '1' ? true : false;
+			}elseif(strpos ( $key, 'ddig' ) !== false){
+				$obj->{$key} = \Cryptography\Controller\CryptController::encrypt($value, true);
 			} else {
 				$obj->{$key} = stripslashes ( $value );
 			}

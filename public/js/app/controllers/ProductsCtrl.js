@@ -1,11 +1,12 @@
 ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStorage, ipsumService, ShopSrvc) {
 	//global
 	$scope.searchText = '';	
-	$scope.form = {};
+	$scope.form = {licenses:[]};
 	//clean
 	$scope.cleanProducts = function(){
 		$scope.products = [];
 		$scope.families = [];
+		//$scope.families = [{"formats":[],"licenses":[{}],"family_name":ipsumService.words(5)},{"formats":[],"licenses":[{}],"family_name":ipsumService.words(5)}];
 		$scope.licenses = [];
 		$scope.formats = [];
 		$scope.price=[];
@@ -43,10 +44,9 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	};	
 	//Salvando
 	$scope.saveProducts = function (){
-		//console.log(angular.toJson($scope.families));
 		isSpinnerBar(true);	
 		$scope.form.number_families = $scope.families.length;
-		var data = {'project':$scope.form, 'families':$scope.families};data
+		var data = {'project':$scope.form, 'families':$scope.families};
 		ShopSrvc.saveProducts(data).then(function(res){
 			if(res.status == true){
 				$scope.changeTemplateURL('/ef-products');
@@ -56,8 +56,12 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 			}
 		});
 		
-		//console.log(angular.toJson(data));
+		console.log(angular.toJson(data));
 	};
+	//Licenca
+	$scope.setLicenseId = function(l_key, l_id){
+		$scope.form.licenses[l_key].license_id =l_id; 
+	};	
 	//Edicao
 	$scope.editProducts = function(id){
 		isSpinnerBar(true);	
@@ -75,6 +79,9 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		ShopSrvc.getListActiveLicenses().then(function(res){
 			if(res.status == true){
 				$scope.licenses = res.data.items;
+				angular.forEach($scope.licenses, function (item, key) {
+					$scope.form.licenses[key] ={license_id:item.id}; 
+				});
 				//Carregando formatos
 				//Formatos disponivel
 				ShopSrvc.getListFormats().then(function(res){
@@ -85,7 +92,6 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 						$timeout(function(){
 							if(!isBlank($localStorage.ProductsId)){
 								var id = $localStorage.ProductsId;
-
 								ShopSrvc.getProducts(id).then(function(res){
 									if(res.status == true){
 										$scope.form = res.data.project;
@@ -96,16 +102,16 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 									}
 								});		
 							}else{
-								$scope.form = {};
-								/*$timeout(function(){
-									$scope.form = {name: ipsumService.words(5)};
-									$scope.addFamilyItem();
-								}, 500);*/
+								//$scope.form = {licenses:[]};
 							}
 							$timeout(function(){ delete $localStorage.ProductsId; }, 500);
 							$timeout(function(){ 
 								isSpinnerBar(false);
-								isDropzone();
+								try{
+									isDropzone();
+								}catch(err){
+									console.log(err);
+								}
 							}, 500);
 						}, 500);						
 					}else{
@@ -126,21 +132,19 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		isSpinnerBar(true);
 		var zip = $('#media_url'+f_key+''+t_key).val();
 		if(zip.length > 10){
-			var data = {uploaded: zip};
+			var data = {uploaded: zip, 'f_key':f_key, 't_key':t_key, 'format_id':t_id};
 			ShopSrvc.getListFontFiles(data).then(function(res){
 				if(res.status == true){
 					$timeout(function(){
 						$scope.$apply(function(){
 							$scope.families[f_key].formats[t_id].files = res.data.files;
 							$scope.families[f_key].formats[t_id].number_files = res.data.total;
+							
+							if(isBlank($scope.form.ddig)){
+								$scope.form.ddig = res.data.ddig;
+							}
 						});
 					});
-					
-					
-					//$timeout(function(){
-						//console.log($scope.families);
-						//console.log(angular.toJson($scope.families));
-					//},2000);
 				}else{
 					bootbox.alert(res.data);
 				}
@@ -154,11 +158,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	};
 	//Atualizando precos
 	$scope.updateWeight = function(f_key, l_key, l_id){
-		//console.log(f_key, l_key, l_id);
-		//console.log($scope.families[f_key].licenses[l_key]);
-		
-		var price = $scope.families[f_key].licenses[l_key].money_weight;
-		
+		var price = $scope.families[f_key].money_weight;
 		angular.forEach($scope.families[f_key].formats, function (f_item, f_k) {
 			angular.forEach(f_item.files, function (fl_item, fl_k) {
 				if(fl_item.check_price == false){
@@ -166,12 +166,20 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 				};
 			});
 		});
-	}; 
+	};
+	//Atualizando preco de familia
+	$scope.updateFamilyPrice = function(l_key){
+		var price = $scope.form.licenses[l_key].money_family;
+		angular.forEach($scope.families, function (f_item, f_k) {
+			//console.log(f_item);
+			if(f_item.check_family == false){
+				$scope.families[f_k].money_family = price; 
+			};
+		});
+	};	
 	//Add Familias
 	$scope.addFamilyItem = function(){
-		$scope.families.push({formats:[], licenses:[{}],family_name:null});
-		//$scope.families.push({formats:[], licenses:[{}],family_name:ipsumService.words(5)});
-		//console.log($scope.families);
+		$scope.families.push({formats:[], family_name:null});
 	};
 	//Remove uma Familia
 	$scope.removeFamilyItem = function(f_key, y, n, t, m, err){
@@ -242,6 +250,10 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		ShopSrvc.removeProducts(id).then(function(res){
 			if(res.status == true){
 				$('#products-tr-'+id).addClass('hide');
+				
+				if($scope.products.length == 0){
+					$scope.initProducts();
+				}
 				isSpinnerBar(false);
 			}else{
 				$('#products-tr-'+id).addClass('danger');

@@ -36,10 +36,9 @@ class LicenseHasFormatsController extends \Useful\Controller\ControlController
 	/**
 	 * Retorna todos os itens pre formatado para a loja
 	 * @param unknown $license_id
-	 * @param unknown $company_id
 	 */
-	public function fetchAllToShop($license_id, $company_id){
-		return  $this->getDbTable ( '\Shop\Model\LicenseHasFormatsTable' )->fetchAllToShop($license_id, $company_id);
+	public function fetchAllShop($license_id){
+		return  $this->getDbTable ( '\Shop\Model\LicenseHasFormatsTable' )->fetchAllShop($license_id);
 	}
 	
 	/**

@@ -25,12 +25,14 @@ class ProjectsTable extends AbstractTableGateway {
 	 * @param unknown $company_id        	
 	 * @param unknown $user_id        	
 	 */
-	public function save($id, $name, $company_id, $user_id) {
+	public function save($id, $name, $company_id, $user_id, $project_ddig, $project_banner) {
 		$data = array (
 				'company_id' => $company_id,
 				'name' => addslashes ( $name ),
 				'user_id' => $user_id,
-				'dt_update' => date ( 'Y-m-d H:i:s' ) 
+				'dt_update' => date ( 'Y-m-d H:i:s' ),
+				'ddig' => $project_ddig,
+				'banner' => $project_banner 
 		);
 		
 		$id = ( int ) $id;
@@ -85,7 +87,7 @@ class ProjectsTable extends AbstractTableGateway {
 			$select->from ( $this->table );
 			// WHERE
 			$select->where ( "$this->table.id = '{$id}'" );
-			if($company_id != null && $company_id > 0){
+			if ($company_id != null && $company_id > 0) {
 				$select->where ( "{$this->table}.company_id='{$company_id}'" );
 			}
 			// ORDER
@@ -126,7 +128,7 @@ class ProjectsTable extends AbstractTableGateway {
 			$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		}
 		// ORDER
-		$select->order ( "{$this->table}.name ASC" );
+		$select->order ( "{$this->table}.id DESC" );
 		// Executando
 		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
 		$paginator = new \Zend\Paginator\Paginator ( $adapter );

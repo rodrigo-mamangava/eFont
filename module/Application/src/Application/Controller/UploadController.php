@@ -21,6 +21,7 @@ class UploadController extends ApplicationController {
 	 * Upload para Amazon
 	 */
 	public function fileAction() {
+		set_time_limit(180);
 		// action body
 		$Request = $this->getRequest ();
 		$data = $this->translate ( "Unknown Error, try again, please." );

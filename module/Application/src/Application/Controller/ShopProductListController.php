@@ -23,8 +23,6 @@ class ShopProductListController extends ApplicationController
 		// Default
 		$data = $this->translate ( "Unknown Error, try again, please." );
 		$outcome = $status = false;
-		// System
-		$user_id = $this->get_user_id ();
 		// GET
 		$Params = $this->params ();
 		$count = $Params->fromQuery ( 'count', 10 );
@@ -32,26 +30,23 @@ class ShopProductListController extends ApplicationController
 		$search = $Params->fromQuery ( 'search', null );
 		// Query
 		$ProductsController = new \Shop\Controller\ProjectsController( $this->getMyServiceLocator () );
-		$Family = new \Shop\Controller\FamiliesController($this->getServiceLocator());
-		
 		$Paginator = $ProductsController->filter ( $search, $count, $offset, null );
-		
 		if ($Paginator->count () > 0) {
-			$arr = iterator_to_array ( $Paginator->getCurrentItems () );
-			foreach($arr as $p_key=>$p_item){
-				$arr[$p_key]['families'] =  \Useful\Controller\UsefulController::paginatorToArray($Family->fetchAll($p_item->company_id, $p_item->id));
-				$arr[$p_key]['number_families'] = count($arr[$p_key]['families']);
-			}
+			$rs = iterator_to_array ( $Paginator->getCurrentItems () );
 			
+			foreach($rs as $key=>$item){
+				$item['ddig'] = \Cryptography\Controller\CryptController::encrypt($item['ddig'], true);
+				$rs[$key] = $item;
+			}
 			$data = array ();
-			$data ['items'] = $arr;
+			$data ['items'] = $rs;
 			$data ['total'] = $Paginator->getTotalItemCount ();
 			$data ['count'] = $count;
 			$data ['offset'] = $offset;
 				
 			$outcome = $status = true;
 		}
-		// Response
+// 		// Response
 		self::showResponse ( $status, $data, $outcome, true );
 		die ();
 	}

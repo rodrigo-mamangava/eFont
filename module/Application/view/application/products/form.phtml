@@ -26,9 +26,32 @@
 							<input type="text" ng-model="form.name" class="form-control"  maxlength="255" placeholder="<?php echo $this->translate('PROJECT NAME');?>" required="required" />
 						</div>
 						<div class="col-md-2 pull-right">
-							<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="addFamilyItem();"><small><i class="fa fa-plus"></i>  <?php echo $this->translate('Add Family');?></small></a>						
+							<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-show="formProducts.$invalid" ng-disabled="true"><small><i class="fa fa-plus"></i>  <?php echo $this->translate('Add Family');?></small></a>
+							<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-hide="formProducts.$invalid" ng-click="addFamilyItem();"><small><i class="fa fa-plus"></i>  <?php echo $this->translate('Add Family');?></small></a>						
 						</div>
-					</div>					
+					</div>		
+					
+					<!-- LICENCES -->
+					<div class="form-group margin-top-40">
+						<div class="col-md-offset-2 col-md-6">
+						  <table class="table">
+						  		<!-- HEADER -->
+								<tr class="not-not-border">
+									<th class="not-not-border"><label class="control-label pull-left"><small><strong><?php echo $this->translate('Lincese');?></strong></small></label></th>
+									<th class="not-not-border"><label class="control-label pull-left"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></th>
+								</tr>
+								<!-- LICENSES -->
+								<tr ng-repeat="(l_key, l_item) in licenses">
+									<td class="not-not-border" ng-init="setLicenseId(l_key, l_item.id)">
+										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox-{{l_key}}" class="c-check" ng-model="form.licenses[l_key].check_enabled">
+                                    	<label for="checkbox-{{l_key}}"><span class="inc"></span><span class="check"></span><span class="box"></span><small ng-class="form.licenses[l_key].check_enabled?'c-font-green':'c-font-red'">{{l_item.name}}</small></label></div>
+									</td>
+									<td class="not-not-border text-left" colspan="2" ng-hide="form.licenses[l_key].check_enabled"><span><?php echo $this->translate('Disabled at the cart.');?></span></td>
+									<td ng-show="form.licenses[l_key].check_enabled" class="not-not-border"><input ui-money-mask="2" ng-model="form.licenses[l_key].money_family" ng-change="updateFamilyPrice(l_key);" type="text" class="form-control"></td>
+								</tr>
+						</table>
+						</div>
+					</div>		
 					<!-- FAMILY -->
 					<section ng-repeat="(f_key, f_item) in families">
 						<hr />
@@ -42,22 +65,17 @@
 							<a href="javascript:;" class="col-md-12 btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFamilyItem(f_key, '<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the family');?> <b>'+f_item.family_name+'<b/>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><small><i class="fa fa-trash"></i>  <?php echo $this->translate('REMOVE');?></small></a>
 							</div>
 						</div>
-						<!-- LICENCES -->
-						<div class="form-group margin-top-40">
-							<div class="col-md-10">
+						<!-- PRECO/PESO -->
+						<div class="form-group">
+							<div class="col-md-offset-2 col-md-8">
 							  <table class="table">
-							  		<!-- HEADER -->
-									<tr class="not-not-border"><td class="not-not-border"><label class="control-label pull-right"><small><strong><?php echo $this->translate('Lincese');?></strong></small></label></td>
-										<td class="not-not-border"><label class="control-label pull-right"><small><?php echo $this->translate('WEIGHT PRICE');?></small></label></td>
-										<td class="not-not-border"><label class="control-label pull-right"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></td>
-									</tr>
-									<!-- LICENSES -->
-									<tr ng-repeat="(l_key, l_item) in licenses"><td class="not-not-border" ng-init="f_item.licenses[l_key].license_id = l_item.id">
-										<div class="c-checkbox c-toggle-hide" data-object-selector="c-form-register" data-animation-speed="600"><input type="checkbox" id="checkbox-{{f_key}}-{{l_key}}" class="c-check" ng-model="f_item.licenses[l_key].check_enabled">
-                                        <label for="checkbox-{{f_key}}-{{l_key}}"><span class="inc"></span><span class="check"></span><span class="box"></span><small ng-class="f_item.licenses[l_key].check_enabled?'c-font-green':'c-font-red'">{{l_item.name}}</small></label></div>
-                                        </td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" ng-model="f_item.licenses[l_key].check_weight" ></span><input ng-change="updateWeight(f_key, l_key, l_item.id);" ng-disabled="!f_item.licenses[l_key].check_weight" ui-money-mask="2" ng-model="f_item.licenses[l_key].money_weight" type="text" class="form-control"></div></td>
-										<td class="not-not-border"><div class="input-group"><span class="input-group-addon"><input type="checkbox" ng-model="f_item.licenses[l_key].check_family" ></span><input ng-disabled="!f_item.licenses[l_key].check_family" ui-money-mask="2" ng-model="f_item.licenses[l_key].money_family" type="text" class="form-control"></div></td>
+									<tr class="not-not-border">
+										<td class="not-not-border col-md-6"><label class="control-label pull-left"><small><?php echo $this->translate('WEIGHT PRICE');?></small></label></td>
+										<td class="not-not-border col-md-6"><label class="control-label pull-left"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></td>
+									</tr>							  		
+									<tr>
+										<td class="not-not-border col-md-6"><div class="input-group"><input ng-change="updateWeight(f_key, l_key, l_item.id);" ui-money-mask="2" ng-model="f_item.money_weight" type="text" class="form-control"></div></td>
+										<td class="not-not-border col-md-6"><div class="input-group"><span class="input-group-addon"><input type="checkbox" ng-model="f_item.check_family"></span><input ng-disabled="!f_item.check_family" ui-money-mask="2" ng-model="f_item.money_family" type="text" class="form-control"></div></td>
 									</tr>
 							</table>
 							</div>
@@ -71,8 +89,8 @@
 								<div class="col-md-8">
 								<div class="input-group">
 									<!-- readonly="readonly"  -->
-									<input type="text" placeholder="" readonly="readonly" class="form-control" ng-model="f_item.formats[t_item.id].media_url" id="media_url{{f_key}}{{t_key}}" name="media_url{{f_key}}{{t_key}}" ng-change="getRetrieveDetails(f_key, t_key ,t_item.id);"/>
-									<span class="input-group-btn"><button class="btn blue" type="button" data-id="media_url{{f_key}}{{t_key}}" onclick="fileUploadDropzone($(this).data('id'));" ><i class="fa fa-upload"></i></button></span>
+									<input type="text" placeholder="" class="form-control" ng-model="f_item.formats[t_item.id].media_url" id="media_url{{f_key}}{{t_key}}" name="media_url{{f_key}}{{t_key}}" ng-change="getRetrieveDetails(f_key, t_key ,t_item.id);"/>
+									<span class="input-group-btn"><button class="btn blue" type="button" data-uuid="{{t_item.id}}" data-id="media_url{{f_key}}{{t_key}}" onclick="fileUploadDropzone($(this).data('id'), $(this).data('uuid'));" ><i class="fa fa-upload"></i></button></span>
 								</div>
 								</div>
 								<div class="col-md-2 pull-right">
@@ -84,13 +102,13 @@
 								<div class="col-md-12">
 								<table class="table table-bordered table-striped">
 									<tr ng-repeat="(fl_key, fl_item) in f_item.formats[t_item.id].files">
-									<td class="col-md-5">{{fl_item.font_file}}</td>
-									<td class="col-md-4"><span ng-show="t_item.id == '0'">{{fl_item.font_subfamily}}</span><input ng-hide="t_item.id == '0'" type="text" class="form-control" ng-model="fl_item.font_subfamily" /></td>
+									<td class="col-md-3 small bold">{{fl_item.font_file}}</td>
+									<td class="col-md-6"><span ng-show="t_item.id == '0'">{{fl_item.font_subfamily}}</span><input ng-hide="t_item.id == '0'" type="text" class="form-control" ng-model="fl_item.font_subfamily" /></td>
 									<td class="col-md-2"><span ng-show="t_item.id == '0'">Trial</span><div ng-hide="t_item.id == '0'" class="input-group"><span class="input-group-addon"><input type="checkbox" ng-model="fl_item.check_price" ></span><input ui-money-mask="2" ng-model="fl_item.font_price" type="text" class="form-control" ng-disabled="!fl_item.check_price"></div></td></tr>
 								</table>
 								</div>
 							</div>											
-						</section>
+						</section>						
 					</section>
 					<!-- BUTTON -->
 					<hr/>
@@ -104,6 +122,7 @@
 				</form>
 			</div>
 			<!-- END FORM -->
+			
 			<!-- BEGIN CONFIRM -->
 			<div class="portlet-body form" ng-show="screen_summary">
 				<div class="col-md-12">
@@ -112,12 +131,31 @@
 						<label class="uppercase c-font-bold bold pull-left"><?php echo $this->translate('PROJECT');?></label>
 						<label class="uppercase c-font-bold bold pull-right c-font-red"><?php echo $this->translate('SUMMARY');?></label>
 					</div>		
+					
 					<!-- PROJECT INFO -->
 					<hr class="row"/>
 					<div class="form-group margin-top-40 margin-bottom-20">
-						<label class="pull-left"><strong><?php echo $this->translate('Project Name');?>:</strong> <span>{{form.name}}</span></label>
-						<label class="pull-right">{{families.length}} <span> <?php echo $this->translate('Family');?> </span></label>
+						<!-- PROJECT -->
+						<div class="col-md-12">
+							<label class="pull-left"><strong><?php echo $this->translate('Project Name');?>:</strong> <span>{{form.name}}</span></label>
+							<label class="pull-right">{{families.length}} <span> <?php echo $this->translate('Family');?> </span></label>
+						</div>
+						<!-- LINCESE -->
+						<div class="col-md-6 pull-right">
+						<table class="table">
+					  		<!-- HEADER -->
+							<tr class="not-not-border"><td class="not-not-border"><label class="control-label"><small><strong><?php echo $this->translate('Lincese');?></strong></small></label></td>
+								<td class="not-not-border"><label class="control-label"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></td>
+							</tr>
+							<!-- LICENSES -->
+								<tr ng-repeat="(l_key, l_item) in licenses" ng-show="form.licenses[l_key].check_enabled">
+									<td class="not-not-border"><small class="c-font-bold">{{l_item.name}}</small></td>
+									<td class="not-not-border"><small>{{form.licenses[l_key].money_family | currency}}</small></td>
+								</tr>							
+						</table>
+						</div>						
 					</div>			
+					
 					<!-- FAMILIES -->
 					<section ng-repeat="(f_key, f_item) in families">
 						<!-- FAMILY -->
@@ -130,15 +168,15 @@
 							<div class="col-md-6 pull-right">
 							<table class="table">
 						  		<!-- HEADER -->
-								<tr class="not-not-border"><td class="not-not-border"><label class="control-label"><small><strong><?php echo $this->translate('Lincese');?></strong></small></label></td>
+								<tr class="not-not-border">
 									<td class="not-not-border"><label class="control-label"><small><?php echo $this->translate('WEIGHT PRICE');?></small></label></td>
 									<td class="not-not-border"><label class="control-label"><small><?php echo $this->translate('FAMILY PRICE');?></small></label></td>
 								</tr>
-								<!-- LICENSES -->
-									<tr ng-repeat="(l_key, l_item) in licenses" ng-show="f_item.licenses[l_key].check_enabled"><td class="not-not-border"><div><small class="c-font-bold">{{l_item.name}}</small></td>
-										<td class="not-not-border"><small ng-show="f_item.licenses[l_key].check_weight"> {{f_item.licenses[l_key].money_weight | currency}}</small><small ng-hide="f_item.licenses[l_key].check_weight"> - </small></td>
-										<td class="not-not-border"><small ng-show="f_item.licenses[l_key].check_family"> {{f_item.licenses[l_key].money_family | currency}}</small><small ng-hide="f_item.licenses[l_key].check_family"> - </small></td>
-									</tr>							
+								<!-- PRICES -->
+								<tr>
+									<td class="not-not-border"><small> {{f_item.money_weight | currency}}</small></td>
+									<td class="not-not-border"><small> {{f_item.money_family | currency}}</small></td>
+								</tr>							
 							</table>
 							</div>
 						</div>
@@ -150,7 +188,7 @@
 								<h5>{{t_item.name}}</h5>
 								<table class="table table-bordered table-striped"">
 								<tr ng-repeat="(fl_key, fl_item) in f_item.formats[t_item.id].files" ng-show="f_item.formats[t_item.id].files">
-									<td class="not-not-border">{{fl_item.font_file}}</td>
+									<td class="not-not-border">{{fl_item.font_subfamily}}</td>
 									<td class="not-not-border"><span ng-show="t_item.id == '0'">Trial</span><span ng-hide="t_item.id == '0'">{{fl_item.font_price | currency}}</td>
 								</tr>
 								<tr ng-hide="f_item.formats[t_item.id].files">
@@ -172,7 +210,8 @@
 				</form>
 				</div>
 			</div>	
-			<!-- END CONFIRM -->
+			<!-- END CONFIRM -->			
+			
 		</div>
 	</div>
 	<!-- END C-LAYOUT-SIDEBAR-CONTENT-->

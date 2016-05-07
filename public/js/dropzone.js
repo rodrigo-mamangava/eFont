@@ -8,10 +8,11 @@ var FormDropzone = function () {
 			}
 			//console.log(acceptedFiles);
 			var myDropzone = new Dropzone("#my-dropzone", {
-				maxFilesize: 2,
+				maxFilesize: 6,
 				uploadMultiple: false,
 				maxFiles: 1,
-				acceptedFiles: acceptedFiles      		
+				acceptedFiles: acceptedFiles,
+				autoDiscover: true			
 			});
 
 			myDropzone.on("addedfile", function(file) {
@@ -45,6 +46,20 @@ var FormDropzone = function () {
 					_this.removeAllFiles();
 				}
 			});
+			
+			myDropzone.on("uploadprogress", function(file, progress) {
+		        console.log("File progress", progress);
+		      });
+		    
+			myDropzone.on("sending", function(file, xhr, formData) {
+				// Will send the filesize along with the file as POST data.
+				formData.append("filesize", file.size);
+			});			
+			
+			myDropzone.on("error", function(file, message) { 
+				bootbox.alert(message);
+				this.removeFile(file); 
+			});			
 
 			myDropzone.on("success", function(file, responseText) {
 				// Handle the responseText here. For example, add the text to the preview element:
@@ -52,6 +67,8 @@ var FormDropzone = function () {
 					$('#dropzone-to-imagem').val(responseText.data.short);
 					$('#'+$('#dropzone-to-id').val()).val(responseText.data.short).trigger('change');
 					$('#modal_file_upload_form_static').modal('hide');
+				}else{
+					bootbox.alert(responseText.data);
 				}
 			});         	
 		}

@@ -16,8 +16,8 @@ class ProjectsController extends \Useful\Controller\ControlController
 	 * @param unknown $company_id
 	 * @param unknown $user_id
 	 */
-	public function save($id, $name, $company_id, $user_id){
-		return $this->getDbTable ( '\Shop\Model\ProjectsTable' )->save($id, $name, $company_id, $user_id);
+	public function save($id, $name, $company_id, $user_id, $project_ddig, $project_banner){
+		return $this->getDbTable ( '\Shop\Model\ProjectsTable' )->save($id, $name, $company_id, $user_id, $project_ddig, $project_banner);
 	}
 	/**
 	 * Retorna um item

@@ -126,15 +126,15 @@ class ApplicationController extends AbstractActionController {
 	 * Aviso que a sessao expirou
 	 */
 	public function getSessionTimeout(){
-		echo '
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js" />		
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" />		
-		<script type="text/javascript">
+		echo '<html><head>
+		<script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>		
+		</head><body><script type="text/javascript">
 			bootbox.alert("'.$this->translate('Your session is about to expire.').'", function() {
 				window.location.href = "/logout";
 			});
-		</script>' ;
-		
+		</script></body></html>' ;
 		return;
 	}
 	/**
@@ -271,55 +271,6 @@ class ApplicationController extends AbstractActionController {
 			throw new \Exception ( $this->translate ( 'Oops! No permissions.' ) );
 		}
 		return true;
-	}
-	/**
-	 * Verifica o limite do plano de uma empresa
-	 */
-	function checkLimitPlans() {
-		// Set numbers by type
-		$ready_to_use = 0;
-		if ($this->get_privilege_type () != 1) {
-			$ready_to_use = 99;
-		}
-		// Control
-		$available_staff = $available_web = $plan_tech_users = $plan_web_users = $use_web = $use_staff = $ready_to_use;
-		
-		if ($this->get_privilege_type () != 2) {//Root nem perde tempo conferido
-			$Company = new \Quiz\Controller\CompanyController ( $this->getMyServiceLocator () );
-			$Paginator = $Company->filter ( null, null, null, $this->get_company_id () );
-			if ($Paginator->count () > 0) {
-				foreach ( $Paginator as $rs ) {
-					if ($rs->id == $this->get_company_id ()) {
-						$plan_web_users = isset ( $rs->plan_web_users ) ? $rs->plan_web_users : 0;
-						$plan_tech_users = isset ( $rs->plan_tech_users ) ? $rs->plan_tech_users : 0;
-						$use_web = isset ( $rs->use_web ) ? $rs->use_web : 0;
-						$use_staff = isset ( $rs->use_tech ) ? $rs->use_tech : 0;
-						
-						$available_web = ($plan_web_users > 0 && $use_web > 0) ? ($plan_web_users - $use_web) : $plan_web_users;
-						$available_staff = ($plan_tech_users > 0 && $use_staff > 0) ? ($plan_tech_users - $use_staff) : $plan_tech_users;
-						break;
-					}
-				}
-			}
-		}
-		
-		$this->viewModel->setVariable ( 'USE_WEB', $use_web );
-		$this->viewModel->setVariable ( 'USE_STAFF', $use_staff );
-		$this->viewModel->setVariable ( 'PLAN_WEB', $plan_web_users );
-		$this->viewModel->setVariable ( 'PLAN_STAFF', $plan_tech_users );
-		$this->viewModel->setVariable ( 'AVAILABLE_WEB', $available_web );
-		$this->viewModel->setVariable ( 'AVAILABLE_STAFF', $available_staff );
-		
-		$this->layout ()->setVariable ( 'USE_WEB', $use_web );
-		$this->layout ()->setVariable ( 'USE_STAFF', $use_staff );
-		$this->layout ()->setVariable ( 'PLAN_WEB', $plan_web_users );
-		$this->layout ()->setVariable ( 'PLAN_STAFF', $plan_tech_users );
-		$this->layout ()->setVariable ( 'AVAILABLE_WEB', $available_web );
-		$this->layout ()->setVariable ( 'AVAILABLE_STAFF', $available_staff );
-		
-		//var_dump ( $available_staff, $available_web ); 
-		
-		return;
 	}
 	/**
 	 * Retorna o idioma salvo na sessao do login

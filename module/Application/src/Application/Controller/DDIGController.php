@@ -2,6 +2,8 @@
 
 namespace Application\Controller;
 
+use Validador\Controller\ValidadorController;
+
 /**
  * Dynamic Dummy Image Generator
  * 
@@ -30,6 +32,9 @@ class DDIGController extends ApplicationController {
 		$foreground = $Params->fromQuery ( 'foreground', '000' );
 		$format = $Params->fromQuery ( 'format', 'png' );
 		$font = $Params->fromQuery ( 'font', 'data/tmp/mplus-1c-medium.ttf' );
+		if(ValidadorController::isValidRegexp($font, 'base64')){
+			$font = \Cryptography\Controller\CryptController::decrypt($font, true);
+		}
 		$fontsize = $Params->fromQuery ( 'fontsize', null );
 		// Set variables
 		$this->viewModel->setVariable ( 'text', $text );
