@@ -37,12 +37,22 @@ class FontStylesController extends \Useful\Controller\ControlController {
 	}
 	/**
 	 * Retorna todos os itens
-	 *
-	 * @param unknown $company_id        	
-	 * @param unknown $project_id        	
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 * @param unknown $family_id
+	 * @param unknown $family_has_formats_id
+	 * @param unknown $formats_id
 	 */
 	public function fetchAll($company_id, $project_id, $family_id, $family_has_formats_id, $formats_id) {
 		return $this->getDbTable ( '\Shop\Model\FontStylesTable' )->fetchAll ($company_id, $project_id, $family_id, $family_has_formats_id, $formats_id);
+	}
+	/**
+	 * Retorna todos os itens pre formatados
+	 * @param unknown $company_id
+	 * @param unknown $project_id
+	 */
+	public function fetchAllShop($company_id, $project_id) {
+		return $this->getDbTable ( '\Shop\Model\FontStylesTable' )->fetchAllShop ($company_id, $project_id);
 	}
 	/**
 	 * Limpando pelas chaves principais

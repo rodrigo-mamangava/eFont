@@ -69,13 +69,14 @@ class FontStylesTable extends AbstractTableGateway {
 	}
 	/**
 	 * Atualizando itens pelo array do data
-	 * @param unknown $id
-	 * @param unknown $company_id
-	 * @param unknown $data
+	 * 
+	 * @param unknown $id        	
+	 * @param unknown $company_id        	
+	 * @param unknown $data        	
 	 */
-	public function updated($id, $company_id, $user_id, $data){
+	public function updated($id, $company_id, $user_id, $data) {
 		// Update
-		$data ['dt_update'] = date('Y-m-d H:i:s');
+		$data ['dt_update'] = date ( 'Y-m-d H:i:s' );
 		// Where
 		$where = array ();
 		$where ['id'] = $id;
@@ -86,14 +87,15 @@ class FontStylesTable extends AbstractTableGateway {
 			return false;
 		}
 		return $id;
-	}	
+	}
 	/**
 	 * Retorna todos os itens
-	 * @param unknown $company_id
-	 * @param unknown $project_id
-	 * @param unknown $family_id
-	 * @param unknown $family_has_formats_id
-	 * @param unknown $formats_id
+	 * 
+	 * @param unknown $company_id        	
+	 * @param unknown $project_id        	
+	 * @param unknown $family_id        	
+	 * @param unknown $family_has_formats_id        	
+	 * @param unknown $formats_id        	
 	 */
 	public function fetchAll($company_id, $project_id, $family_id, $family_has_formats_id, $formats_id) {
 		// SELECT
@@ -105,6 +107,46 @@ class FontStylesTable extends AbstractTableGateway {
 		$select->where ( "{$this->table}.family_has_formats_id='{$family_has_formats_id}'" );
 		$select->where ( "{$this->table}.formats_id='{$formats_id}'" );
 		
+		$select->where ( "{$this->table}.project_id='{$project_id}'" );
+		$select->where ( "{$this->table}.company_id='{$company_id}'" );
+		
+		$select->where ( "{$this->table}.removed='0' OR {$this->table}.removed IS NULL" );
+		// ORDER
+		$select->order ( "{$this->table}.sequence ASC" );
+		// Executando
+		// var_dump($select->getSqlString());
+		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+		$paginator = new \Zend\Paginator\Paginator ( $adapter );
+		$paginator->setItemCountPerPage ( null );
+		$paginator->setCurrentPageNumber ( null );
+		
+		return $paginator;
+	}
+	/**
+	 * Retorna todos os itens pre formatados
+	 * 
+	 * @param unknown $company_id        	
+	 * @param unknown $project_id        	
+	 */
+	public function fetchAllShop($company_id, $project_id) {
+		// SELECT
+		$select = new Select ();
+		// COLS
+		$select->columns ( array (
+				'id',
+				'font_file',
+				'font_subfamily',
+				'font_price',
+				'sequence',
+				'uploadkey',
+				'formats_id',
+				'linked',
+				'family_id',
+				'family_has_formats_id' 
+		) );
+		// FROM
+		$select->from ( $this->table );
+		// WHERE
 		$select->where ( "{$this->table}.project_id='{$project_id}'" );
 		$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		

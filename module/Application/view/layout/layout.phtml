@@ -51,7 +51,7 @@
             <?php if(isset($this->CHANGETEMPLATEURL) && strlen($this->CHANGETEMPLATEURL) > 1 ){?>
             <div dynamic-template ng-init="changeTemplateURL('<?php echo $this->CHANGETEMPLATEURL;?>');"><?php echo $this->content; ?></div>
             <?php }else{?>
-            <div dynamic-template ng-init="changeTemplateURL('/shop-product-details');"><?php echo $this->content; ?></div>
+            <div dynamic-template ng-init="changeTemplateURL('/shop-cart');"><?php echo $this->content; ?></div>
             <?php }?>
 		    <!-- END: PAGE CONTENT -->
         </div>
@@ -197,6 +197,7 @@
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/ProductsCtrl.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/ShopProductListCtrl.js"></script>
 		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/ShopProductDetailsCtrl.js"></script>
+		<script type="text/javascript" src="<?php echo $this->basePath(); ?>/js/app/controllers/ShopCartCtrl.js"></script>
 		<!-- END ANGULAR JS -->
     </body>
 </html>

@@ -83,8 +83,8 @@
 					<hr />
 					<table class="table table-condensed table-bordered"><tbody><tr>
 						<td width="1%"><a href="javascript:;" class="btn c-btn btn-xs" ng-model="form.collapsed" ng-click="form.collapsed=!form.collapsed"><i class="fa" ng-class="form.collapsed?'fa-minus':'fa-plus'"></i></a></td>
-						<td class="c-bg-dark c-bg-dark-font">&nbsp;<small>{{form.name}}&nbsp; &#8226; &nbsp; {{families.length}} <?php echo $this->translate('Families');?> &nbsp;</small></td>
-						<td class="c-bg-dark c-bg-dark-font col-md-2"><!-- <small >&nbsp;{{form.collection  * multiplier_c | currency }}</small> --></td></tr>
+						<td class="c-bg-dark c-bg-dark-font">&nbsp;<small>{{form.name}}&nbsp; &#8226; &nbsp; {{ form.families }} <?php echo $this->translate('Families');?> &nbsp;</small></td>
+						<td class="c-bg-dark c-bg-dark-font col-md-2"><small >&nbsp;{{form.collection | currency}}</small></td></tr>
 						
 						<tr ng-repeat="(c_key, c_item) in families" ng-show="form.collapsed">
 							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="c_item.check_collection" ng-change="onChangeSelectedCollection(c_key, c_item.id);" /></button></td>
@@ -103,25 +103,13 @@
 						<tr>
 							<td width="1%"><a href="javascript:;" class="btn c-btn btn-xs" ng-model="f_item.collapsed" ng-click="f_item.collapsed=!f_item.collapsed"><i class="fa" ng-class="f_item.collapsed?'fa-minus':'fa-plus'"></i></a></td>
 							<td class="c-bg-dark c-bg-dark-font">&nbsp;<small>{{f_item.family_name}}</small></td>
-							<td class="c-bg-dark c-bg-dark-font col-md-2"><small>{{f_item.collection | currency}}</small></td>
+							<td class="c-bg-dark c-bg-dark-font col-md-2"><small>{{f_item.subprice | currency}}</small></td>
 						</tr>
 						
-						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key][1]" ng-show="f_item.collapsed">
-							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_item.styles[1][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 1 );" /></button></td>
-							<td>&nbsp;<small>{{f_s_item.font_name}}</small></td>
-							<td class="col-md-2"><small >&nbsp;{{ f_s_item.collection | currency }}</small></td>						
-						</tr>
-						
-						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key][2]" ng-show="f_item.collapsed">
-							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_item.styles[2][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 2 );"/></button></td>
-							<td>&nbsp;<small>{{f_s_item.font_name}}</small></td>
-							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[license][2][formats[license][2]] | currency }}</small></td>						
-						</tr>
-						
-						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key][3]" ng-show="f_item.collapsed">
-							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_item.styles[3][f_s_item.id].selected" ng-change="onChangeSelectedItem(f_s_key, f_key, 3 );"/></button></td>
-							<td>&nbsp;<small>{{f_s_item.font_name}}</small></td>
-							<td class="col-md-2"><small >&nbsp;{{ f_s_item.font_weight * multiplier[license][3][formats[license][3]] | currency }}</small></td>						
+						<tr ng-repeat="(f_s_key, f_s_item) in styles[f_key]" ng-show="f_item.collapsed">
+							<td width="1%"><button class="btn c-btn btn-xs c-btn-white"><input type="checkbox" ng-model="f_s_item.selected" ng-change="onChangeSelectedItem(f_s_key, f_key);" /></button></td>
+							<td>&nbsp;<small>{{f_s_item.font_subfamily}}</small></td>
+							<td class="col-md-2"><small >&nbsp;{{ f_s_item.price || 0 | currency }}</small></td>						
 						</tr>
 					</tbody></table>
 					</div>
@@ -145,15 +133,13 @@
 						<small><i class="fa" ng-class="f_item.selected?'fa-minus':'fa-plus'"></i>&nbsp;&nbsp;{{f_item.family_name}}&nbsp; &#8226; &nbsp;{{selected_numbers[f_key] || 0}} fonts</small>
 						</a>
 						<p ng-show="f_item.selected"><small>Styles</small></p>
-						<p ng-show="f_item.selected"><small class="col-md-6" ng-repeat="(sel_key, sel_item) in f_item.styles[1] | selectedFilter:true" >{{sel_item.font_name}}</small></p>
-						<p ng-show="f_item.selected"><small class="col-md-6" ng-repeat="(sel_key, sel_item) in f_item.styles[2] | selectedFilter:true">{{sel_item.font_name}}</small></p>
-						<p ng-show="f_item.selected"><small class="col-md-6" ng-repeat="(sel_key, sel_item) in f_item.styles[3] | selectedFilter:true">{{sel_item.font_name}}</small></p>
+						<p ng-show="f_item.selected"><small class="col-md-6" ng-repeat="(sel_key, sel_item) in styles[f_key] | selectedFilter:true" >{{sel_item.font_subfamily}}</small></p>
 						</div>
 						<hr class="col-md-12"/>
 					</section>
 					
 					<div class="col-md-12">
-						<div class="row"><a href="javascript:;" class="btn c-btn-dark btn-block c-btn-square" ng-disabled="cart < '1'" ng-click="notimplemented();">ADD TO CART</a></div>
+						<div class="row"><a href="javascript:;" class="btn c-btn-dark btn-block c-btn-square" ng-disabled="cart < '1'" ng-click="AddToCart();">ADD TO CART</a></div>
 					</div>
 				</div>
 				<!-- END PRICE -->								

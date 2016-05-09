@@ -15,82 +15,45 @@
             <!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
             <!-- BEGIN: PAGE CONTENT -->
             <!-- BEGIN: CONTENT/SHOPS/SHOP-CART-1 -->
-            <div class="c-content-box c-size-lg">
+            <section ng-controller="ShopCartCtrl" ng-init="initYourCart();">
+            <div class="c-content-box c-size-lg" ng-show="cart.length">
                 <div class="container">
                     <div class="c-shop-cart-page-1">
                         <div class="row c-cart-table-title">
-                            <div class="col-md-2 c-cart-image">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Image');?></h3>
-                            </div>
-                            <div class="col-md-4 c-cart-desc">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Description');?></h3>
-                            </div>
-                            <div class="col-md-1 c-cart-ref">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('SKU');?></h3>
-                            </div>
-                            <div class="col-md-2 c-cart-price">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Price');?></h3>
-                            </div>
-                            <div class="col-md-1 c-cart-total">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Total');?></h3>
-                            </div>
+                            <div class="col-md-2 c-cart-image"><h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Font');?></h3></div>
+                            <div class="col-md-4 c-cart-desc"><h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Project');?></h3></div>
+                            <div class="col-md-2 c-cart-ref"><h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Styles');?></h3></div>
+                            <div class="col-md-2 c-cart-price"><h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('License');?></h3></div>
+                            <div class="col-md-1 c-cart-total"><h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"><?php echo $this->translate('Total');?></h3></div>
                             <div class="col-md-1 c-cart-remove"></div>
                         </div>
                         <!-- BEGIN: SHOPPING CART ITEM ROW -->
-                        <div class="row c-cart-table-row">
-                            <h2 class="c-font-uppercase c-font-bold c-theme-bg c-font-white c-cart-item-title c-cart-item-first"><?php echo $this->translate('Item');?> 1</h2>
-                            <div class="col-md-2 col-sm-3 col-xs-5 c-cart-image">
-                                <img src="http://placehold.it/1200x900" /> </div>
+                        <div class="row c-cart-table-row" ng-repeat="(key, item) in cart">
+                            <div class="col-md-2 col-sm-3 col-xs-5 c-cart-image"><img ng-src="{{'/ef-ddig/?text=Ab&font='+item.form.ddig+'&size=140x140'}}" /> </div>
                             <div class="col-md-4 col-sm-9 col-xs-7 c-cart-desc">
-                                <h3><a href="javascript:;" ng-click="changeTemplateURL('/shop-product-details');" class="c-font-bold c-theme-link c-font-22 c-font-dark">Font Winter J</a></h3>
-                                <p><?php echo $this->translate('License Types');?>: A</p>
+                                <h3><a href="javascript:;" class="c-font-bold c-theme-link c-font-22 c-font-dark">{{item.form.name}}</a></h3>
+                                <p><?php echo $this->translate('By');?>: </p>
                             </div>
-                            <div class="col-md-1 col-sm-3 col-xs-6 c-cart-ref">
-                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold"><?php echo $this->translate('SKU');?></p>
-                                <p>120715</p>
+                            <div class="col-md-2 col-sm-3 col-xs-6 c-cart-ref">
+                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold"><?php echo $this->translate('Styles');?></p>
+                                <p><ul class="list-inline small"><li ng-repeat="(f_key, f_item) in item.families" ng-show="f_item.check_collection"><b>Collection</b> {{f_item.family_name}}</li></ul></p>
+                                <p><ul ng-repeat="(s_key, s_item) in item.styles" class="list-inline small"><li ng-repeat="(f_key, f_item) in s_item" ng-show="f_item.selected">{{f_item.font_subfamily}}</li></ul></p>
                             </div>
                             <div class="col-md-2 col-sm-3 col-xs-6 c-cart-price">
-                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold"><?php echo $this->translate('Price');?></p>
-                                <p class="c-cart-price c-font-bold">$147.00</p>
+                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold"><?php echo $this->translate('License');?></p>
+                                <p class="c-cart-price c-font-bold">{{item.licenses[item.license].name}}</p>
                             </div>
                             <div class="col-md-1 col-sm-3 col-xs-6 c-cart-total">
                                 <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold"><?php echo $this->translate('Total');?></p>
-                                <p class="c-cart-price c-font-bold">$147.00</p>
+                                <p class="c-cart-price c-font-bold">{{item.cart | currency}}</p>
                             </div>
                             <div class="col-md-1 col-sm-12 c-cart-remove">
-                                <a href="#" class="c-theme-link c-cart-remove-desktop"><i class="fa fa-close"></i></a>
-                                <a href="#" class="c-cart-remove-mobile btn c-btn c-btn-md c-btn-square c-btn-red c-btn-border-1x c-font-uppercase"><?php echo $this->translate('Remove item from Cart');?></a>
+                                <a href="javascript:;" ng-click="removeItem(key,'<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('Remove item from Cart');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')" class="c-theme-link c-cart-remove-desktop"><i class="fa fa-close"></i></a>
+                                <a href="javascript:;" ng-click="removeItem(key,'<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('Remove item from Cart');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')" class="c-cart-remove-mobile btn c-btn c-btn-md c-btn-square c-btn-red c-btn-border-1x c-font-uppercase"><?php echo $this->translate('Remove item from Cart');?></a>
                             </div>
                         </div>
                         <!-- END: SHOPPING CART ITEM ROW -->
-                        <!-- BEGIN: SHOPPING CART ITEM ROW -->
-                        <div class="row c-cart-table-row">
-                            <h2 class="c-font-uppercase c-font-bold c-theme-bg c-font-white c-cart-item-title">Item 2</h2>
-                            <div class="col-md-2 col-sm-3 col-xs-5 c-cart-image">
-                                <img src="http://placehold.it/1200x900" /> </div>
-                            <div class="col-md-4 col-sm-9 col-xs-7 c-cart-desc">
-                                <h3><a href="javascript:;" ng-click="changeTemplateURL('/shop-product-details');" class="c-font-bold c-theme-link c-font-22 c-font-dark">Font Sports</a></h3>
-                                <p>License Types: Mobile</p>
-                                <p>By: User A</p>
-                            </div>
-                            <div class="col-md-1 col-sm-3 col-xs-6 c-cart-ref">
-                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">SKU</p>
-                                <p>160815</p>
-                            </div>
-                            <div class="col-md-2 col-sm-3 col-xs-6 c-cart-price">
-                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Unit Price</p>
-                                <p class="c-cart-price c-font-bold">$99.00</p>
-                            </div>
-                            <div class="col-md-1 col-sm-3 col-xs-6 c-cart-total">
-                                <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Total</p>
-                                <p class="c-cart-price c-font-bold">$99.00</p>
-                            </div>
-                            <div class="col-md-1 col-sm-12 c-cart-remove">
-                                <a href="#" class="c-theme-link c-cart-remove-desktop"><i class="fa fa-close"></i></a>
-                                <a href="#" class="c-cart-remove-mobile btn c-btn c-btn-md c-btn-square c-btn-red c-btn-border-1x c-font-uppercase">Remove item from Cart</a>
-                            </div>
-                        </div>
-                        <!-- END: SHOPPING CART ITEM ROW -->
+
                         <!-- BEGIN: SUBTOTAL ITEM ROW -->
                         <div class="row">
                             <div class="c-cart-subtotal-row c-margin-t-20">
@@ -98,7 +61,7 @@
                                     <h3 class="c-font-uppercase c-font-bold c-right c-font-16 c-font-grey-2"><?php echo $this->translate('Subtotal');?></h3>
                                 </div>
                                 <div class="col-md-1 col-sm-6 col-xs-6 c-cart-subtotal-border">
-                                    <h3 class="c-font-bold c-font-16">$246.00</h3>
+                                    <h3 class="c-font-bold c-font-16">{{subtotal | currency}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -107,10 +70,10 @@
                         <div class="row">
                             <div class="c-cart-subtotal-row">
                                 <div class="col-md-2 col-md-offset-9 col-sm-6 col-xs-6 c-cart-subtotal-border">
-                                    <h3 class="c-font-uppercase c-font-bold c-right c-font-16 c-font-grey-2"><?php echo $this->translate('Shipping Fee');?></h3>
+                                    <h3 class="c-font-uppercase c-font-bold c-right c-font-16 c-font-grey-2"><?php echo $this->translate('Bundle Discount');?></h3>
                                 </div>
                                 <div class="col-md-1 col-sm-6 col-xs-6 c-cart-subtotal-border">
-                                    <h3 class="c-font-bold c-font-16">$15.00</h3>
+                                    <h3 class="c-font-bold c-font-16 c-font-red">{{discount | currency}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -119,23 +82,36 @@
                         <div class="row">
                             <div class="c-cart-subtotal-row">
                                 <div class="col-md-2 col-md-offset-9 col-sm-6 col-xs-6 c-cart-subtotal-border">
-                                    <h3 class="c-font-uppercase c-font-bold c-right c-font-16 c-font-grey-2"><?php echo $this->translate('Grand Total');?></h3>
+                                    <h3 class="c-font-uppercase c-font-bold c-right c-font-16 c-font-grey-2"><?php echo $this->translate('Total');?></h3>
                                 </div>
                                 <div class="col-md-1 col-sm-6 col-xs-6 c-cart-subtotal-border">
-                                    <h3 class="c-font-bold c-font-16">$261.00</h3>
+                                    <h3 class="c-font-bold c-font-16">{{total | currency}}</h3>
                                 </div>
                             </div>
                         </div>
                         <!-- END: SUBTOTAL ITEM ROW -->
                         <div class="c-cart-buttons">
                             <a href="javascript:;" ng-click="changeTemplateURL('/shop-product-list');" class="btn c-btn btn-lg c-btn-red c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><?php echo $this->translate('Continue Shopping');?></a>
-                            <a href="javascript:;"  ng-click="changeTemplateURL('/shop-checkout');" class="btn c-btn btn-lg c-theme-btn c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-r"><?php echo $this->translate('Checkout');?></a>
+                            <a href="javascript:;" ng-click="changeTemplateURL('/shop-checkout');" class="btn c-btn btn-lg c-theme-btn c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-r"><?php echo $this->translate('Checkout');?></a>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- END: CONTENT/SHOPS/SHOP-CART-1 -->
-
+            
+            <!-- BEGIN: CONTENT/SHOPS/SHOP-CART-EMPTY -->
+            <div class="c-content-box c-size-lg" ng-hide="cart.length">
+                <div class="container">
+                    <div class="c-shop-cart-page-1 c-center">
+                        <i class="fa fa-frown-o c-font-dark c-font-50 c-font-thin "></i>
+                        <h2 class="c-font-thin c-center">Your Shopping Cart is Empty</h2>
+                        <a href="javascript:;" class="btn c-btn btn-lg c-btn-dark c-btn-square c-font-white c-font-bold c-font-uppercase" ng-click="changeTemplateURL('/ef-welcome');" >Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+            <!-- END: CONTENT/SHOPS/SHOP-CART-EMPTY -->
+			</section>
+			
             <!-- BEGIN: CONTENT/STEPS/STEPS-3 -->
             <div class="c-content-box c-size-md c-theme-bg">
                 <div class="container">

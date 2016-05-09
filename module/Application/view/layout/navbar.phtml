@@ -102,9 +102,9 @@
                                     </a>
                                 </li>
                                 <li class="c-cart-toggler-wrapper">
-                                    <a href="#" class="c-btn-icon c-cart-toggler">
+                                    <a href="javascript:;" class="c-btn-icon c-cart-toggler">
                                         <i class="icon-handbag c-cart-icon"></i>
-                                        <span class="c-cart-number c-theme-bg">2</span>
+                                        <span id="shop-c-cart-number" class="c-cart-number c-theme-bg">0</span>
                                     </a>
                                 </li>
                                 <?php if(isset($this->USER_LOGGED)){?>
@@ -122,40 +122,28 @@
                     </div>
                     <!-- BEGIN: LAYOUT/HEADERS/QUICK-CART -->
                     <!-- BEGIN: CART MENU -->
-                    <div class="c-cart-menu">
+                    <div class="c-cart-menu" ng-controller="ShopCartCtrl" ng-init="viewCart();">
                         <div class="c-cart-menu-title">
-                            <p class="c-cart-menu-float-l c-font-sbold">2 <?php echo $this->translate('item(s)');?></p>
-                            <p class="c-cart-menu-float-r c-theme-font c-font-sbold">$79.00</p>
+                            <p class="c-cart-menu-float-l c-font-sbold">{{cart.length}} <?php echo $this->translate('item(s)');?></p>
+                            <p class="c-cart-menu-float-r c-theme-font c-font-sbold">{{total | currency}}</p>
                         </div>
                         <ul class="c-cart-menu-items">
-                            <li>
-                                <div class="c-cart-menu-close">
-                                    <a href="#" class="c-theme-link"><i class="fa fa-close"></i></a>
-                                </div>
-                                <img src="http://placehold.it/600x600" />
+                            <li ng-repeat="(c_key, c_item) in cart">
+                                <img ng-src="{{'/ef-ddig/?text=Ab&font='+c_item.form.ddig+'&size=140x140'}}" />
                                 <div class="c-cart-menu-content">
-                                    <p>1 x
-                                        <span class="c-item-price c-theme-font">$30</span>
-                                    </p>
-                                    <a href="javascript:;" class="c-item-name c-font-sbold">Font Y</a>
+                                    <p>1 x <span class="c-item-price c-theme-font">{{c_item.cart | currency}}</span></p>
+                                    <a href="javascript:;" class="c-item-name c-font-sbold">{{c_item.form.name}}</a>
                                 </div>
                             </li>
-                            <li>
-                                <div class="c-cart-menu-close">
-                                    <a href="#" class="c-theme-link"><i class="fa fa-close"></i></a>
-                                </div>
-                                <img src="http://placehold.it/600x600" />
+                            <li ng-hide="cart.length">
                                 <div class="c-cart-menu-content">
-                                    <p>1 x
-                                        <span class="c-item-price c-theme-font">$49</span>
-                                    </p>
-                                    <a href="shop-product-details.html" class="c-item-name c-font-sbold">Font Z</a>
+                                    <span class="c-item-name c-font-sbold c-font-red">Your Shopping Cart is Empty</span>
                                 </div>
                             </li>
                         </ul>
-                        <div class="c-cart-menu-footer">
-                            <a href="shop-cart.html" class="btn btn-md c-btn c-btn-square c-btn-grey-3 c-font-white c-font-bold c-center c-font-uppercase"><?php echo $this->translate('View Cart');?></a>
-                            <a href="shop-checkout.html" class="btn btn-md c-btn c-btn-square c-theme-btn c-font-white c-font-bold c-center c-font-uppercase"><?php echo $this->translate('Checkout');?></a>
+                        <div class="c-cart-menu-footer" ng-show="cart.length">
+                            <a href="javascript:;" ng-click="changeTemplateURL('/shop-cart');" class="btn btn-md c-btn c-btn-square c-btn-grey-3 c-font-white c-font-bold c-center c-font-uppercase"><?php echo $this->translate('View Cart');?></a>
+                            <a href="javascript:;" ng-click="changeTemplateURL('/shop-checkout');" class="btn btn-md c-btn c-btn-square c-theme-btn c-font-white c-font-bold c-center c-font-uppercase"><?php echo $this->translate('Checkout');?></a>
                         </div>
                     </div>
                     <!-- END: CART MENU -->

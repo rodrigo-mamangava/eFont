@@ -36,13 +36,14 @@ class ShopProductDetailsController extends ApplicationController {
 		} else {
 			// Default
 			$project = null;
-			$base_formats = $collections = $pricebook = $families = $formats = $licenses = array ();
+			$base_fonts = $base_styles = $base_formats = $collections = $styles = $fonts = $families = $formats = $licenses = array ();
 			// Controllers
 			$Projects = new \Shop\Controller\ProjectsController ( $this->getServiceLocator () );
 			$ProjectHasLicense = new \Shop\Controller\ProjectHasLicenseController ( $this->getServiceLocator () );
 			$LicenseHasFormats = new \Shop\Controller\LicenseHasFormatsController ( $this->getServiceLocator () );
 			$ProjectHasFamiliy = new \Shop\Controller\ProjectHasFamilyController ( $this->getServiceLocator () );
 			$FamilyHasFormats = new \Shop\Controller\FamilyHasFormatsController ( $this->getServiceLocator () );
+			$FontStyles = new \Shop\Controller\FontStylesController ( $this->getServiceLocator () );
 			// BEGIN PROJETO
 			$rs = $Projects->find ( $id, null );
 			
@@ -50,6 +51,7 @@ class ShopProductDetailsController extends ApplicationController {
 				// PROJETO
 				$project = UsefulController::getStripslashes ( $rs );
 				$project_id = $project ['id'];
+				$project ['collection'] = 0;
 				
 				// BEGIN LICENCAS
 				$rs_licenses = $ProjectHasLicense->fetchAllShop ( $project_id );
@@ -84,7 +86,12 @@ class ShopProductDetailsController extends ApplicationController {
 				if ($rs_families->count () > 0) {
 					$rs_families = iterator_to_array ( $rs_families->getCurrentItems () );
 					foreach ( $rs_families as $f_item ) {
+						
 						$f_item ['collection'] = 0;
+						$f_item ['subprice'] = 0;
+						$f_item ['check_collection'] = false;
+						$f_item ['collapsed'] = true;
+						
 						$families [$f_item->id] = UsefulController::getStripslashes ( $f_item );
 						// BEGIN BASE FORMATS
 						$rs_base_formats = $FamilyHasFormats->fetchAll ( $project->company_id, $f_item->id, $project_id );
@@ -95,9 +102,27 @@ class ShopProductDetailsController extends ApplicationController {
 							}
 						}
 						// END BASE FORMATS
+						$project ['families'] ++;
 					}
 				}
 				// END FAMILIA
+				
+				// BEGIN STYLES
+				$rs_styles = $FontStyles->fetchAllShop ( $project->company_id, $project_id );
+				if ($rs_styles->count () > 0) {
+					$rs_styles = iterator_to_array ( $rs_styles->getCurrentItems () );
+					foreach ( $rs_styles as $s_item ) {
+						$base_styles [$s_item->family_id] [$s_item->formats_id] [$s_item->id] = $s_item->font_price;
+						
+						$font_subfamily = strtolower ( ValidadorController::removeBlank ( $s_item->font_subfamily ) );
+						
+						$base_fonts [$s_item->family_id] [$font_subfamily] ['pricing'] [$s_item->formats_id] [$s_item->id] = $s_item->font_price;
+						$base_fonts [$s_item->family_id] [$font_subfamily] ['font_subfamily'] = $s_item->font_subfamily;
+						$base_fonts [$s_item->family_id] [$font_subfamily] ['disabled'] = false;
+						$base_fonts [$s_item->family_id] [$font_subfamily] ['selected'] = false;
+					}
+				}
+				// END STYLES
 				
 				// BEGIN COLLECTIONS
 				foreach ( $formats as $ft_lc_key => $ft_lc_item ) { // Formato x Licenca
@@ -108,18 +133,32 @@ class ShopProductDetailsController extends ApplicationController {
 							foreach ( $families as $f_key => $f_item ) { // Licenca x Formato
 								$p = $f_item->money_family;
 								
-								if (isset ( $base_formats [$f_key] [$ft_fi_key] )) {
+								if (isset ( $base_formats [$f_key] [$ft_fi_key] )) { // Existe o formato carregado?
 									$collections [$ft_lc_key] [$ft_fi_key] [$ft_pr_key] [$f_key] = sprintf ( "%.2f", floatval ( $m ) * floatval ( $p ) );
+									
+									if (isset ( $base_styles [$f_key] [$ft_fi_key] )) { // Existe o estilo
+										$style = $base_styles [$f_key] [$ft_fi_key];
+										foreach ( $style as $s_key => $s_item ) {
+											$styles [$ft_lc_key] [$ft_fi_key] [$ft_pr_key] [$f_key] [$s_key] = sprintf ( "%.2f", floatval ( $m ) * floatval ( $s_item ) );
+										}
+									}
+									
+									if (isset ( $base_fonts [$f_key] )) { // Existe a fonte?
+										$font = $base_fonts [$f_key];
+										foreach ( $font as $fn_key => $fn_item ) {
+											if (isset ( $fn_item ['pricing'] [$ft_fi_key] )) {
+												foreach ( $fn_item ['pricing'] [$ft_fi_key] as $fp_key => $fp_item ) {
+													$fonts [$ft_lc_key] [$ft_fi_key] [$ft_pr_key] [$f_key] [$fn_key] [$fp_key] = sprintf ( "%.2f", floatval ( $m ) * floatval ( $fp_item ) );
+												}
+											}
+										}
+									}
 								}
 							}
 						}
 					}
 				}
 				// END COLLECTIONS
-				
-				// BEGIN PRICEBOOK
-				
-				// END PRICEBBOK
 				
 				// Retorno
 				$outcome = $status = true;
@@ -129,7 +168,9 @@ class ShopProductDetailsController extends ApplicationController {
 						'formats' => $formats,
 						'families' => $families,
 						'collections' => $collections,
-						'pricebook' => $pricebook 
+						'pricing' => $styles,
+						'styles' => $base_fonts,
+						'fonts' => $fonts 
 				);
 				// END PROJETO
 			} else {
