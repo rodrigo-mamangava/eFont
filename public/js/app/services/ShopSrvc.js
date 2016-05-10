@@ -179,7 +179,19 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			},function (err) {
 				console.log(err);
 			});	
-		},			
+		},	
+		/**
+		 * Checkout
+		 */
+		goCheckoutCompleted : function(data){
+			//POST
+			return $http.post('/shop-checkout/checkout', data)
+			.then(function(res) {
+				return res.data;
+			},function (err) {
+				console.log(err);
+			});				
+		},
 		/**
 		 * Fake Random
 		 */

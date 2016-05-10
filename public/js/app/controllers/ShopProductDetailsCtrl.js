@@ -210,6 +210,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 	 * Add to cart
 	 */
 	$scope.AddToCart = function(){
+		isSpinnerBar(true);	
 		var your_cart = {form:$scope.form, 
 				products:$scope.products, 
 				licenses:$scope.licenses, 
@@ -230,6 +231,7 @@ ShopApp.controller('ShopProductDetailsCtrl', function($scope, $timeout, $http, $
 				$scope.changeTemplateURL('/shop-cart');
 			}else{
 				$localStorage.ShopYourCart = [your_cart];
+				$scope.changeTemplateURL('/shop-cart');
 			}
 		}, 20);
 	};

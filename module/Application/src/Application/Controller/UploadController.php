@@ -38,8 +38,9 @@ class UploadController extends ApplicationController {
 						if ($ext == 'zip') {
 							$data ['short'] = $data ['url'];
 						} else {
-							$Short = new \Useful\Controller\ShortURLController ( $this->getServiceLocator () );
-							$data ['short'] = $Short->shortener ( $data ['url'] );
+							$data ['short'] = $data ['url'];
+// 							$Short = new \Useful\Controller\ShortURLController ( $this->getServiceLocator () );
+// 							$data ['short'] = $Short->shortener ( $data ['url'] );
 						}
 						$status = true;
 					}

@@ -5,6 +5,13 @@ ShopApp.controller('ShopCartCtrl', function($scope, $timeout, $http, $localStora
 	$scope.subtotal = 0;
 	$scope.discount = 0;
 	$scope.total = 0;
+	$scope.form = {};
+	/**
+	 * Limpando/inicializando
+	 */
+	$scope.cleanCart = function(){
+		$scope.form.payment = 0;
+	};
 	/**
 	 * Inicializando carrinho
 	 */
@@ -78,7 +85,9 @@ ShopApp.controller('ShopCartCtrl', function($scope, $timeout, $http, $localStora
 			$scope.UpdateViewCart();
 		});
 	};
-	
+	/**
+	 * Atualizando view do menu superior
+	 */
 	$scope.UpdateViewCart = function(){
 		$scope.cart = $localStorage.ShopYourCart;
 
@@ -91,4 +100,33 @@ ShopApp.controller('ShopCartCtrl', function($scope, $timeout, $http, $localStora
 			$scope.total = parseFloat($scope.subtotal) - parseFloat($scope.discount);			
 		},10);
 	};
+	/**
+	 * Go to Checkout
+	 */
+	$scope.goCheckoutCompleted = function(){
+		isSpinnerBar(true);
+		var data = {'checkout': $scope.form, 'cart': $scope.cart};
+		console.log(data);
+		ShopSrvc.goCheckoutCompleted(data).then(function(res){
+			console.log(res);
+			if(res.status == true){
+				$scope.form.total = $scope.total;
+				$localStorage.ShopCompleted =  res.data;
+				$localStorage.ShopYourOrder =  res.outcome;
+				$localStorage.ShopCheckout = $scope.form;
+				
+				delete $localStorage.ShopYourCart;
+				
+				$timeout(function(){
+					$scope.changeTemplateURL('/shop-checkout-complete');
+					$timeout(function(){ isSpinnerBar(false);}, 500);
+				},100);
+			}else{
+				bootbox.alert(res.data);
+				$timeout(function(){ isSpinnerBar(false);}, 500);
+			}
+		});	
+	};
+	//init
+	$scope.cleanCart();
 });

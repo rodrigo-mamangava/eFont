@@ -1,24 +1,34 @@
 ShopApp.controller('ShopCheckoutCtrl', function($scope, $timeout, $http, $localStorage, ipsumService, ShopSrvc) {
 	//global
 	$scope.searchText = '';	
-	$scope.checkout = [];
-	$scope.subtotal = 0;
+	$scope.completed = [];
+	$scope.yourorder = '';
+	$scope.checkout = '';
 	$scope.discount = 0;
 	$scope.total = 0;
+	$scope.purchased = new Date(); 
 	/**
-	 * Inicializando carrinho
+	 * Inicializando Order view
 	 */
-	$scope.initCheckoutCart = function(){
-		if(!isBlank($localStorage.ShopYourCart)){
-			isSpinnerBar(true);
-			$timeout(function(){
-				$scope.checkout = $localStorage.ShopYourCart;
-				$scope.pricebook(); 
-				isSpinnerBar(false);
-			},100);
-		}else{
-			delete $scope.checkout;
-		}	
+	$scope.initCheckoutCompleted = function(){
+		$scope.completed = $localStorage.ShopCompleted;
+		$scope.yourorder = $localStorage.ShopYourOrder;
+		$scope.checkout  = $localStorage.ShopCheckout;
+		$scope.total = $scope.checkout.total |0 ;
+		
+		console.log($scope.completed);
+		console.log($scope.yourorder);
+		console.log($scope.checkout);
+		
+		isSpinnerBar(true);
+		$timeout(function(){
+			isSpinnerBar(false);
+			
+			delete $localStorage.ShopCompleted;
+			delete $localStorage.ShopYourOrder;
+			delete $localStorage.ShopCheckout;
+			delete $localStorage.ShopYourCart;
+		},100);
 	};
 	/**
 	 * Default

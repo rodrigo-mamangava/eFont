@@ -14,7 +14,7 @@
             </div>
             <!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
             <!-- BEGIN: PAGE CONTENT -->
-            <div class="c-content-box c-size-lg c-overflow-hide c-bg-white">
+            <div class="c-content-box c-size-lg c-overflow-hide c-bg-white" ng-controller="ShopCheckoutCtrl" ng-init="initCheckoutCompleted();">
                 <div class="container">
                     <div class="c-shop-order-complete-1 c-content-bar-1 c-align-left c-bordered c-theme-border c-shadow">
                         <div class="c-content-title-1">
@@ -30,50 +30,24 @@
                             <ul class="c-list-inline list-inline">
                                 <li>
                                     <h3><?php echo $this->translate('Order Number');?></h3>
-                                    <p>#12345</p>
+                                    <p>#{{yourorder}}</p>
                                 </li>
                                 <li>
                                     <h3><?php echo $this->translate('Date Purchased');?></h3>
-                                    <p>August 26, 2015</p>
+                                    <p> {{purchased | date:'dd/MM/yyyy'}}</p>
                                 </li>
                                 <li>
                                     <h3><?php echo $this->translate('Total Payable');?></h3>
-                                    <p>$95.00</p>
+                                    <p>{{total | currency}}</p>
                                 </li>
                                 <li>
                                     <h3><?php echo $this->translate('Payment Method');?></h3>
-                                    <p><?php echo $this->translate('Direct Bank Transfer');?></p>
+                                    <p><span ng-show="checkout.payment == '0'"><?php echo $this->translate('Direct Bank Transfer');?></span><span ng-show="checkout.payment == '1'"><?php echo $this->translate('Paypal');?></span></p>
                                 </li>
                             </ul>
                         </div>
                         <!-- END: ORDER SUMMARY -->
-                        <!-- BEGIN: BANK DETAILS -->
-                        <div class="c-bank-details c-margin-t-30 c-margin-b-30">
-                            <p class="c-margin-b-20"><?php echo $this->translate('Make your payment directly into our account. Please use your Order ID as the payment reference. Your order won\'t be shipped until the funds have cleared in our account.');?></p>
-                            <h3 class="c-margin-t-40 c-margin-b-20 c-font-uppercase c-font-22 c-font-bold"><?php echo $this->translate('OUR BANK DETAILS');?></h3>
-                            <h3 class="c-border-bottom"><?php echo $this->translate('Account Name');?> : &nbsp;
-                                <span class="c-font-thin"><?php echo $this->translate('Themehats');?></span>
-                            </h3>
-                            <ul class="c-list-inline list-inline">
-                                <li>
-                                    <h3><?php echo $this->translate('Account Number');?></h3>
-                                    <p>12345678901234567</p>
-                                </li>
-                                <li>
-                                    <h3><?php echo $this->translate('Sort Code');?></h3>
-                                    <p>123</p>
-                                </li>
-                                <li>
-                                    <h3><?php echo $this->translate('Bank');?></h3>
-                                    <p>Bank Name</p>
-                                </li>
-                                <li>
-                                    <h3><?php echo $this->translate('BIC');?></h3>
-                                    <p>12345</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- END: BANK DETAILS -->
+
                         <!-- BEGIN: ORDER DETAILS -->
                         <div class="c-order-details">
                             <div class="c-border-bottom hidden-sm hidden-xs">
@@ -88,14 +62,14 @@
                                         <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold"><?php echo $this->translate('Price');?></h3>
                                     </div>
                                     <div class="col-md-2">
-                                        <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold"><?php echo $this->translate('Total');?></h3>
+                                        <h3 class="c-font-uppercase c-font-16 c-font-grey-2 c-font-bold"><?php echo $this->translate('Download');?></h3>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- BEGIN: PRODUCT ITEM ROW -->
                             <div class="c-border-bottom c-row-item">
-                                <div class="row">
+                                <div class="row" ng-repeat="(c_key, c_item) in completed">
                                     <div class="col-md-3 col-sm-12 c-image">
                                         <div class="c-content-overlay">
                                             <div class="c-overlay-wrapper">
@@ -104,22 +78,24 @@
                                                 </div>
                                             </div>
                                             <div class="c-bg-img-top-center c-overlay-object" data-height="height">
-                                                <img width="100%" class="img-responsive" src="http://placehold.it/1200x900"> </div>
+                                                <img width="140" height="140" class="img-responsive" ng-src="{{'/ef-ddig/?text=Ab&font='+c_item.completed.project_ddig+'&size=200x200'}}"> </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-sm-8">
                                         <ul class="c-list list-unstyled">
                                             <li class="c-margin-b-25">
-                                                <a href="shop-product-details-2.html" class="c-font-bold c-font-22 c-theme-link">Sports Wear</a>
+                                                <a href="javascript:;" class="c-font-bold c-font-22 c-theme-link">{{c_item.completed.project_name}}</a>
+                                                <br/>{{c_item.completed.project_license}}
                                             </li>
-                                            <li class="c-margin-b-10">Font: Winter J</li>
-                                            <li><?php echo $this->translate('Lincese');?>: Desktop</li>
-                                            <li>By: User A</li>
                                         </ul>
                                     </div>
                                     <div class="col-md-2 col-sm-2">
                                         <p class="visible-xs-block c-theme-font c-font-uppercase c-font-bold"><?php echo $this->translate('Total');?></p>
-                                        <p class="c-font-sbold c-font-18">$30.00</p>
+                                        <p class="c-font-sbold c-font-18">{{c_item.completed.project_cart | currency}}</p>
+                                    </div>
+                                    
+                                    <div class="col-md-2 col-sm-2">
+                                        <a href="{{'/ef-download/?downloadkey='+c_item.download}}" class="btn c-theme-btn c-theme-border c-btn-square c-btn-uppercase c-font-16" target="_blank"><i class="fa fa-download"></i></a>
                                     </div>
                                 </div>
                             </div>

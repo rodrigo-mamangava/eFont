@@ -110,6 +110,19 @@ return array (
 										) 
 								) 
 						),
+						'ef-download' => array (
+								'type' => 'Segment',
+								'options' => array (
+										'route' => '/ef-download[/][/:action]',
+										'constraints' => array (
+												'action' => '(?!\bpage\b)[a-zA-Z][a-zA-Z0-9_-]*'
+										),
+										'defaults' => array (
+												'controller' => 'Application\Controller\Download',
+												'action' => 'index'
+										)
+								)
+						),
 						'ef-font-files' => array (
 								'type' => 'Segment',
 								'options' => array (
@@ -352,6 +365,7 @@ return array (
 						'Application\Controller\Customer' => 'Application\Controller\CustomerController',
 						'Application\Controller\Profile' => 'Application\Controller\ProfileController',
 						'Application\Controller\Upload' => 'Application\Controller\UploadController',
+						'Application\Controller\Download' => 'Application\Controller\DownloadController',
 						// View Shop
 						'Application\Controller\ShopCart' => 'Application\Controller\ShopCartController',
 						'Application\Controller\ShopCheckout' => 'Application\Controller\ShopCheckoutController',
