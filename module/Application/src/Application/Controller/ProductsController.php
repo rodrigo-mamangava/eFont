@@ -283,7 +283,7 @@ class ProductsController extends ApplicationController {
 					// BANNER
 					try {
 						$path_parts = pathinfo ( $project_ddig );
-						if ($ok_logo == false && $path_parts ['extension'] == 'ttf') {
+						if ($ok_logo == false && ($path_parts ['extension'] == 'ttf' || $path_parts ['extension'] == 'woff' ||  $path_parts ['extension'] == 'otf')) {
 							$banner = \Useful\Controller\FontImageController::banner ( $project_ddig, $project_name );
 							if ($banner) {
 								$ok_logo = true;
