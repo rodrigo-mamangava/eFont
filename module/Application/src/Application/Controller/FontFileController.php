@@ -42,6 +42,9 @@ class FontFileController extends ApplicationController {
 				'svg',
 				/*'html'*/ 
 		); // File extensions
+		$ddigTypes = array (
+				'ttf' 
+		);
 		
 		if ($this->getRequest ()->isPost ()) {
 			try {
@@ -58,7 +61,8 @@ class FontFileController extends ApplicationController {
 				$folder = $uploadDirectory . $destination;
 				$outputfile = $uploadDirectory . $destination . '.zip';
 				file_put_contents ( $outputfile, fopen ( $uploaded, 'r' ) );
-				$default = null;
+				$default = 'data/tmp/mplus-1c-medium.ttf';
+				$ok_ddig = false;
 				/**
 				 * Descompactando o arquivo
 				 */
@@ -116,8 +120,9 @@ class FontFileController extends ApplicationController {
 									if ($id) {
 										$files [$font_family . ' ' . $font_subfamily] [$id] = $font;
 										
-										if ($default == null && $ext == 'ttf') {
+										if ($ok_ddig == false && in_array ( $ext, $ddigTypes )) {
 											$default = $path;
+											$ok_ddig = true;
 										}
 										
 										$count ++;

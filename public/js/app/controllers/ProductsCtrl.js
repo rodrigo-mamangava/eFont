@@ -10,6 +10,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		$scope.licenses = [];
 		$scope.formats = [];
 		$scope.price=[];
+		$scope.current_price_family = 0;
 		//Form
 		$scope.screen_from = true;
 		$scope.screen_summary = false;
@@ -143,6 +144,10 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 							if(isBlank($scope.form.ddig)){
 								$scope.form.ddig = res.data.ddig;
 							}
+							
+							$timeout(function(){
+								$scope.updateWeight(f_key, t_key , -1);
+							},20);
 						});
 					});
 				}else{
@@ -170,6 +175,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	//Atualizando preco de familia
 	$scope.updateFamilyPrice = function(l_key){
 		var price = $scope.form.licenses[l_key].money_family;
+		$scope.current_price_family = price;
 		angular.forEach($scope.families, function (f_item, f_k) {
 			//console.log(f_item);
 			if(f_item.check_family == false){
@@ -179,7 +185,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	};	
 	//Add Familias
 	$scope.addFamilyItem = function(){
-		$scope.families.push({formats:[], family_name:null});
+		$scope.families.push({formats:[], family_name:null, money_family: $scope.current_price_family, check_family: false});
 	};
 	//Remove uma Familia
 	$scope.removeFamilyItem = function(f_key, y, n, t, m, err){
