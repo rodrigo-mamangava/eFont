@@ -15,6 +15,7 @@ return array (
 				'adapters' => array (
 						'Adapter' => array (
 								'driver' => 'Pdo',
+								//'dsn' => 'mysql:dbname=mmgv_efont;host=tatu-bola.cdhbozgjogpb.us-west-2.rds.amazonaws.com',
 								'dsn' => 'mysql:dbname=mmgv_efont;host=localhost',
 								'username' => 'mmgv_efont',
 								'password' => 'mmgv_efont',
@@ -24,6 +25,7 @@ return array (
 						),
 						'Accounts' => array (
 								'driver' => 'Pdo',
+								//'dsn' => 'mysql:dbname=mmgv_efont;host=tatu-bola.cdhbozgjogpb.us-west-2.rds.amazonaws.com',
 								'dsn' => 'mysql:dbname=mmgv_efont;host=localhost',
 								'username' => 'mmgv_efont',
 								'password' => 'mmgv_efont',
