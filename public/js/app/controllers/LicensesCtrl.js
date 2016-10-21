@@ -1,8 +1,7 @@
 ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStorage, ipsumService, ShopSrvc) {
 	//global
 	$scope.searchText = '';	
-	//$scope.form = {'formats':[0,1,2,3]};
-	$scope.form = {'formats':[0]};
+	$scope.form = {'formats':[0,1,2,3,4]};
 	$scope.onlyNumbers = /^\d+$/;
 	//clean
 	$scope.cleanLicenses = function(){
@@ -16,8 +15,7 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 		$scope.licenses[0] = [];
 		$scope.licenses[1] = [];
 
-		//$scope.form = {'formats':[0,1,2,3]};
-		$scope.form = {'formats':[0]};
+		$scope.form = {'formats':[0,1,2,3]};
 		//Pag
 		$scope.totalItems[0] = 0;
 		$scope.currentPage[0] = 0;
@@ -84,6 +82,14 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 			$scope.changeTemplateURL('/ef-licenses/form');
 		}, 500);
 	};
+
+	$scope.editCustomLicenses = function(id){
+		isSpinnerBar(true);
+		$localStorage.LicensesId = id;
+		$timeout(function(){
+			$scope.changeTemplateURL('/ef-licenses/custom-form');
+		}, 500);
+	};
 	
 	$scope.getLicenses = function(){
 		//Get company profile
@@ -110,7 +116,14 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 			});		
 		}else{
 			//$scope.form = {'formats':[[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }]]};
-			$scope.form = {'formats':[[{parameters:null, multiplier: null }],[{parameters:null, multiplier: null }],[{parameters:null, multiplier: null }],[{parameters:null, multiplier: null }]]};
+			$scope.form = {
+				'formats':[
+					[{parameters:null, multiplier: null }],
+					[{parameters:null, multiplier: null }],
+					[{parameters:null, multiplier: null }],
+					[{parameters:null, multiplier: null }]
+				]
+			};
 		}
 		$timeout(function(){ delete $localStorage.LicensesId; }, 500);
 		$timeout(function(){ 
@@ -167,19 +180,20 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 				isSpinnerBar(false);
 			}									
 		});
-	};	
+	};
 	//Add Formatos
 	$scope.addFormatItem = function(id){
 		console.log($scope.form.formats);
-		//$scope.form.formats[id].push({parameters: ipsumService.words(5), multiplier:getRandomInt() });
+		//$scope.form.formats_custom[id].push({parameters: ipsumService.words(5), multiplier:getRandomInt() });
 		$scope.form.formats[id].push({parameters:null, multiplier:null });
 		console.log(id);
 	};
-	//Remove uma Formato
+	//Remove um Formato
 	$scope.removeFormatItem = function(id, cart_key){
 		console.log(cart_key, id);
 		$scope.form.formats[id].splice(cart_key, 1);
 	};
+
 	//Alterando paginacao
 	$scope.pageChanged = function (check_custom){ $scope.initLicenses('',check_custom); }
 	//Select all

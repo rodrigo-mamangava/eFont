@@ -157,7 +157,7 @@ class LicensesController extends ApplicationController {
 
 				if ($formats_number > 0) {
 					foreach ( $formats as $f_key => $f_item ) {
-						if (($f_key == 1 && $check_desktop == true) || ($f_key == 2 && $check_web == true) || ($f_key == 3 && $check_app == true)) {
+						if (($f_key == 4 && $check_custom == false) || ($f_key == 1 && $check_desktop == true) || ($f_key == 2 && $check_web == true) || ($f_key == 3 && $check_app == true)) {
 							
 							$font = array ();
 							foreach ( $f_item as $w_key => $w_item ) {

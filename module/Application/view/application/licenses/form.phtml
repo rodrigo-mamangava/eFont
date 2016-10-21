@@ -54,38 +54,45 @@
                                 </label>
                                 <div class="col-md-6">
                                     <label class="checkbox-inline control-label"
-                                           ng-show="companyData.check_fmt_otf"><input type="checkbox"
-                                                                                      ng-model="form.check_fmt_otf"
-                                                                                      id="check_otf"><?php echo $this->translate('.OTF'); ?>
+                                           ng-show="companyData.check_fmt_otf">
+                                            <input type="checkbox"
+                                                  ng-model="form.check_fmt_otf"
+                                                  id="check_otf"><?php echo $this->translate('.OTF'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
-                                           ng-show="companyData.check_fmt_ttf"><input type="checkbox"
-                                                                                      ng-model="form.check_fmt_ttf"
-                                                                                      id="check_ttf"><?php echo $this->translate('.TTF'); ?>
+                                           ng-show="companyData.check_fmt_ttf">
+                                            <input type="checkbox"
+                                              ng-model="form.check_fmt_ttf"
+                                              id="check_ttf"><?php echo $this->translate('.TTF'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
-                                           ng-show="companyData.check_fmt_eot"><input type="checkbox"
-                                                                                      ng-model="form.check_fmt_eot"
-                                                                                      id="check_eot"><?php echo $this->translate('.EOT'); ?>
+                                           ng-show="companyData.check_fmt_eot">
+                                            <input type="checkbox"
+                                              ng-model="form.check_fmt_eot"
+                                              id="check_eot"><?php echo $this->translate('.EOT'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
-                                           ng-show="companyData.check_fmt_woff"><input type="checkbox"
-                                                                                       ng-model="form.check_fmt_woff"
-                                                                                       id="check_woff"><?php echo $this->translate('.WOFF'); ?>
+                                           ng-show="companyData.check_fmt_woff">
+                                            <input type="checkbox"
+                                               ng-model="form.check_fmt_woff"
+                                               id="check_woff"><?php echo $this->translate('.WOFF'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
-                                           ng-show="companyData.check_fmt_woff2"><input type="checkbox"
-                                                                                        ng-model="form.check_fmt_woff2"
-                                                                                        id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
+                                           ng-show="companyData.check_fmt_woff2">
+                                            <input type="checkbox"
+                                            ng-model="form.check_fmt_woff2"
+                                            id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
                                     </label>
 
 
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="checkbox-inline control-label" ng-show="companyData.check_fmt_trial"><input type="checkbox"
-                                                                                        ng-model="form.check_fmt_trial"
-                                                                                        id="check_trial"><?php echo $this->translate('Trial'); ?>
+                                    <label class="checkbox-inline control-label"
+                                           ng-show="companyData.check_fmt_trial">
+                                            <input type="checkbox"
+                                                ng-model="form.check_fmt_trial"
+                                                id="check_trial"><?php echo $this->translate('Trial'); ?>
                                     </label>
                                 </div>
                             </div>
@@ -97,7 +104,7 @@
                                     style=" vertical-align: text-bottom; margin-top: 18px;"><?php echo $this->translate('LICENSE INFO'); ?></label>
 
                                 <div class="col-md-1 form-group pull-right" style="margin-right: 20px;"><a
-                                        ng-click="addFormatItem(0);" href="javascript:;"
+                                        ng-click="addFormatItem(4);" href="javascript:;"
                                         class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i
                                             class="fa fa-plus"></i></a></div>
 
@@ -110,28 +117,31 @@
                                 <div class="col-md-11">
                                     <div class="input-group col-md-10 pull-left">
                                         <ul class="list-unstyled" ui-sortable="sortableFormatDesktop"
-                                            ng-model="form.formats[0]">
-                                            <li ng-repeat="(cart_key, cart_item) in form.formats[0]"
+                                            ng-model="form.formats[4]">
+                                            <li ng-repeat="(cart_key, cart_item) in form.formats[4]"
                                                 class="col-md-12">
                                                 <p>
                                                 <table>
                                                     <tr>
-                                                        <td class="col-md-7"><input type="text" class="form-control"
-                                                                                    ng-model="cart_item.parameters"
-                                                                                    placeholder="<?php echo $this->translate('1-2 USERS, UNLIMITED'); ?>">
+                                                        <td class="col-md-7">
+                                                            <input type="text" class="form-control"
+                                                                ng-model="cart_item.parameters"
+                                                                placeholder="<?php echo $this->translate('1-2 USERS, UNLIMITED'); ?>">
                                                         </td>
-                                                        <td class="col-md-3"><input type="text" only-number
-                                                                                    class="form-control"
-                                                                                    ng-model="cart_item.multiplier"
-                                                                                    placeholder="<?php echo $this->translate('Multiplier'); ?>">
+                                                        <td class="col-md-3">
+                                                            <input type="text" only-number
+                                                                class="form-control"
+                                                                ng-model="cart_item.multiplier"
+                                                                placeholder="<?php echo $this->translate('Multiplier'); ?>">
                                                         </td>
-                                                        <td class="col-md-2"><span class="input-group-btn"><div
-                                                                    class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>
+                                                        <td class="col-md-2">
+                                                            <span class="input-group-btn">
+                                                                <div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div>
+                                                            </span>
                                                             <span class="input-group-btn"><button
                                                                     class="btn c-btn c-btn-red c-btn-square c-font-white"
                                                                     type="button"
-                                                                    ng-click="removeFormatItem(0, cart_key)"><i
-                                                                        class="fa fa-minus"></i></button></span>
+                                                                    ng-click="removeFormatItem(4, cart_key)"><i class="fa fa-minus"></i></button></span>
                                                         </td>
                                                     </tr>
                                                 </table>
