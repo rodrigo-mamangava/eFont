@@ -1,6 +1,6 @@
 ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumService) {
 	var deferred = $q.defer();
-	var debug = false;
+	var debug = true;
 	return {
 		/**
 		 * Register/Login
@@ -93,9 +93,9 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 				console.log(err);
 			});				
 		},
-		getListLicenses: function(search, count, offset){
+		getListLicenses: function(search, count, offset, check_custom){
 			//GET
-			return $http.get('/ef-licenses/search?search='+search+'&count='+count+'&offset='+offset)
+			return $http.get('/ef-licenses/search?search='+search+'&count='+count+'&offset='+offset+'&check_custom='+check_custom)
 			.then(function(res) {
 				return res.data;
 			},function (err) {
@@ -179,7 +179,16 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			},function (err) {
 				console.log(err);
 			});	
-		},	
+		},
+		getCompanyProfile: function(){
+			//GET
+			return $http.get('/ef-company-profile/search')
+				.then(function(res) {
+					return res.data;
+				},function (err) {
+					console.log(err);
+				});
+		},
 		/**
 		 * Checkout
 		 */

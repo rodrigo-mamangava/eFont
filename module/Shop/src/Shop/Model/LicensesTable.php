@@ -12,25 +12,39 @@ class LicensesTable extends AbstractTableGateway {
 	public function __construct(Adapter $adapter) {
 		$this->adapter = $adapter;
 	}
-	/**
-	 * Salva/Atualiza um item
-	 *
-	 * @param unknown $id        	
-	 * @param unknown $name        	
-	 * @param unknown $file        	
-	 * @param unknown $company_id        	
-	 * @param unknown $user_id        	
-	 * @param unknown $check_trial        	
-	 * @param unknown $check_desktop        	
-	 * @param unknown $check_app        	
-	 * @param unknown $check_web        	
-	 * @param unknown $check_enabled        	
-	 * @param unknown $currency_dollar        	
-	 * @param unknown $currency_euro        	
-	 * @param unknown $currency_libra        	
-	 * @param unknown $currency_real        	
-	 */
-	public function save($id, $name, $file, $company_id, $user_id, $check_trial, $check_desktop, $check_app, $check_web, $check_enabled, $currency_dollar, $currency_euro, $currency_libra, $currency_real) {
+
+    /**
+     * Salva/Atualiza um item
+     *
+     * @param $id
+     * @param $name
+     * @param $file
+     * @param $company_id
+     * @param $user_id
+     * @param $check_trial
+     * @param $check_desktop
+     * @param $check_app
+     * @param $check_web
+     * @param $check_enabled
+     * @param $currency_dollar
+     * @param $currency_euro
+     * @param $currency_libra
+     * @param $currency_real
+     * @param $check_fmt_otf
+     * @param $check_fmt_ttf
+     * @param $check_fmt_eot
+     * @param $check_fmt_woff
+     * @param $check_fmt_woff2
+     * @param $check_fmt_trial
+     * @param $check_custom
+     * @return bool|int
+     */
+	public function save(
+	    $id, $name, $file, $company_id, $user_id, $check_trial,
+        $check_desktop, $check_app, $check_web, $check_enabled,
+        $currency_dollar, $currency_euro, $currency_libra, $currency_real,
+        $check_fmt_otf, $check_fmt_ttf, $check_fmt_eot, $check_fmt_woff,
+        $check_fmt_woff2, $check_fmt_trial, $check_custom ) {
 		$data = array (
 				'company_id' => $company_id,
 				'user_id' => $user_id,
@@ -45,6 +59,13 @@ class LicensesTable extends AbstractTableGateway {
 				'currency_euro' => addslashes ( $currency_euro ),
 				'currency_libra' => addslashes ( $currency_libra ),
 				'currency_real' => addslashes ( $currency_real ),
+                'check_fmt_otf' => ( int ) $check_fmt_otf,
+                'check_fmt_ttf' => ( int ) $check_fmt_ttf,
+                'check_fmt_eot' => ( int ) $check_fmt_eot,
+                'check_fmt_woff' => ( int ) $check_fmt_woff,
+                'check_fmt_woff2' => ( int ) $check_fmt_woff2,
+                'check_fmt_trial' => ( int ) $check_fmt_trial,
+                'check_custom' => ( int ) $check_custom,
 				'dt_update' => date ( 'Y-m-d H:i:s' ) 
 		);
 		
@@ -67,12 +88,15 @@ class LicensesTable extends AbstractTableGateway {
 		}
 		return $id;
 	}
-	/**
-	 * Atualizacao individual
-	 *
-	 * @param unknown $id        	
-	 * @param unknown $data        	
-	 */
+
+    /**
+     * Atualizacao individual
+     *
+     * @param $id
+     * @param $data
+     * @param $company_id
+     * @return bool
+     */
 	public function updated($id, $data, $company_id) {
 		$data ['dt_update'] = date ( 'Y-m-d H:i:s' );
 		
@@ -88,13 +112,15 @@ class LicensesTable extends AbstractTableGateway {
 		}
 		return $data;
 	}
-	/**
-	 * Busca pela chave principal
-	 *
-	 * @param unknown $id        	
-	 * @throws Exception
-	 * @return boolean|multitype:
-	 */
+
+    /**
+     * Busca pela chave principal
+     *
+     * @param $id
+     * @param $company_id
+     * @return bool
+     * @throws \Exception
+     */
 	public function find($id, $company_id) {
 		try {
 			// SELECT
@@ -123,10 +149,13 @@ class LicensesTable extends AbstractTableGateway {
 			throw new \Exception ( 'ERROR : ' . $e->getMessage () );
 		}
 	}
-	/**
-	 * Retorna as ativas
-	 * @param unknown $company_id
-	 */
+
+    /**
+     * Retorna as ativas
+     *
+     * @param $company_id
+     * @return \Zend\Paginator\Paginator
+     */
 	public function fetchAllActive($company_id){
 		// SELECT
 		$select = new Select ();
@@ -146,10 +175,14 @@ class LicensesTable extends AbstractTableGateway {
 		
 		return $paginator;		
 	}
-	/**
-	 * Retorna as ativas para o shopping
-	 * @param unknown $company_id
-	 */
+
+    /**
+     * Retorna as ativas para o shopping
+     *
+     * @param $company_id
+     * @param $project_id
+     * @return \Zend\Paginator\Paginator
+     */
 	public function fetchAllToShop($company_id, $project_id){
 		// SELECT
 		$select = new Select ();
@@ -176,15 +209,18 @@ class LicensesTable extends AbstractTableGateway {
 	
 		return $paginator;
 	}
-	/**
-	 * Consulta customizada
-	 *
-	 * @param unknown $search        	
-	 * @param unknown $count        	
-	 * @param unknown $offset        	
-	 * @param unknown $company_id        	
-	 */
-	public function filter($search, $count, $offset, $company_id) {
+
+    /**
+     * Consulta customizada
+     *
+     * @param $search
+     * @param $count
+     * @param $offset
+     * @param $company_id
+     * @param int $check_custom
+     * @return \Zend\Paginator\Paginator
+     */
+	public function filter($search, $count, $offset, $company_id, $check_custom = 0) {
 		// SELECT
 		$select = new Select ();
 		// FROM
@@ -199,6 +235,10 @@ class LicensesTable extends AbstractTableGateway {
 		if ($company_id != null && $company_id > 0) {
 			$select->where ( "{$this->table}.company_id='{$company_id}'" );
 		}
+
+        if ( $check_custom != null ) {
+            $select->where ( "{$this->table}.check_custom='{$check_custom}'" );
+        }
 		
 		// ORDER
 		$select->order ( "{$this->table}.name ASC" );
@@ -210,9 +250,12 @@ class LicensesTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	/**
-	 * Retorna todos os itens
-	 */
+
+    /**
+     * Retorna todos os itens
+     *
+     * @return \Zend\Paginator\Paginator
+     */
 	public function fetchAll() {
 		// SELECT
 		$select = new Select ();
@@ -231,12 +274,14 @@ class LicensesTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	
-	/**
-	 * Remove um item
-	 *
-	 * @param unknown $id        	
-	 */
+
+    /**
+     * Remove um item
+     *
+     * @param $id
+     * @param $company_id
+     * @return array|bool
+     */
 	public function removed($id, $company_id) {
 		// Update
 		$data = array ();

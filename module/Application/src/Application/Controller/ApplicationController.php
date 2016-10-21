@@ -384,5 +384,15 @@ class ApplicationController extends AbstractActionController {
 			$this->viewModel->setVariable ( 'REASONS', $Paginator );
 		}
 	}
+
+    /**
+     * @return \Useful\Controller\unknown
+     */
+    public function getCompanyProfile(){
+
+        $Company = new \Shop\Controller\CompanyController( $this->getMyServiceLocator () );
+
+        return \Useful\Controller\UsefulController::getStripslashes( $Company->find( $this->get_company_id () ) );
+    }
 	
 }

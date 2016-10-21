@@ -6,26 +6,12 @@
 	<!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
 	<div class="" ng-controller="ProductsCtrl" ng-init="initProducts();">
 		<div class="portlet">
-
-
 			<div class="portlet-title">
-				<div class="caption"  >
-					<div style="margin-bottom: -40px;">
-						<span class="caption-subject text-uppercase" ><?php echo $this->translate('PROJECTS'); ?></span>
-					</div>
+				<div class="pull-right">
+					<p><a href="javascript:;" class="btn c-btn c-btn-green c-btn-square" ng-class="(products.length == '0')?'animated bounce':''" ng-click="changeTemplateURL('/ef-products/form');"><i class="fa fa-plus"></i></a>
+					<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square" ng-show="products.length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Products');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><i class="fa fa-trash"></i></a></p>
 				</div>
-
-				<div class="actions" style="margin-bottom: 45px;">
-					<div class="pull-right">
-						<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square" ng-class="(products.length == '0')?'animated bounce':''" ng-click="changeTemplateURL('/ef-products/form');"><i class="fa fa-plus"></i></a>
-						<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square" ng-show="products.length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Products');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><i class="fa fa-trash"></i></a>
-					</div>
-				</div>
-
 			</div>
-
-			<hr />
-
 			<!-- BEGIN TABLE -->
 			<div class="portlet-body" ng-show="products.length > '0'">
 				<div class="table-scrollable">

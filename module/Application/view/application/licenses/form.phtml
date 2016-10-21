@@ -1,160 +1,169 @@
-<?php echo $this->partial('shop/licenses/breadcrumbs');?>
-<!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
-<div class="container">
-	<?php echo $this->partial('shop/projects/leftmenu');?>
-	<div class="c-layout-sidebar-content ">
-	<!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
-	<div class="" ng-controller="LicensesCtrl" ng-init="getLicenses();">
-		<div class="portlet">
-			<div class="portlet-title">
-				<div class="caption">
-					<div class="pull-right" ng-show="form.id > 0"># {{form.id}}</div>
-				</div>
-			</div>
-			<!-- BEGIN BODY -->
-			<div class="portlet-body form">
-				<form class="form-horizontal" role="form" name="formLicenses">
-					<div class="form-group margin-top-40 margin-bottom-20">
-						<label class="col-md-7 uppercase bold"><?php echo $this->translate('LICENSE');?></label>
-					</div>					
-				
-					<!-- NAME -->
-					<div class="form-group margin-top-40">
-						<label class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Name');?></label>
-						<div class="col-md-6">
-							<input type="text" ng-model="form.name" class="form-control text-danger"  maxlength="255" placeholder="<?php echo $this->translate('Trial, Project, Classic, OEM ...');?>" required="required" />
-						</div>
-						
-						<div class="col-md-5">
-						<div class="">
-							<div class="input-group">
-								<input type="text" placeholder="" readonly="readonly"  class="form-control" ng-model="form.media_url" id="media_url" name="media_url"/>
-								<span class="input-group-btn"><button class="btn blue" type="button" onclick="fileUploadDropzone('media_url');" ><i class="fa fa-upload"></i></button></span>
-							</div>
-						</div>
-						</div>					
-					</div>					
-				
-					<!-- FONTS FILES -->
-					<div class="form-group margin-bottom-20">
-						<label class="control-label bold pull-left"><?php echo $this->translate('Font Files');?>:</label>
-						<div class="col-md-10">
-							<label class="checkbox-inline"><input type="checkbox" ng-model="form.check_trial" id="check_trial"><?php echo $this->translate('Trial');?> </label>
-							<label class="checkbox-inline"><input type="checkbox" ng-model="form.check_desktop" id="check_desktop"><?php echo $this->translate('Desktop');?> </label>
-							<label class="checkbox-inline"><input type="checkbox" ng-model="form.check_app" id="check_app"><?php echo $this->translate('App');?> </label>
-							<label class="checkbox-inline"><input type="checkbox" ng-model="form.check_web" id="check_web"><?php echo $this->translate('Web');?> </label>
-							<label class="checkbox-inline"><input type="checkbox" ng-model="form.check_enabled" id="check_enabled"><?php echo $this->translate('Ativa');?> </label>
-						</div>
-					</div>	
-					
-					<!-- INFO -->
-					<section ng-show="form.check_desktop || form.check_app || form.check_web">
-					<hr/>
-					<div class="form-group margin-top-40" style="margin-top: 40px;">
-						<label class="col-md-7 uppercase bold"><?php echo $this->translate('LICENSE INFO');?></label>
-					</div>
-										
-					
-					<!-- Desktop -->		
-					<div class="form-group margin-top-40" ng-show="form.check_desktop">
-						<label class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Desktop');?></label>
-						<div class="col-md-11">
-							<div class="input-group col-md-10 pull-left">
-								<ul class="list-unstyled" ui-sortable="sortableFormatDesktop" ng-model="form.formats[1]">
-								<li ng-repeat="(cart_key, cart_item) in form.formats[1]" class="col-md-12">							
-								<p><table><tr>
-								<td class="col-md-7"><input type="text" class="form-control" ng-model="cart_item.parameters" placeholder="<?php echo $this->translate('1-2 USERS, UNLIMITED');?>"></td>
-								<td class="col-md-3"><input type="text" class="form-control" ng-model="cart_item.multiplier"  placeholder="<?php echo $this->translate('Multiplier');?>"></td>
-								<td class="col-md-2"><span class="input-group-btn"><div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>							
-								<span class="input-group-btn"><button class="btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(1, cart_key)"><i class="fa fa-minus"></i></button></span></td>
-								</tr></table></p>
-								</li>
-								</ul>
-							</div>
-							<div class="form-group margin-top-40 margin-bottom-10"><a  ng-click="addFormatItem(1);" href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i class="fa fa-plus"></i></a></div>						
-						</div>
-					</div>			
+<?php echo $this->partial('shop/licenses/breadcrumbs'); ?>
+    <!-- END: LAYOUT/BREADCRUMBS/BREADCRUMBS-2 -->
+    <div class="container">
+        <?php echo $this->partial('shop/projects/leftmenu'); ?>
+        <div class="c-layout-sidebar-content ">
+            <!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
+            <div class="" ng-controller="LicensesCtrl" ng-init="getLicenses();">
+                <div class="portlet">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <div class="pull-right" ng-show="form.id > 0"># {{form.id}}</div>
+                        </div>
+                    </div>
+                    <!-- BEGIN BODY -->
+                    <div class="portlet-body form">
+                        <form class="form-horizontal" role="form" name="formLicenses">
+                            <div class="form-group margin-top-40 " style="margin-bottom: -20px">
+                                <label
+                                    class="col-md-7 uppercase bold"><?php echo $this->translate('LICENSE'); ?></label>
+                            </div>
 
-					<!-- WEB -->					
-					<div class="form-group margin-top-40" ng-show="form.check_web">
-						<label class="col-md-1 control-label bold pull-left"><?php echo $this->translate('WEB');?></label>
-						<div class="col-md-11">
-							<div class="input-group col-md-10 pull-left">
-								<ul class="list-unstyled" ui-sortable="sortableFormatDesktop" ng-model="form.formats[2]">
-								<li ng-repeat="(cart_key, cart_item) in form.formats[2]" class="col-md-12">							
-								<p><table><tr>
-								<td class="col-md-7"><input type="text" class="form-control" ng-model="cart_item.parameters" placeholder="<?php echo $this->translate('50.0000-100.000 Pageviews/Month');?>"></td>
-								<td class="col-md-3"><input type="text" class="form-control" ng-model="cart_item.multiplier"  placeholder="<?php echo $this->translate('Multiplier');?>"></td>
-								<td class="col-md-2"><span class="input-group-btn"><div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>							
-								<span class="input-group-btn"><button class="btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(2, cart_key)"><i class="fa fa-minus"></i></button></span></td>
-								</tr></table></p>
-								</li>
-								</ul>
-							</div>
-							<div class="form-group margin-top-40 margin-bottom-10"><a  ng-click="addFormatItem(2);" href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i class="fa fa-plus"></i></a></div>						
-						</div>
-					</div>						
+                            <hr/>
 
-					<!-- APP -->
-					<div class="form-group margin-top-40" ng-show="form.check_app">
-						<label class="col-md-1 control-label bold pull-left"><?php echo $this->translate('APP');?></label>
-						<div class="col-md-11">
-							<div class="input-group col-md-10 pull-left">
-								<ul class="list-unstyled" ui-sortable="sortableFormatDesktop" ng-model="form.formats[3]">
-								<li ng-repeat="(cart_key, cart_item) in form.formats[3]" class="col-md-12">							
-								<p><table><tr>
-								<td class="col-md-7"><input type="text" class="form-control" ng-model="cart_item.parameters" placeholder="<?php echo $this->translate('1 APP, 2-5 APPS');?>"></td>
-								<td class="col-md-3"><input type="text" class="form-control" ng-model="cart_item.multiplier"  placeholder="<?php echo $this->translate('Multiplier');?>"></td>
-								<td class="col-md-2"><span class="input-group-btn"><div class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>							
-								<span class="input-group-btn"><button class="btn c-btn c-btn-red c-btn-square c-font-white" type="button" ng-click="removeFormatItem(3, cart_key)"><i class="fa fa-minus"></i></button></span></td>
-								</tr></table></p>
-								</li>
-								</ul>
-							</div>
-							<div class="form-group margin-top-40 margin-bottom-10"><a  ng-click="addFormatItem(3);" href="javascript:;" class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i class="fa fa-plus"></i></a></div>						
-						</div>
-					</div>	
-					</section>			
-					<!-- CURRENCY -->
-					<hr/>
-					<div class="form-group margin-top-40" style="margin-top: 40px;">
-						<label class="col-md-7 uppercase bold"><?php echo $this->translate('CURRENCY');?></label>
-					</div>									
-				
-					<div class="form-group margin-top-40">
-						<div class="col-md-offset-1 col-md-11">
-							<table class="table">
-							<thead><tr>
-							<th><?php echo $this->translate('Dollar');?></th>
-							<th><?php echo $this->translate('Euro');?></th>
-							<th><?php echo $this->translate('Libra');?></th>
-							<th><?php echo $this->translate('Real');?></th>
-							</tr></thead>
-							<tbody><tr>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-dollar"></i></span><input type="text"  placeholder="1,00" class="form-control" ng-model="form.currency_dollar"></div></td>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="text"  placeholder="0,92" class="form-control" ng-model="form.currency_euro"></div></td>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="text"  placeholder="0,67" class="form-control" ng-model="form.currency_libra"></div></td>
-							<td class="col-md-2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-times"></i></span><input type="text"  placeholder="3.98" class="form-control" ng-model="form.currency_real"></div></td>
-							</tr></tbody>
-							</table>
-						</div>
-					</div>					
-					<!-- BUTTON -->
-					<hr class="row"/>
-					<div class="form-group margin-top-40 margin-bottom-10">
-						<div class="col-md-12 uppercase bold">
-						<a href="javascript:;" class="pull-right btn c-btn btn-lg c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="saveLicenses();" ng-disabled="formLicenses.$invalid"><?php echo $this->translate('Save');?> </a>
-						<a href="javascript:;" class="pull-left btn c-btn btn-lg c-btn-red c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" ng-click="changeTemplateURL('/ef-licenses');" ><?php echo $this->translate('Go Back');?></a>
-						</div>
-					</div>					
-					</div>
-				</form>
-			</div>
-			<!-- END BODY -->
-		</div>
-	</div>
-	<!-- END C-LAYOUT-SIDEBAR-CONTENT-->
-</div>
-</div>
+                            <!-- NAME -->
+                            <div class="form-group margin-top-40">
+                                <label
+                                    class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Name'); ?></label>
+                                <div class="col-md-6">
+                                    <input type="text" ng-model="form.name" class="form-control text-danger"
+                                           maxlength="255"
+                                           placeholder="<?php echo $this->translate('Trial, Project, Classic, OEM ...'); ?>"
+                                           required="required"/>
+                                </div>
 
-<?php echo $this->partial('file-upload-form-static');?>
+                                <div class="col-md-5">
+                                    <div class="">
+                                        <div class="input-group">
+                                            <input type="text" placeholder="" readonly="readonly" class="form-control"
+                                                   ng-model="form.media_url" id="media_url" name="media_url"
+                                                   style="width: 230px"/>
+
+                                            <span class="input-group-btn " style=""><button class="btn blue"
+                                                                                            type="button"
+                                                                                            onclick="fileUploadDropzone('media_url');"><?php echo $this->translate('Upload'); ?></button></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FONTS FILES -->
+                            <div class="form-group margin-bottom-20">
+                                <label
+                                    class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Files'); ?>
+                                </label>
+                                <div class="col-md-6">
+                                    <label class="checkbox-inline control-label"
+                                           ng-show="companyData.check_fmt_otf"><input type="checkbox"
+                                                                                      ng-model="form.check_fmt_otf"
+                                                                                      id="check_otf"><?php echo $this->translate('.OTF'); ?>
+                                    </label>
+                                    <label class="checkbox-inline control-label"
+                                           ng-show="companyData.check_fmt_ttf"><input type="checkbox"
+                                                                                      ng-model="form.check_fmt_ttf"
+                                                                                      id="check_ttf"><?php echo $this->translate('.TTF'); ?>
+                                    </label>
+                                    <label class="checkbox-inline control-label"
+                                           ng-show="companyData.check_fmt_eot"><input type="checkbox"
+                                                                                      ng-model="form.check_fmt_eot"
+                                                                                      id="check_eot"><?php echo $this->translate('.EOT'); ?>
+                                    </label>
+                                    <label class="checkbox-inline control-label"
+                                           ng-show="companyData.check_fmt_woff"><input type="checkbox"
+                                                                                       ng-model="form.check_fmt_woff"
+                                                                                       id="check_woff"><?php echo $this->translate('.WOFF'); ?>
+                                    </label>
+                                    <label class="checkbox-inline control-label"
+                                           ng-show="companyData.check_fmt_woff2"><input type="checkbox"
+                                                                                        ng-model="form.check_fmt_woff2"
+                                                                                        id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
+                                    </label>
+
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="checkbox-inline control-label" ng-show="companyData.check_fmt_trial"><input type="checkbox"
+                                                                                        ng-model="form.check_fmt_trial"
+                                                                                        id="check_trial"><?php echo $this->translate('Trial'); ?>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- INFO -->
+                            <div class="form-group margin-top-40" style="margin-top: 40px; margin-bottom: -20px;">
+                                <label
+                                    class="col-md-9 uppercase bold"
+                                    style=" vertical-align: text-bottom; margin-top: 18px;"><?php echo $this->translate('LICENSE INFO'); ?></label>
+
+                                <div class="col-md-1 form-group pull-right" style="margin-right: 20px;"><a
+                                        ng-click="addFormatItem(0);" href="javascript:;"
+                                        class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i
+                                            class="fa fa-plus"></i></a></div>
+
+                            </div>
+
+                            <hr/>
+
+                            <div class="form-group margin-top-10">
+
+                                <div class="col-md-11">
+                                    <div class="input-group col-md-10 pull-left">
+                                        <ul class="list-unstyled" ui-sortable="sortableFormatDesktop"
+                                            ng-model="form.formats[0]">
+                                            <li ng-repeat="(cart_key, cart_item) in form.formats[0]"
+                                                class="col-md-12">
+                                                <p>
+                                                <table>
+                                                    <tr>
+                                                        <td class="col-md-7"><input type="text" class="form-control"
+                                                                                    ng-model="cart_item.parameters"
+                                                                                    placeholder="<?php echo $this->translate('1-2 USERS, UNLIMITED'); ?>">
+                                                        </td>
+                                                        <td class="col-md-3"><input type="text" only-number
+                                                                                    class="form-control"
+                                                                                    ng-model="cart_item.multiplier"
+                                                                                    placeholder="<?php echo $this->translate('Multiplier'); ?>">
+                                                        </td>
+                                                        <td class="col-md-2"><span class="input-group-btn"><div
+                                                                    class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>
+                                                            <span class="input-group-btn"><button
+                                                                    class="btn c-btn c-btn-red c-btn-square c-font-white"
+                                                                    type="button"
+                                                                    ng-click="removeFormatItem(0, cart_key)"><i
+                                                                        class="fa fa-minus"></i></button></span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- BUTTON -->
+                            <hr class="row"/>
+                            <div class="form-group margin-top-40 margin-bottom-10">
+                                <div class="col-md-12 uppercase bold">
+                                    <a href="javascript:;"
+                                       class="pull-right btn c-btn btn-lg c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"
+                                       ng-click="saveLicenses();"
+                                       ng-disabled="formLicenses.$invalid"><?php echo $this->translate('Save'); ?> </a>
+                                    <a href="javascript:;"
+                                       class="pull-left btn c-btn btn-lg c-btn-red c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"
+                                       ng-click="changeTemplateURL('/ef-licenses');"><?php echo $this->translate('Go Back'); ?></a>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+                <!-- END BODY -->
+            </div>
+        </div>
+        <!-- END C-LAYOUT-SIDEBAR-CONTENT-->
+    </div>
+    </div>
+
+<?php echo $this->partial('file-upload-form-static'); ?>

@@ -4,53 +4,224 @@
 	<?php echo $this->partial('shop/projects/leftmenu');?>
 	<div class="c-layout-sidebar-content ">
 	<!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
-	<div class="" ng-controller="LicensesCtrl" ng-init="initLicenses();">
+	<div class="" ng-controller="LicensesCtrl" ng-init="startLicenses();">
 		<div class="portlet">
+
+
 			<div class="portlet-title">
-				<div class="pull-right">
-					<p><a href="javascript:;" class="btn c-btn c-btn-green c-btn-square" ng-class="(licenses.length == '0')?'animated bounce':''" ng-click="changeTemplateURL('/ef-licenses/form');"><i class="fa fa-plus"></i></a>
-					<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square" ng-show="licenses.length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Licenses');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>')"><i class="fa fa-trash"></i></a></p>
+				<div class="caption"  >
+					<div style="margin-bottom: -40px;">
+						<span class="caption-subject text-uppercase" ><?php echo $this->translate('LICENSE'); ?></span>
+					</div>
 				</div>
+
+				<div class="actions" style="margin-bottom: 45px;">
+					<div class="pull-right">
+						<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square" ng-class="(licenses[0].length == '0')?'animated bounce':''" ng-click="changeTemplateURL('/ef-licenses/form');"><i class="fa fa-plus"></i></a>
+						<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square" ng-show="licenses[0].length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Licenses');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>', 0)"><i class="fa fa-trash"></i></a>
+					</div>
+				</div>
+
 			</div>
+
+			<hr />
+
+
 			<!-- BEGIN TABLE -->
-			<div class="portlet-body" ng-show="licenses.length > '0'">
-				<div class="table-scrollable">
+			<div class="portlet-body form" ng-show="licenses[0].length > '0'" >
+
+				<div class="table-scrollable" >
 					<table class="table table-striped table-bordered table-advance table-hover" id="<?php echo uniqid();?>">
 						<thead>
 							<tr>
-								<th width="1%"><input type="checkbox" class="icheck" ng-model="selectedAll" ng-click="checkAll()"/></th>
+								<th width="1%"><input type="checkbox" class="icheck" ng-model="selectedAll[0]" ng-click="checkAll(0)"/></th>
 								<th width="1%"><?php echo $this->translate('#');?></th>
 								<th class="col-md-3"><?php echo $this->translate('Name');?></th>
 								<th class="col-md-7"><?php echo $this->translate('Font Files');?></th>
+								<th class="col-md-2"><?php echo $this->translate('License Info');?></th>
+								<th class="col-md-2"><?php echo $this->translate('Activate');?></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="item in licenses" id="licenses-tr-{{item.id}}">
-								<td><input type="checkbox" class="icheck" ng-model="item.Selected" ng-change="isSelected('checkbox-{{item.id}}')" id="checkbox-{{item.id}}"/></td>
+							<tr ng-repeat="item in licenses[0] | filter: { check_custom: false }" id="licenses-tr-{{item.id}}">
+								<td><input type="checkbox" class="icheck" ng-model="item.Selected" ng-change="isSelected('checkbox-{{item.id}}', 0)" id="checkbox-{{item.id}}"/></td>
 								<td class="text-muted"><small>{{item.id}}</small></td>
 								<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td>
 								<td ng-click="editLicenses(item.id);" class="qz-pointer">
-									<span ng-show="item.check_trial =='1'" class="col-md-2 btn c-btn"><i class="fa fa-clone"></i> Trial </span>
-									<span ng-show="item.check_desktop =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-desktop"></i> Desktop </span>
-									<span ng-show="item.check_web =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-globe"></i> Web </span>
-									<span ng-show="item.check_app =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-mobile"></i> APP </span>
-									<span ng-show="item.check_enabled =='1'"  class="col-md-2 btn c-btn"><i class="fa fa-check"></i> Ativa </span>
+									<span ng-show="item.check_fmt_otf =='1'" class=" small"><i class="fa fa-check"></i> .OTF </span>
+									<span ng-show="item.check_fmt_ttf =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .TTF </span>
+									<span ng-show="item.check_fmt_eot =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .EOT </span>
+									<span ng-show="item.check_fmt_woff =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .WOFF </span>
+									<span ng-show="item.check_fmt_trial =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> TRIAL </span>
+									<span ng-show="item.check_fmt_woff2 =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .WOFF2 </span>
+								</td>
+								<td ng-click="editLicenses(item.id);" class="qz-pointer" align="center">
+									<i class="fa fa-clone"></i>
+								</td>
+								<td ng-click="editLicenses(item.id);" class="qz-pointer" align="center">
+									<input type="checkbox" class="icheck" id="checkbox-activate-{{item.id}}"/>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<!-- Pag. -->
-				<div ng-show="totalItems > 10">
-					<uib-pagination ng-change="pageChanged()" total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+				<div ng-show="totalItems[0] > 10">
+					<uib-pagination ng-change="pageChanged(0)" total-items="totalItems[0]" ng-model="currentPage[0]" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
 				</div>			
 			</div>
 			<!-- END TABLE -->
 			<!-- BEGIN DISPLAY -->
-			<div class="portlet-body" ng-show="licenses.length == '0'" id="no-data-to-display">
+			<div class="portlet-body" ng-show="licenses[0].size() == '0'" id="no-data-to-display">
 				<?php echo $this->partial('no-data-to-display');?>
 			</div>
-			<!-- END DISPLAY -->		
+			<!-- END DISPLAY -->
+
+			<div class="portlet-title" style="margin-top:60px">
+				<div class="caption"  >
+					<div style="margin-bottom: -40px;">
+						<span class="caption-subject text-uppercase" ><?php echo $this->translate('CUSTOM LICENSE'); ?></span>
+					</div>
+				</div>
+
+				<div class="actions" style="margin-bottom: 45px;">
+					<div class="pull-right">
+						<a href="javascript:;" class="btn c-btn c-btn-green c-btn-square" ng-class="(licenses[1].length == '0')?'animated bounce':''" ng-click="changeTemplateURL('/ef-licenses/custom-form');"><i class="fa fa-plus"></i></a>
+						<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square" ng-show="licenses[1].length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Licenses');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>', 1)"><i class="fa fa-trash"></i></a>
+					</div>
+				</div>
+
+			</div>
+
+			<hr />
+
+			<!-- BEGIN TABLE -->
+			<div class="portlet-body form" ng-show="licenses[1].length > '0'" >
+
+				<div class="table-scrollable" >
+					<table class="table table-striped table-bordered table-advance table-hover" id="<?php echo uniqid();?>">
+						<thead>
+						<tr>
+							<th width="1%"><input type="checkbox" class="icheck" ng-model="selectedAll[1]" ng-click="checkAll(1)"/></th>
+							<th width="1%"><?php echo $this->translate('#');?></th>
+							<th class="col-md-3"><?php echo $this->translate('Name');?></th>
+							<th class="col-md-7"><?php echo $this->translate('Font Files');?></th>
+							<th class="col-md-2"><?php echo $this->translate('License Info');?></th>
+							<th class="col-md-2"><?php echo $this->translate('Activate');?></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="item in licenses[1] | filter: { check_custom: true }" id="licenses-tr-{{item.id}}">
+							<td><input type="checkbox" class="icheck" ng-model="item.Selected" ng-change="isSelected('checkbox-{{item.id}}', 1)" id="checkbox-{{item.id}}"/></td>
+							<td class="text-muted"><small>{{item.id}}</small></td>
+							<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td>
+							<td ng-click="editLicenses(item.id);" class="qz-pointer">
+								<span ng-show="item.check_trial =='1'" class="small" ><i class="fa fa-check"></i>Trial</span>
+								<span ng-show="item.check_desktop =='1'" class="small" >&nbsp;&nbsp;<i class="fa fa-check"  ></i> Desktop </span>
+								<span ng-show="item.check_web =='1'" class="small" >&nbsp;&nbsp;<i class="fa fa-check" ></i> Web </span>
+								<span ng-show="item.check_app =='1'" class="small" >&nbsp;&nbsp;<i class="fa fa-check" ></i> APP </span>
+								<span ng-show="item.check_enabled =='1'" class="small" >&nbsp;&nbsp;<i class="fa fa-check" ></i> Ativa </span>
+							</td>
+							<td ng-click="editLicenses(item.id);" class="qz-pointer" align="center">
+								<i class="fa fa-clone"></i>
+							</td>
+							<td ng-click="editLicenses(item.id);" class="qz-pointer" align="center">
+								<input type="checkbox" class="icheck" id="checkbox-activate-{{item.id}}"/>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- Pag. -->
+				<div ng-show="totalItems[1] > 10">
+					<uib-pagination ng-change="pageChanged(1)" total-items="totalItems[1]" ng-model="currentPage[1]" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+				</div>
+			</div>
+			<!-- END TABLE -->
+
+
+			<div class="portlet-title" style="margin-top:60px">
+				<div class="caption"  >
+					<div style="margin-bottom: -10px;">
+						<span class="caption-subject " ><?php echo $this->translate('Available Formats'); ?></span>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+			<!-- FONTS FILES -->
+			<div class="form-group margin-bottom-20">
+
+				<div class="col-md-10">
+                    <label class="checkbox-inline control-label"><input type="checkbox"
+                                                                        ng-model="companyData.check_fmt_otf"
+                                                                        id="check_otf"><?php echo $this->translate('.OTF'); ?>
+                    </label>
+					<label class="checkbox-inline control-label"><input type="checkbox"
+																		ng-model="companyData.check_fmt_ttf"
+																		id="check_ttf"><?php echo $this->translate('.TTF'); ?>
+					</label>
+					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_eot"
+																		id="check_eot"><?php echo $this->translate('.EOT'); ?>
+					</label>
+					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_woff"
+																		id="check_woff"><?php echo $this->translate('.WOFF'); ?>
+					</label>
+
+					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_woff2"
+																		id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
+					</label>
+
+				</div>
+
+				<div class="col-md-1">
+					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_trial"
+																		id="check_trial"><?php echo $this->translate('Trial'); ?>
+					</label>
+				</div>
+			</div>
+			<br />
+			<hr />
+
+			<div class="portlet-title" style="margin-top:60px">
+				<div class="caption"  >
+					<div style="margin-bottom: -10px;">
+						<span class="caption-subject " ><?php echo $this->translate('Currency'); ?></span>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+			<!-- FONTS FILES -->
+			<div class="form-group margin-bottom-20">
+
+				<div class="col-md-12">
+
+                    <label class="checkbox-inline control-label">
+                        <?php echo $this->translate('Dollar'); ?>
+                        <input type="input" placeholder="1,00" ng-model="companyData.currency_dollar" id="curr_dollar" size="8">
+                    </label>
+                    <label class="checkbox-inline control-label">
+                        <?php echo $this->translate('Euro'); ?>
+                        <input type="input" placeholder="0,92" ng-model="companyData.currency_euro" id="curr_euro" size="8">
+                    </label>
+                    <label class="checkbox-inline control-label">
+                        <?php echo $this->translate('Libra'); ?>
+                        <input type="input" placeholder="0,67" ng-model="companyData.currency_libra" id="curr_libra" size="8">
+                    </label>
+
+                    <label class="checkbox-inline control-label">
+                        <?php echo $this->translate('Real'); ?>
+                        <input type="input" placeholder="3,98" ng-model="companyData.currency_real" id="curr_real" size="8">
+                    </label>
+				</div>
+
+			</div>
+			<br />
+			<hr />
+
+
+
 		</div>
 	</div>
 	<!-- END C-LAYOUT-SIDEBAR-CONTENT-->

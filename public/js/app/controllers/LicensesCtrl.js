@@ -1,31 +1,60 @@
 ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStorage, ipsumService, ShopSrvc) {
 	//global
 	$scope.searchText = '';	
-	$scope.form = {'formats':[0,1,2,3]};
+	//$scope.form = {'formats':[0,1,2,3]};
+	$scope.form = {'formats':[0]};
+	$scope.onlyNumbers = /^\d+$/;
 	//clean
 	$scope.cleanLicenses = function(){
-		$scope.licenses = [];
-		$scope.form = {'formats':[0,1,2,3]};
+		$scope.licenses = new Array();
+		$scope.totalItems = new Array();
+		$scope.currentPage = new Array();
+		$scope.radioModel = new Array();
+		$scope.maxSize = new Array();
+		$scope.selected_items = new Array();
+
+		$scope.licenses[0] = [];
+		$scope.licenses[1] = [];
+
+		//$scope.form = {'formats':[0,1,2,3]};
+		$scope.form = {'formats':[0]};
 		//Pag
-		$scope.totalItems = 0;
-		$scope.currentPage = 0;	
-		$scope.radioModel = '10';
-		$scope.maxSize = 10;	
+		$scope.totalItems[0] = 0;
+		$scope.currentPage[0] = 0;
+		$scope.radioModel[0] = '10';
+		$scope.maxSize[0] = 10;
+
+		$scope.totalItems[1] = 0;
+		$scope.currentPage[1] = 0;
+		$scope.radioModel[1] = '10';
+		$scope.maxSize[1] = 10;
+
 		//Checkbox
-		$scope.selected_items = 0;
+		$scope.selected_items[0] = 0;
+		$scope.selected_items[1] = 0;
+
+		$scope.companyData = null;
 	};
+	$scope.startLicenses = function(){
+		$scope.initLicenses('',0);
+		$scope.initLicenses('',1);
+	};
+
 	//Lista de itens
-	$scope.initLicenses = function(search){//Carrega todos os itens
+	$scope.initLicenses = function(search, check_custom){//Carrega todos os itens
 		search = typeof search !== 'undefined' ? search : $scope.searchText;
+		check_custom = typeof check_custom !== 'undefined' ? check_custom : 0;
 		isSpinnerBar(true);	
 
-		ShopSrvc.getListLicenses(search, $scope.radioModel, $scope.currentPage).then(function(res){
+		ShopSrvc.getListLicenses(search, $scope.radioModel[check_custom], $scope.currentPage[check_custom], check_custom).then(function(res){
 			if(res.status == true){
 				$timeout(function(){
 					$scope.$apply(function(){
-						$scope.licenses = res.data.items;
-						$scope.totalItems = res.data.total;
-						$scope.currentPage = res.data.offset;
+						$scope.licenses[check_custom] = res.data.items;
+						$scope.totalItems[check_custom] = res.data.total;
+						$scope.currentPage[check_custom] = res.data.offset;
+						$scope.companyData = res.data.company;
+
 					});
 				});
 			}else{
@@ -57,10 +86,20 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 	};
 	
 	$scope.getLicenses = function(){
+		//Get company profile
+		ShopSrvc.getCompanyProfile().then(function(res){
+			if(res.status == true){
+				$scope.companyData = res.data.company;
+			}else{
+				bootbox.alert(res.data);
+				$scope.form = {};
+			}
+		});
+
 		if(!isBlank($localStorage.LicensesId)){
-			isSpinnerBar(true);	
+			isSpinnerBar(true);
 			var id = $localStorage.LicensesId;
-			
+
 			ShopSrvc.getLicenses(id).then(function(res){
 				if(res.status == true){
 					$scope.form = res.data;
@@ -80,12 +119,12 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 		}, 1000);
 	};
 	//Remover varios itens
-	$scope.removeSelected = function(y, n, t, m, err) {
+	$scope.removeSelected = function(y, n, t, m, err, check_custom) {
 		var html = '';
-		if($scope.selected_items < 1){
+		if($scope.selected_items[check_custom] < 1){
 			bootbox.alert(err);
 		}else{
-			angular.forEach($scope.licenses, function (item, k) {
+			angular.forEach($scope.licenses[check_custom], function (item, k) {
 				if(item.Selected === true){
 					html = html +'<b class="has-error">'+item.name +'</b><br/>';
 				}
@@ -105,7 +144,7 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 						className: "btn-danger",
 						callback: function() {
 							isSpinnerBar(true);
-							angular.forEach($scope.licenses, function (item, k) {
+							angular.forEach($scope.licenses[check_custom], function (item, k) {
 								if(item.Selected === true){
 									$scope.removed(item.id);
 								}
@@ -142,27 +181,27 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 		$scope.form.formats[id].splice(cart_key, 1);
 	};
 	//Alterando paginacao
-	$scope.pageChanged = function (){ $scope.initLicenses(); }
+	$scope.pageChanged = function (check_custom){ $scope.initLicenses('',check_custom); }
 	//Select all
-	$scope.checkAll = function () {
-		if ($scope.selectedAll) {
-			$scope.selectedAll = true;
-			$scope.selected_items = $scope.totalItems;
+	$scope.checkAll = function (check_custom) {
+		if ($scope.selectedAll[check_custom]) {
+			$scope.selectedAll[check_custom] = true;
+			$scope.selected_items[check_custom] = $scope.totalItems[check_custom];
 		} else {
-			$scope.selectedAll = false;
-			$scope.selected_items = 0;
+			$scope.selectedAll[check_custom] = false;
+			$scope.selected_items[check_custom] = 0;
 		}
-		angular.forEach($scope.licenses, function (item) {
-			item.Selected = $scope.selectedAll;
+		angular.forEach($scope.licenses[check_custom], function (item) {
+			item.Selected = $scope.selectedAll[check_custom];
 		});
 
 	};
 	//Se selecionado
-	$scope.isSelected = function(id) {
+	$scope.isSelected = function(id, check_custom) {
 		if ($('#'+id).is(':checked')) {
-			$scope.selected_items++;
+			$scope.selected_items[check_custom]++;
 		}else{
-			$scope.selected_items--;
+			$scope.selected_items[check_custom]--;
 		}
 	};	
 	//Init

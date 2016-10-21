@@ -7,31 +7,39 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Sql\Select;
 
 class CompanyTable extends AbstractTableGateway {
-	protected $table = 'company';
+
+    protected $table = 'company';
 	// Nome da tabela no banco
 	public function __construct(Adapter $adapter) {
 		$this->adapter = $adapter;
 	}
-	/**
-	 * Salva/Atualiza um item
-	 * 
-	 * @param unknown $id        	
-	 * @param unknown $name        	
-	 * @param unknown $phone        	
-	 * @param unknown $email        	
-	 * @param unknown $contact        	
-	 * @param unknown $address        	
-	 * @param unknown $address_number        	
-	 * @param unknown $address_city        	
-	 * @param unknown $address_state        	
-	 * @param unknown $address_country        	
-	 * @param unknown $address_postal_code        	
-	 * @param unknown $map_lat        	
-	 * @param unknown $map_lng        	
-	 * @param unknown $status        	
-	 * @param unknown $company_id        	
-	 */
-	public function save($id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state, $address_country, $address_postal_code, $map_lat, $map_lng, $status, $company_id = null) {
+
+    /**
+     * Salva/Atualiza um item
+     *
+     * @param $id
+     * @param $name
+     * @param $phone
+     * @param $email
+     * @param $contact
+     * @param $address
+     * @param $address_number
+     * @param $address_city
+     * @param $address_state
+     * @param $address_country
+     * @param $address_postal_code
+     * @param $map_lat
+     * @param $map_lng
+     * @param $status
+     * @param null $company_id
+     * @param null $check_fmt_otf
+     * @param null $check_fmt_ttf
+     * @param null $check_fmt_eot
+     * @param null $check_fmt_woff
+     * @param null $check_fmt_woff2
+     * @return bool|int
+     */
+	public function save($id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state, $address_country, $address_postal_code, $map_lat, $map_lng, $status, $company_id = null, $check_fmt_otf = null, $check_fmt_ttf = null, $check_fmt_eot = null, $check_fmt_woff = null, $check_fmt_woff2 = null) {
 		$data = array (
 				'company_id' => $company_id,
 				'name' => addslashes ( $name ),
@@ -47,7 +55,12 @@ class CompanyTable extends AbstractTableGateway {
 				'status' => ( int ) $status,
 				'map_lng' => addslashes ( $map_lng ),
 				'map_lat' => addslashes ( $map_lat ),
-				'dt_update' => date ( 'Y-m-d H:i:s' ) 
+				'dt_update' => date ( 'Y-m-d H:i:s' ),
+                'check_fmt_otf' => ( int ) $check_fmt_otf,
+                'check_fmt_ttf' => ( int ) $check_fmt_ttf,
+                'check_fmt_eot' => ( int ) $check_fmt_eot,
+                'check_fmt_woff' => ( int ) $check_fmt_woff,
+                'check_fmt_woff2' => ( int ) $check_fmt_woff2
 		);
 		
 		$id = ( int ) $id;
@@ -69,12 +82,15 @@ class CompanyTable extends AbstractTableGateway {
 		}
 		return $id;
 	}
-	/**
-	 * Atualizacao individual
-	 *
-	 * @param unknown $id        	
-	 * @param unknown $data        	
-	 */
+
+    /**
+     * Atualizacao individual
+     *
+     * @param $id
+     * @param $data
+     * @param $company_id
+     * @return bool
+     */
 	public function updated($id, $data, $company_id) {
 		$data ['dt_update'] = date ( 'Y-m-d H:i:s' );
 		
@@ -90,13 +106,15 @@ class CompanyTable extends AbstractTableGateway {
 		}
 		return $data;
 	}
-	/**
-	 * Busca pela chave principal
-	 *
-	 * @param unknown $id        	
-	 * @throws Exception
-	 * @return boolean|multitype:
-	 */
+
+    /**
+     * Busca pela chave principal
+     *
+     * @param $id
+     * @param $company_id
+     * @return bool
+     * @throws \Exception
+     */
 	public function find($id, $company_id) {
 		try {
 			// SELECT
@@ -125,14 +143,16 @@ class CompanyTable extends AbstractTableGateway {
 			throw new \Exception ( 'ERROR : ' . $e->getMessage () );
 		}
 	}
-	/**
-	 * Consulta customizada
-	 *
-	 * @param unknown $search        	
-	 * @param unknown $count        	
-	 * @param unknown $offset        	
-	 * @param unknown $company_id        	
-	 */
+
+    /**
+     * Consulta customizada
+     *
+     * @param $search
+     * @param $count
+     * @param $offset
+     * @param $company_id
+     * @return \Zend\Paginator\Paginator
+     */
 	public function filter($search, $count, $offset, $company_id) {
 		// SELECT
 		$select = new Select ();
@@ -159,9 +179,12 @@ class CompanyTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	/**
-	 * Retorna todos os itens
-	 */
+
+    /**
+     * Retorna todos os itens
+     *
+     * @return \Zend\Paginator\Paginator
+     */
 	public function fetchAll() {
 		// SELECT
 		$select = new Select ();
@@ -180,12 +203,14 @@ class CompanyTable extends AbstractTableGateway {
 		
 		return $paginator;
 	}
-	
-	/**
-	 * Remove um item
-	 *
-	 * @param unknown $id        	
-	 */
+
+    /**
+     * Remove um item
+     *
+     * @param $id
+     * @param $company_id
+     * @return array|bool
+     */
 	public function removed($id, $company_id) {
 		// Update
 		$data = array ();
