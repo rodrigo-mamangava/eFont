@@ -5,9 +5,7 @@
 	<div class="c-layout-sidebar-content ">
 	<!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
 	<div class="" ng-controller="LicensesCtrl" ng-init="startLicenses();">
-		<div class="portlet">
-
-
+		<div class="portlet" ng-controller="CompanyProfileCtrl">
 			<div class="portlet-title">
 				<div class="caption"  >
 					<div style="margin-bottom: -40px;">
@@ -21,11 +19,9 @@
 						<a href="javascript:;" class="btn c-btn c-btn-red c-btn-square" ng-show="licenses[0].length > 0" ng-disabled="selected_items == '0'" ng-class="selected_items != '0'?'animated bounce':'';" ng-click="removeSelected('<?php echo $this->translate('Remove');?>', '<?php echo $this->translate('No');?>', '<?php echo $this->translate('Are you sure?');?>', '<?php echo $this->translate('You will remove the Licenses');?>', '<?php echo $this->translate('Please, click inside the box and select the action. You can select one or more.');?>', 0)"><i class="fa fa-trash"></i></a>
 					</div>
 				</div>
-
 			</div>
 
 			<hr />
-
 
 			<!-- BEGIN TABLE -->
 			<div class="portlet-body form" ng-show="licenses[0].length > '0'" >
@@ -149,34 +145,50 @@
 			</div>
 
 			<hr />
-			<!-- FONTS FILES -->
+			<!-- COMPANY AVAILABLE FORMATS -->
 			<div class="form-group margin-bottom-20">
 
 				<div class="col-md-10">
-                    <label class="checkbox-inline control-label"><input type="checkbox"
-                                                                        ng-model="companyData.check_fmt_otf"
-                                                                        id="check_otf"><?php echo $this->translate('.OTF'); ?>
+                    <label class="checkbox-inline control-label">
+						<input type="checkbox"
+								ng-model="companyData.check_fmt_otf"
+							    ng-change="saveCompanyProfile()"
+								id="check_otf"><?php echo $this->translate('.OTF'); ?>
                     </label>
-					<label class="checkbox-inline control-label"><input type="checkbox"
-																		ng-model="companyData.check_fmt_ttf"
-																		id="check_ttf"><?php echo $this->translate('.TTF'); ?>
+					<label class="checkbox-inline control-label">
+						<input type="checkbox"
+								ng-model="companyData.check_fmt_ttf"
+							   	ng-change="saveCompanyProfile()"
+								id="check_ttf"><?php echo $this->translate('.TTF'); ?>
 					</label>
-					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_eot"
-																		id="check_eot"><?php echo $this->translate('.EOT'); ?>
+					<label class="checkbox-inline control-label">
+						<input type="checkbox"
+							   ng-model="companyData.check_fmt_eot"
+							   ng-change="saveCompanyProfile()"
+							   id="check_eot"><?php echo $this->translate('.EOT'); ?>
 					</label>
-					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_woff"
-																		id="check_woff"><?php echo $this->translate('.WOFF'); ?>
+					<label class="checkbox-inline control-label">
+						<input type="checkbox"
+							   ng-model="companyData.check_fmt_woff"
+							   ng-change="saveCompanyProfile()"
+							   id="check_woff"><?php echo $this->translate('.WOFF'); ?>
 					</label>
 
-					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_woff2"
-																		id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
+					<label class="checkbox-inline control-label">
+						<input type="checkbox"
+							   ng-model="companyData.check_fmt_woff2"
+							   ng-change="saveCompanyProfile()"
+							   id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
 					</label>
 
 				</div>
 
 				<div class="col-md-1">
-					<label class="checkbox-inline control-label"><input type="checkbox" ng-model="companyData.check_fmt_trial"
-																		id="check_trial"><?php echo $this->translate('Trial'); ?>
+					<label class="checkbox-inline control-label">
+						<input type="checkbox"
+							   ng-model="companyData.check_fmt_trial"
+							   ng-change="saveCompanyProfile()"
+							   id="check_trial"><?php echo $this->translate('Trial'); ?>
 					</label>
 				</div>
 			</div>
@@ -192,27 +204,43 @@
 			</div>
 
 			<hr />
-			<!-- FONTS FILES -->
+			<!-- COMPANY CURRENCY GLOBAL VALUES -->
 			<div class="form-group margin-bottom-20">
 
 				<div class="col-md-12">
 
                     <label class="checkbox-inline control-label">
                         <?php echo $this->translate('Dollar'); ?>
-                        <input type="input" placeholder="1,00" ng-model="companyData.currency_dollar" id="curr_dollar" size="8">
+                        <input type="input"
+							   placeholder="1,00"
+							   ng-model="companyData.currency_dollar"
+							   ng-blur="saveCompanyProfile()"
+							   id="curr_dollar" size="8">
                     </label>
                     <label class="checkbox-inline control-label">
                         <?php echo $this->translate('Euro'); ?>
-                        <input type="input" placeholder="0,92" ng-model="companyData.currency_euro" id="curr_euro" size="8">
+                        <input type="input"
+							   placeholder="0,92"
+							   ng-model="companyData.currency_euro"
+							   ng-blur="saveCompanyProfile()"
+							   id="curr_euro" size="8">
                     </label>
                     <label class="checkbox-inline control-label">
                         <?php echo $this->translate('Libra'); ?>
-                        <input type="input" placeholder="0,67" ng-model="companyData.currency_libra" id="curr_libra" size="8">
+                        <input type="input"
+							   placeholder="0,67"
+							   ng-model="companyData.currency_libra"
+							   ng-blur="saveCompanyProfile()"
+							   id="curr_libra" size="8">
                     </label>
 
                     <label class="checkbox-inline control-label">
                         <?php echo $this->translate('Real'); ?>
-                        <input type="input" placeholder="3,98" ng-model="companyData.currency_real" id="curr_real" size="8">
+                        <input type="input"
+							   placeholder="3,98"
+							   ng-model="companyData.currency_real"
+							   ng-blur="saveCompanyProfile()"
+							   id="curr_real" size="8">
                     </label>
 				</div>
 

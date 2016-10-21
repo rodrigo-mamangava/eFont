@@ -180,6 +180,18 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 				console.log(err);
 			});	
 		},
+		/**
+		 * Company Profile
+		 */
+		saveCompanyProfile: function(data){
+			//POST
+			return $http.post('/ef-company-profile/save', data)
+				.then(function(res) {
+					return res.data;
+				},function (err) {
+					console.log(err);
+				});
+		},
 		getCompanyProfile: function(){
 			//GET
 			return $http.get('/ef-company-profile/search')

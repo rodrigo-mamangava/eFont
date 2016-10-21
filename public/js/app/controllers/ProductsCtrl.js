@@ -1,6 +1,6 @@
 ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStorage, ipsumService, ShopSrvc) {
 	//global
-	$scope.searchText = '';	
+	$scope.searchText = '';
 	$scope.form = {licenses:[]};
 	//clean
 	$scope.cleanProducts = function(){
@@ -16,17 +16,17 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		$scope.screen_summary = false;
 		//Pag
 		$scope.totalItems = 0;
-		$scope.currentPage = 0;	
+		$scope.currentPage = 0;
 		$scope.radioModel = '10';
-		$scope.maxSize = 10;	
+		$scope.maxSize = 10;
 		//Checkbox
 		$scope.selected_items = 0;
 	};
 	//Lista de itens
 	$scope.initProducts = function(search){//Carrega todos os itens
 		search = typeof search !== 'undefined' ? search : $scope.searchText;
-		isSpinnerBar(true);	
-		
+		isSpinnerBar(true);
+
 		ShopSrvc.getListProducts(search, $scope.radioModel, $scope.currentPage).then(function(res){
 			if(res.status == true){
 				$timeout(function(){
@@ -39,13 +39,13 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 			}else{
 				$scope.cleanProducts();
 			}
-			
+
 			$timeout(function(){ isSpinnerBar(false);}, 500);
 		});
-	};	
+	};
 	//Salvando
 	$scope.saveProducts = function (){
-		isSpinnerBar(true);	
+		isSpinnerBar(true);
 		$scope.form.number_families = $scope.families.length;
 		var data = {'project':$scope.form, 'families':$scope.families};
 		ShopSrvc.saveProducts(data).then(function(res){
@@ -56,16 +56,16 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 				$timeout(function(){ isSpinnerBar(false);}, 500);
 			}
 		});
-		
+
 		console.log(angular.toJson(data));
 	};
 	//Licenca
 	$scope.setLicenseId = function(l_key, l_id){
-		$scope.form.licenses[l_key].license_id =l_id; 
-	};	
+		$scope.form.licenses[l_key].license_id =l_id;
+	};
 	//Edicao
 	$scope.editProducts = function(id){
-		isSpinnerBar(true);	
+		isSpinnerBar(true);
 		$localStorage.ProductsId = id;
 		$timeout(function(){
 			$scope.changeTemplateURL('/ef-products/form');
@@ -75,13 +75,14 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	 * Carrega o produto
 	 */
 	$scope.getProducts = function(){
-		isSpinnerBar(true);	
+		return false;//ESACAPANDO PARA DESENVOLVER A TELA
+		isSpinnerBar(true);
 		//Licencas ativas
 		ShopSrvc.getListActiveLicenses().then(function(res){
 			if(res.status == true){
 				$scope.licenses = res.data.items;
 				angular.forEach($scope.licenses, function (item, key) {
-					$scope.form.licenses[key] ={license_id:item.id}; 
+					$scope.form.licenses[key] ={license_id:item.id};
 				});
 				//Carregando formatos
 				//Formatos disponivel
@@ -101,12 +102,12 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 										bootbox.alert(res.data);
 										$scope.form = {};
 									}
-								});		
+								});
 							}else{
 								//$scope.form = {licenses:[]};
 							}
 							$timeout(function(){ delete $localStorage.ProductsId; }, 500);
-							$timeout(function(){ 
+							$timeout(function(){
 								isSpinnerBar(false);
 								try{
 									isDropzone();
@@ -114,16 +115,16 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 									console.log(err);
 								}
 							}, 500);
-						}, 500);						
+						}, 500);
 					}else{
-						bootbox.alert(res.data);					
+						bootbox.alert(res.data);
 					}
 				});
 			}else{
 				bootbox.alert(res.data, function(){
 					$timeout(function(){
 						$scope.changeTemplateURL('/ef-licenses/form');
-					}, 500);					
+					}, 500);
 				});
 			}
 		});
@@ -140,11 +141,11 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 						$scope.$apply(function(){
 							$scope.families[f_key].formats[t_id].files = res.data.files;
 							$scope.families[f_key].formats[t_id].number_files = res.data.total;
-							
+
 							if(isBlank($scope.form.ddig)){
 								$scope.form.ddig = res.data.ddig;
 							}
-							
+
 							$timeout(function(){
 								$scope.updateWeight(f_key, t_key , -1);
 							},20);
@@ -167,7 +168,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		angular.forEach($scope.families[f_key].formats, function (f_item, f_k) {
 			angular.forEach(f_item.files, function (fl_item, fl_k) {
 				if(fl_item.check_price == false){
-					fl_item.font_price = price; 
+					fl_item.font_price = price;
 				};
 			});
 		});
@@ -179,10 +180,10 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		angular.forEach($scope.families, function (f_item, f_k) {
 			//console.log(f_item);
 			if(f_item.check_family == false){
-				$scope.families[f_k].money_family = price; 
+				$scope.families[f_k].money_family = price;
 			};
 		});
-	};	
+	};
 	//Add Familias
 	$scope.addFamilyItem = function(){
 		$scope.families.push({formats:[], family_name:null, money_family: $scope.current_price_family, check_family: false});
@@ -205,14 +206,14 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 					callback: function() {
 						$timeout(function(){
 							$scope.$apply(function(){
-								$scope.families.splice(f_key, 1);		
+								$scope.families.splice(f_key, 1);
 							});
 						});
 					}
-				},				
+				},
 			}
-		});			
-	};	
+		});
+	};
 	//Remover varios itens
 	$scope.removeSelected = function(y, n, t, m, err) {
 		var html = '';
@@ -245,18 +246,18 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 								}
 							});
 						}
-					},				
+					},
 				}
-			});	
+			});
 		}
-	};  
+	};
 	//executa a acao de remover
 	$scope.removed = function(id){
 		isSpinnerBar(true);
 		ShopSrvc.removeProducts(id).then(function(res){
 			if(res.status == true){
 				$('#products-tr-'+id).addClass('hide');
-				
+
 				if($scope.products.length == 0){
 					$scope.initProducts();
 				}
@@ -264,9 +265,9 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 			}else{
 				$('#products-tr-'+id).addClass('danger');
 				isSpinnerBar(false);
-			}									
+			}
 		});
-	};	
+	};
 	//Retornando a tela inicial
 	$scope.goBack = function(y, n, t, m, err){
 		bootbox.dialog({
@@ -287,23 +288,23 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 							$scope.changeTemplateURL('/ef-products');
 						},500);
 					}
-				},				
+				},
 			}
-		});		
+		});
 	};
 	/**
 	 * Exibe o summary, oculta o form
 	 */
 	$scope.goSummary = function(){
 		$scope.screen_from = false;
-		$scope.screen_summary = true;		
+		$scope.screen_summary = true;
 	};
 	/**
 	 * Exibe o form, oculta o summario
 	 */
 	$scope.goForm = function(){
 		$scope.screen_from = true;
-		$scope.screen_summary = false;			
+		$scope.screen_summary = false;
 	};
 	//Alterando paginacao
 	$scope.pageChanged = function (){ $scope.initProducts(); }
@@ -328,14 +329,14 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		}else{
 			$scope.selected_items--;
 		}
-	};	
+	};
 	//Init
 	$scope.cleanProducts();
 	$('#qz-query').keypress(function(e) {
 		if(e.which == 13) {
 			$scope.initProducts($('#qz-query').val());
 		}
-	});	
+	});
 	/**
 	 * Not implement alert
 	 */

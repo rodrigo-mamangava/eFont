@@ -19,25 +19,23 @@ class LicensesController extends ApplicationController {
 	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
 	 */
 	public function indexAction() {
-        return $this->viewModel->setTerminal ( true );
-
-        //return $this->viewModel;
-
+        //return $this->viewModel->setTerminal ( true );
+        return $this->viewModel;
 	}
 	/**
 	 * Formulario
 	 */
 	public function formAction() {
-		return $this->viewModel->setTerminal ( true );
-        //return $this->viewModel;
+		//return $this->viewModel->setTerminal ( true );
+        return $this->viewModel;
 	}
 
     /**
      * Formulario Customizado
      */
     public function customFormAction() {
-        return $this->viewModel->setTerminal ( true );
-        //return $this->viewModel;
+        //return $this->viewModel->setTerminal ( true );
+        return $this->viewModel;
     }
 	
 	/**
@@ -113,9 +111,10 @@ class LicensesController extends ApplicationController {
 		self::showResponse ( $status, $data, $outcome, true );
 		die ();
 	}
-	/**
-	 * Salva/Atualiza
-	 */
+
+    /**
+     * Salva/Atualiza
+     */
 	public function saveAction() {
 		// Default
 		$data = $this->translate ( "Unknown Error, try again, please." );

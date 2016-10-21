@@ -37,9 +37,18 @@ class CompanyTable extends AbstractTableGateway {
      * @param null $check_fmt_eot
      * @param null $check_fmt_woff
      * @param null $check_fmt_woff2
+     * @param null $currency_dollar
+     * @param null $currency_euro
+     * @param null $currency_libra
+     * @param null $currency_real
      * @return bool|int
      */
-	public function save($id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state, $address_country, $address_postal_code, $map_lat, $map_lng, $status, $company_id = null, $check_fmt_otf = null, $check_fmt_ttf = null, $check_fmt_eot = null, $check_fmt_woff = null, $check_fmt_woff2 = null) {
+	public function save(
+	    $id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state,
+        $address_country, $address_postal_code, $map_lat, $map_lng, $status, $company_id = null,
+        $check_fmt_otf = null, $check_fmt_ttf = null, $check_fmt_eot = null, $check_fmt_woff = null,
+        $check_fmt_woff2 = null, $currency_dollar = null, $currency_euro = null, $currency_libra = null,
+        $currency_real = null ) {
 		$data = array (
 				'company_id' => $company_id,
 				'name' => addslashes ( $name ),
@@ -60,7 +69,11 @@ class CompanyTable extends AbstractTableGateway {
                 'check_fmt_ttf' => ( int ) $check_fmt_ttf,
                 'check_fmt_eot' => ( int ) $check_fmt_eot,
                 'check_fmt_woff' => ( int ) $check_fmt_woff,
-                'check_fmt_woff2' => ( int ) $check_fmt_woff2
+                'check_fmt_woff2' => ( int ) $check_fmt_woff2,
+                'currency_dollar' => addslashes ( $currency_dollar ),
+                'currency_euro' => addslashes ( $currency_euro ),
+                'currency_libra' => addslashes ( $currency_libra ),
+                'currency_real' => addslashes ( $currency_real )
 		);
 		
 		$id = ( int ) $id;
@@ -91,7 +104,7 @@ class CompanyTable extends AbstractTableGateway {
      * @param $company_id
      * @return bool
      */
-	public function updated($id, $data, $company_id) {
+	public function updated( $id, $data, $company_id = null ) {
 		$data ['dt_update'] = date ( 'Y-m-d H:i:s' );
 		
 		$where = array (

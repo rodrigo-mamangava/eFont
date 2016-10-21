@@ -33,10 +33,24 @@ class CompanyController extends ControlController {
      * @param null $check_fmt_eot
      * @param null $check_fmt_woff
      * @param null $check_fmt_woff2
+     * @param null $currency_dollar
+     * @param null $currency_euro
+     * @param null $currency_libra
+     * @param null $currency_real
      * @return mixed
      */
-	public function save($id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state, $address_country, $address_postal_code, $map_lat = '', $map_lng = '', $status = 0, $company_id = null, $check_fmt_otf = null, $check_fmt_ttf = null, $check_fmt_eot = null, $check_fmt_woff = null, $check_fmt_woff2 = null ) {
-		return $this->getDbTable ( '\Shop\Model\CompanyTable' )->save($id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state, $address_country, $address_postal_code, $map_lat, $map_lng, $status, $company_id = null, $check_fmt_otf = null, $check_fmt_ttf = null, $check_fmt_eot = null, $check_fmt_woff = null, $check_fmt_woff2 = null);
+	public function save(
+	    $id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state,
+        $address_country, $address_postal_code, $map_lat = '', $map_lng = '', $status = 0, $company_id = null,
+        $check_fmt_otf = null, $check_fmt_ttf = null, $check_fmt_eot = null, $check_fmt_woff = null,
+        $check_fmt_woff2 = null, $currency_dollar = null, $currency_euro = null, $currency_libra = null,
+        $currency_real = null ) {
+        return $this->getDbTable ( '\Shop\Model\CompanyTable' )->save(
+            $id, $name, $phone, $email, $contact, $address, $address_number, $address_city, $address_state,
+            $address_country, $address_postal_code, $map_lat, $map_lng, $status, $company_id, $check_fmt_otf,
+            $check_fmt_ttf, $check_fmt_eot, $check_fmt_woff, $check_fmt_woff2, $currency_dollar, $currency_euro,
+            $currency_libra, $currency_real
+        );
 	}
 
     /**
@@ -80,7 +94,7 @@ class CompanyController extends ControlController {
      * @param $company_id
      * @return mixed
      */
-	public function updated($id, $data, $company_id){
+	public function updated($id, $data, $company_id = null){
 		return $this->getDbTable ( '\Shop\Model\CompanyTable' )->updated($id, $data, $company_id);
 	}
 
