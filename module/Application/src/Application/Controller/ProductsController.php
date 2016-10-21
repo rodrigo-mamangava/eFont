@@ -18,15 +18,15 @@ class ProductsController extends ApplicationController {
 	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
 	 */
 	public function indexAction() {
-        //return $this->viewModel->setTerminal ( true );
-        return $this->viewModel;
+        return $this->viewModel->setTerminal ( true );
+        //return $this->viewModel;
 	}
 	/**
 	 * Formulario
 	 */
 	public function formAction() {
-        //return $this->viewModel->setTerminal ( true );
-        return $this->viewModel;
+        return $this->viewModel->setTerminal ( true );
+        //return $this->viewModel;
 	}
 	/**
 	 * Busca
