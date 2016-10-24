@@ -15,7 +15,7 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 		$scope.licenses[0] = [];
 		$scope.licenses[1] = [];
 
-		$scope.form = {'formats':[0,1,2,3]};
+		$scope.form = {'formats':[0,1,2,3,4]};
 		//Pag
 		$scope.totalItems[0] = 0;
 		$scope.currentPage[0] = 0;
@@ -32,6 +32,7 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 		$scope.selected_items[1] = 0;
 
 		$scope.companyData = null;
+		
 	};
 	$scope.startLicenses = function(){
 		$scope.initLicenses('',0);
@@ -64,14 +65,14 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 	};	
 	//Salvando
 	$scope.saveLicenses = function (){
-		isSpinnerBar(true);	
+		isSpinnerBar(true);
 		ShopSrvc.saveLicenses($scope.form).then(function(res){
 			if(res.status == true){
 				$scope.changeTemplateURL('/ef-licenses');
 			}else{
 				bootbox.alert(res.data);
-				$timeout(function(){ isSpinnerBar(false);}, 500);
 			}
+			$timeout(function(){ isSpinnerBar(false);}, 500);
 		});
 	};
 	//Edicao
@@ -89,6 +90,22 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 		$timeout(function(){
 			$scope.changeTemplateURL('/ef-licenses/custom-form');
 		}, 500);
+	};
+
+	//Ativacao
+	$scope.activateLicense = function(item){
+		isSpinnerBar(true);
+		ShopSrvc.activateLicense(item).then(function(res){
+			if(res.status == true){
+				bootbox.alert(res.data);
+				$timeout(function(){
+					bootbox.hideAll();
+				},2000);
+			}else{
+				bootbox.alert(res.data);
+			}
+			$timeout(function(){ isSpinnerBar(false);}, 500);
+		});
 	};
 	
 	$scope.getLicenses = function(){
@@ -109,6 +126,7 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 			ShopSrvc.getLicenses(id).then(function(res){
 				if(res.status == true){
 					$scope.form = res.data;
+					console.log("$scope.form: " + $scope.form);
 				}else{
 					bootbox.alert(res.data);
 					$scope.form = {};
@@ -118,6 +136,7 @@ ShopApp.controller('LicensesCtrl', function($scope, $timeout, $http, $localStora
 			//$scope.form = {'formats':[[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }],[{parameters: ipsumService.words(5), multiplier:getRandomInt() }]]};
 			$scope.form = {
 				'formats':[
+					[{parameters:null, multiplier: null }],
 					[{parameters:null, multiplier: null }],
 					[{parameters:null, multiplier: null }],
 					[{parameters:null, multiplier: null }],

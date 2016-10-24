@@ -44,7 +44,7 @@
 								<td class="text-muted"><small>{{item.id}}</small></td>
 								<td ng-click="editLicenses(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td>
 								<td ng-click="editLicenses(item.id);" class="qz-pointer">
-									<span ng-show="item.check_fmt_otf =='1'" class=" small"><i class="fa fa-check"></i> .OTF </span>
+									<span ng-show="item.check_fmt_otf =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .OTF </span>
 									<span ng-show="item.check_fmt_ttf =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .TTF </span>
 									<span ng-show="item.check_fmt_eot =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .EOT </span>
 									<span ng-show="item.check_fmt_woff =='1'" class=" small">&nbsp;&nbsp;<i class="fa fa-check"></i> .WOFF </span>
@@ -54,8 +54,10 @@
 								<td ng-click="editLicenses(item.id);" class="qz-pointer" align="center">
 									<i class="fa fa-clone"></i>
 								</td>
-								<td ng-click="editLicenses(item.id);" class="qz-pointer" align="center">
-									<input type="checkbox" class="icheck" id="checkbox-activate-{{item.id}}"/>
+								<td ng-click="activateLicense(item);" class="qz-pointer" align="center">
+									<input type="checkbox" class="icheck"
+										   ng-model="item.check_enabled"
+										   id="checkbox-activate-{{item.id}}"/>
 								</td>
 							</tr>
 						</tbody>
@@ -121,8 +123,10 @@
 							<td ng-click="editCustomLicenses(item.id);" class="qz-pointer" align="center">
 								<i class="fa fa-clone"></i>
 							</td>
-							<td ng-click="editCustomLicenses(item.id);" class="qz-pointer" align="center">
-								<input type="checkbox" class="icheck" id="checkbox-activate-{{item.id}}"/>
+							<td ng-click="activateLicense(item);" class="qz-pointer" align="center">
+								<input type="checkbox" class="icheck"
+									   ng-model="item.check_enabled"
+									   id="checkbox-activate-{{item.id}}"/>
 							</td>
 						</tr>
 						</tbody>

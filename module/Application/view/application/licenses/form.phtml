@@ -97,6 +97,20 @@
                                 </div>
                             </div>
 
+
+                            <!-- ACTIVATION -->
+                            <div class="form-group margin-bottom-20">
+                                <label
+                                    class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Activate'); ?>
+                                </label>
+                                <div class="col-md-10">
+                                    <label class="checkbox-inline control-label">
+                                        <input type="checkbox"
+                                               ng-model="form.check_enabled"
+                                               id="check_enabled"></label>
+                                </div>
+                            </div>
+
                             <!-- INFO -->
                             <div class="form-group margin-top-40" style="margin-top: 40px; margin-bottom: -20px;">
                                 <label
@@ -104,7 +118,7 @@
                                     style=" vertical-align: text-bottom; margin-top: 18px;"><?php echo $this->translate('LICENSE INFO'); ?></label>
 
                                 <div class="col-md-1 form-group pull-right" style="margin-right: 20px;"><a
-                                        ng-click="addFormatItem(4);" href="javascript:;"
+                                            ng-click="addFormatItem(4);" href="javascript:;"
                                         class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i
                                             class="fa fa-plus"></i></a></div>
 

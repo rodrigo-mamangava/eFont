@@ -119,7 +119,16 @@ ShopApp.factory('ShopSrvc', function($q, $timeout, $http, $localStorage, ipsumSe
 			},function (err) {
 				console.log(err);
 			});	
-		},	
+		},
+		activateLicense: function(data){
+			//POST
+			return $http.post('/ef-licenses/activate', data)
+				.then(function(res) {
+					return res.data;
+				},function (err) {
+					console.log(err);
+				});
+		},
 		/**
 		 * Produtos
 		 */

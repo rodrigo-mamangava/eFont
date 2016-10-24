@@ -304,4 +304,70 @@ class LicensesController extends ApplicationController {
 		self::showResponse ( $status, $data, $outcome, true );
 		die ();
 	}
+
+    /**
+     * Ativacao
+     */
+	public function activateAction(){
+        // Default
+        $data = $this->translate ( "Unknown Error, try again, please." );
+        $outcome = $status = false;
+        // System
+        $user_id = $this->get_user_id ();
+        $company_id = $this->get_company_id ();
+
+        if ($this->getRequest ()->isPost ()) {
+            try {
+                // PARAMS
+                $post = $this->postJsonp ();
+                $id = isset ( $post ['id'] ) ? $post ['id'] : 0;
+                $name = isset ( $post ['name'] ) ? $post ['name'] : null;
+                $file = isset ( $post ['media_url'] ) ? $post ['media_url'] : null;
+
+                $check_trial = isset ( $post ['check_trial'] ) ? $post ['check_trial'] : false;
+                $check_desktop = isset ( $post ['check_desktop'] ) ? $post ['check_desktop'] : false;
+                $check_web = isset ( $post ['check_web'] ) ? $post ['check_web'] : false;
+                $check_app = isset ( $post ['check_app'] ) ? $post ['check_app'] : false;
+
+                $currency_dollar = isset ( $post ['currency_dollar'] ) ? $post ['currency_dollar'] : '';
+                $currency_euro = isset ( $post ['currency_euro'] ) ? $post ['currency_euro'] : '';
+                $currency_libra = isset ( $post ['currency_libra'] ) ? $post ['currency_libra'] : '';
+                $currency_real = isset ( $post ['currency_real'] ) ? $post ['currency_real'] : '';
+
+                $check_fmt_otf = isset ( $post ['check_fmt_otf'] ) ? $post ['check_fmt_otf'] : false;
+                $check_fmt_ttf = isset ( $post ['check_fmt_ttf'] ) ? $post ['check_fmt_ttf'] : false;
+                $check_fmt_eot = isset ( $post ['check_fmt_eot'] ) ? $post ['check_fmt_eot'] : false;
+                $check_fmt_woff = isset ( $post ['check_fmt_trial'] ) ? $post ['check_fmt_woff'] : false;
+                $check_fmt_woff2 = isset ( $post ['check_fmt_woff2'] ) ? $post ['check_fmt_woff2'] : false;
+                $check_fmt_trial = isset ( $post ['check_fmt_trial'] ) ? $post ['check_fmt_trial'] : false;
+
+                $check_custom = isset ( $post ['check_custom'] ) ? $post ['check_custom'] : false;
+
+                $check_enabled = isset ( $post ['check_enabled'] ) ? $post ['check_enabled'] : false;
+
+                // Mapper
+                $LicensesController = new \Shop\Controller\LicensesController ( $this->getMyServiceLocator () );
+
+                $rs = $LicensesController->save (
+                        $id, $name, $file, $company_id, $user_id, $check_trial,
+                        $check_desktop, $check_app, $check_web, $check_enabled,
+                        $currency_dollar, $currency_euro, $currency_libra, $currency_real,
+                        $check_fmt_otf, $check_fmt_ttf, $check_fmt_eot, $check_fmt_woff,
+                        $check_fmt_woff2, $check_fmt_trial, $check_custom
+                    );
+                // Response
+                $status = true;
+                $outcome = $rs;
+
+                $data = ( $check_enabled )
+                        ? $this->translate ( "The license has been activated." )
+                        : $this->translate ( "The license has been deactivated." );
+            } catch ( \Exception $e ) {
+                $data = $e->getMessage ();
+            }
+        }
+        // Response
+        self::showResponse ( $status, $data, $outcome, true );
+        die ();
+    }
 }
