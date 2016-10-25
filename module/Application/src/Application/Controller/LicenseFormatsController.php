@@ -27,7 +27,7 @@ class LicenseFormatsController extends ApplicationController {
 		$outcome = $status = false;
 		// Query
 		$LicenseFormatsController = new \Shop\Controller\LicenseFormatsController ( $this->getMyServiceLocator () );
-		$Paginator = $LicenseFormatsController->fetchAll();
+		$Paginator = $LicenseFormatsController->fetchAllWithoutDefault();
 		if ($Paginator->count () > 0) {
 			$data = array ();
 			$data ['items'] = iterator_to_array ( $Paginator->getCurrentItems () );

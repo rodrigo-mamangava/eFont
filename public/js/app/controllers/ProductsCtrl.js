@@ -75,7 +75,6 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	 * Carrega o produto
 	 */
 	$scope.getProducts = function(){
-		return false;//ESACAPANDO PARA DESENVOLVER A TELA
 		isSpinnerBar(true);
 		//Licencas ativas
 		ShopSrvc.getListActiveLicenses().then(function(res){
@@ -186,7 +185,10 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	};
 	//Add Familias
 	$scope.addFamilyItem = function(){
-		$scope.families.push({formats:[], family_name:null, money_family: $scope.current_price_family, check_family: false});
+		console.log( "$scope.families.length: " + $scope.families.length );
+		if ( $scope.families.length < 1 ){
+			$scope.families.push({formats:[], family_name:null, money_family: $scope.current_price_family, check_family: false});
+		}
 	};
 	//Remove uma Familia
 	$scope.removeFamilyItem = function(f_key, y, n, t, m, err){

@@ -34,7 +34,7 @@
 							<tr>
 								<th width="1%"><input type="checkbox" class="icheck" ng-model="selectedAll" ng-click="checkAll()"/></th>
 								<th width="1%"><?php echo $this->translate('#');?></th>
-								<th class="col-md-3"><?php echo $this->translate('Project Name');?></th>
+								<!--<th class="col-md-3"><?php echo $this->translate('Project Name');?></th>-->
 								<th class="col-md-3"><?php echo $this->translate('Family Name');?></th>
 								<th class="col-md-3"><?php echo $this->translate('Font Info');?></th>
 								<th class="col-md-2"><?php echo $this->translate('Specimen');?></th>
@@ -44,7 +44,7 @@
 							<tr ng-repeat="item in products" id="products-tr-{{item.id}}">
 								<td><input type="checkbox" class="icheck" ng-model="item.Selected" ng-change="isSelected('checkbox-{{item.id}}')" id="checkbox-{{item.id}}"/></td>
 								<td class="text-muted"><small>{{item.id}}</small></td>
-								<td ng-click="editProducts(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td>
+								<!--<td ng-click="editProducts(item.id);" class="qz-pointer">{{item.name | stripslashes}}</td> -->
 								<td ng-click="editProducts(item.id);" class="qz-pointer">
 									<ul class="list-unstyled small"><li ng-repeat="(f_key, f_item) in item.families">{{f_item.family_name | stripslashes }}</li></ul>
 								</td>

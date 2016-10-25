@@ -29,4 +29,24 @@ class LicenseFormatsTable extends AbstractTableGateway {
 		
 		return ($paginator);
 	}
+
+    /**
+     * Todos os items com exceção de Default
+     */
+    public function fetchAllWithoutDefault() {
+        // SELECT
+        $select = new Select ();
+        $select->from ( $this->table );
+        // WHERE
+        $select->where ( "{$this->table}.name NOT LIKE 'Default%'" );
+        // ORDER
+        $select->order ( "{$this->table}.id ASC" );
+        // Executando
+        $adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
+        $paginator = new \Zend\Paginator\Paginator ( $adapter );
+        $paginator->setItemCountPerPage ( null );
+        $paginator->setCurrentPageNumber ( 0 );
+
+        return ($paginator);
+    }
 }
