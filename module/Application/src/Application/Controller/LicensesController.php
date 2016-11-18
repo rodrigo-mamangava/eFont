@@ -91,7 +91,7 @@ class LicensesController extends ApplicationController {
 		$LicensesController = new \Shop\Controller\LicensesController ( $this->getMyServiceLocator () );
 		$Paginator = $LicensesController->filter ( $search, $count, $offset, $company_id, $check_custom );
 
-		if ($Paginator->count () > 0) {
+        if ($Paginator->count () > 0) {
 		    $arr = iterator_to_array ( $Paginator->getCurrentItems () );
             foreach ($arr as $k=>$item){
                 $arr[$k] = UsefulController::getStripslashes($item);
@@ -104,6 +104,9 @@ class LicensesController extends ApplicationController {
 
             //Dados da Empresa
             $data ['company'] = $this->getCompanyProfile();
+
+            //Basic Licenses
+            $data [ 'custom_basic_licenses' ] = $this->listBasicLicenses ( $check_custom, $company_id );
 			
 			$outcome = $status = true;
 		}
@@ -127,6 +130,7 @@ class LicensesController extends ApplicationController {
 			try {
 				// PARAMS
 				$post = $this->postJsonp ();
+
 				$id = isset ( $post ['id'] ) ? $post ['id'] : 0;
 				$name = isset ( $post ['name'] ) ? $post ['name'] : null;
 				$file = isset ( $post ['media_url'] ) ? $post ['media_url'] : null;
@@ -143,6 +147,9 @@ class LicensesController extends ApplicationController {
 				$currency_real = isset ( $post ['currency_real'] ) ? $post ['currency_real'] : '';
 				// Formatos
 				$formats = isset ( $post ['formats'] ) ? $post ['formats'] : null;
+                if ( is_array( $formats ) ){
+                    $formats = array_filter( $formats );
+                }
 				$formats_number = is_array ( $formats ) ? count ( $formats ) : 0;
 				$formats_data = array ();
 
@@ -155,23 +162,28 @@ class LicensesController extends ApplicationController {
 
                 $check_custom = isset ( $post ['check_custom'] ) ? $post ['check_custom'] : false;
 
+//                echo "<pre>"; print_r($post['basic_licenses']); echo "</pre>";
+
 				if ($formats_number > 0) {
 					foreach ( $formats as $f_key => $f_item ) {
-						if (($f_key == 4 && $check_custom == false) || ($f_key == 1 && $check_desktop == true) || ($f_key == 2 && $check_web == true) || ($f_key == 3 && $check_app == true)) {
-							
-							$font = array ();
-							foreach ( $f_item as $w_key => $w_item ) {
-								$font [$w_key] ['id'] = isset ( $w_item ['id'] ) ? $w_item ['id'] : null;
-								$font [$w_key] ['parameters'] = isset ( $w_item ['parameters'] ) ? $w_item ['parameters'] : null;
-								$font [$w_key] ['multiplier'] = isset ( $w_item ['multiplier'] ) ? $w_item ['multiplier'] : null;
-								$font [$w_key] ['sequence'] = $w_key;
-							}
-							
-							$formats_data [$f_key] = $font;
-							unset ( $font );
-						}
+                        $font = array ();
+                        foreach ( $f_item as $w_key => $w_item ) {
+                            $font [$w_key] ['id'] = isset ( $w_item ['id'] ) ? $w_item ['id'] : null;
+                            $font [$w_key] ['license_basic_id'] = isset ( $w_item ['license_basic_id'] ) ? $w_item ['license_basic_id'] : null;
+                            $font [$w_key] ['parameters'] = isset ( $w_item ['parameters'] ) ? $w_item ['parameters'] : null;
+                            $font [$w_key] ['multiplier'] = isset ( $w_item ['multiplier'] ) ? $w_item ['multiplier'] : null;
+                            $font [$w_key] ['sequence'] = $w_key;
+                        }
+
+                        $formats_data [$f_key] = $font;
+                        unset ( $font );
 					}
 				}
+
+                // Basic licenses
+                $basic_licenses = isset ( $post ['basic_licenses'] ) ? $post ['basic_licenses'] : null;
+                $basic_licenses_number = is_array ( $basic_licenses ) ? count ( $basic_licenses ) : 0;
+
 				// Validate
 				if (! ValidadorController::isValidDigits ( $id )) {
 					$data = $this->translate ( "Id." ) . ' ' . $this->translate ( "You can't leave this empty." );
@@ -193,18 +205,41 @@ class LicensesController extends ApplicationController {
 						
 						$LicenseHasFormats = new \Shop\Controller\LicenseHasFormatsController ( $this->getMyServiceLocator () );
 						$LicenseHasFormats->removeByLicense ( $rs, $company_id ); // Removemos para depois ativar, assim evita bug quando remove uma opcao ou adicionar
-						sleep(1);
+
+                        //Se for licenca custom, trata os relacionamentos com as licensas basicas que irao compor
+                        // a licenca custom/combo.
+                        if ( $check_custom ) {
+                            $CustomLicenseHasBasicLicenses = new \Shop\Controller\CustomLicenseHasBasicLicensesController( $this->getMyServiceLocator () );
+                            $CustomLicenseHasBasicLicenses->removeByCustomLicense( $rs ); // Removemos para depois incluir toda a nova lista
+
+                            if ( is_array( $basic_licenses ) && $basic_licenses_number > 0 ) {
+                                foreach ( $basic_licenses as $basic_license ) {
+                                    if ( $basic_license[ 'check_enabled' ] ){
+                                        $CustomLicenseHasBasicLicenses->save( $rs, $basic_license['license_basic_id'] );
+                                    }
+                                }
+                            }
+                        }
+                        sleep(1);
 						
 						//var_dump($formats_data);
 						foreach ( $formats_data as $f_key => $f_item ) {
 							foreach ( $f_item as $w_key => $w_item ) {
-								$LicenseHasFormats->save ( $w_item ['id'], $rs, $f_key, $company_id, $user_id, $w_item ['parameters'], $w_item ['multiplier'], $w_item ['sequence'] );
+                                if ( ( $check_custom ) && ( $w_item ['parameters'] == '' ) ){
+                                    continue; // pula para o proximo
+                                }
+								$LicenseHasFormats->save (
+								    $w_item ['id'], $rs, $f_key, $company_id,
+                                    $user_id, $w_item ['parameters'], $w_item ['multiplier'],
+                                    $w_item ['sequence'], $w_item ['license_basic_id']
+                                );
 							}
 						}
 					}
 					// Response
 					$status = true;
 					$outcome = $rs;
+                    $data = $this->translate ( "Data have been saved!" );
 				}
 			} catch ( \Exception $e ) {
 				$data = $e->getMessage ();
@@ -244,12 +279,13 @@ class LicensesController extends ApplicationController {
 				$data ['check_app'] = $data ['check_app'] == 1 ? true : false;
 				$data ['check_web'] = $data ['check_web'] == 1 ? true : false;
 				$data ['check_enabled'] = $data ['check_enabled'] == 1 ? true : false;
+                $data ['check_custom'] = $data ['check_custom'] == 1 ? true : false;
 				
 				$data ['formats'] = array (
-						array (),
-						array (),
-						array (),
-						array () 
+//						array (),
+//						array (),
+//						array (),
+//						array ()
 				);
 				$formats = $LicensesHasFormats->fetchAll ( $id, $company_id );
 				if ($formats->count () > 0) {
@@ -257,6 +293,7 @@ class LicensesController extends ApplicationController {
 					foreach ( $arr as $w_key => $w_item ) {
 						$font = array ();
 						$font ['id'] = isset ( $w_item ['id'] ) ? $w_item ['id'] : null;
+                        $font ['license_basic_id'] = isset ( $w_item ['license_basic_id'] ) ? $w_item ['license_basic_id'] : null;
 						$font ['parameters'] = isset ( $w_item ['parameters'] ) ? $w_item ['parameters'] : null;
 						$font ['multiplier'] = isset ( $w_item ['multiplier'] ) ? $w_item ['multiplier'] : 1;
 						$seq = $font ['sequence'] = isset ( $w_item ['sequence'] ) ? $w_item ['sequence'] : 0;
@@ -265,6 +302,24 @@ class LicensesController extends ApplicationController {
 						$data ['formats'] [$f_key] [$seq] = $font;
 					}
 				}
+
+				if ( $data ['check_custom'] ) {
+                    $CustomLicenseHasBasicLicenses = new \Shop\Controller\CustomLicenseHasBasicLicensesController( $this->getMyServiceLocator () );
+                    $basic_licenses = $CustomLicenseHasBasicLicenses->fetchAll( $id );
+                    if ($basic_licenses->count () > 0) {
+                        $basic_licenses_arr = iterator_to_array ( $basic_licenses->getCurrentItems () );
+                        foreach ( $basic_licenses_arr as $w_key => $w_item ) {
+                            $b_license = [];
+                            $b_license['license_basic_id'] = isset ( $w_item ['license_basic_id'] ) ? $w_item ['license_basic_id'] : null;
+                            $b_license['name'] = isset ( $w_item ['name'] ) ? $w_item ['name'] : null;
+                            $b_license['check_enabled'] = true;
+                            $data [ 'basic_licenses' ] [ $b_license['license_basic_id'] ] = $b_license;
+                            //USAR UM VETOR ESPELHADO
+                            $data [ 'basic_licenses_suport' ] [ ] = $b_license;
+                        }
+                    }
+                }
+
 				$outcome = $status = true;
 			} else {
 				$data = $this->translate ( 'Invalid Id' );
@@ -369,5 +424,33 @@ class LicensesController extends ApplicationController {
         // Response
         self::showResponse ( $status, $data, $outcome, true );
         die ();
+    }
+
+    /**
+     * @param $check_custom
+     * @param $company_id
+     * @return array|null
+     */
+    protected function listBasicLicenses( $check_custom, $company_id ){
+        if ( $check_custom == 0 ) {
+            return null;
+        }
+        $CustomLicenseHasBasicLicenseController = new \Shop\Controller\CustomLicenseHasBasicLicensesController( $this->getMyServiceLocator () );
+        $PaginatorBasicLicenses = $CustomLicenseHasBasicLicenseController->fetchAllByCompanyId( $company_id );
+        if ( $PaginatorBasicLicenses->count () <= 0 ) {
+            return null;
+        }
+        $arr_basic_licenses = iterator_to_array ( $PaginatorBasicLicenses->getCurrentItems () );
+        foreach ( $arr_basic_licenses as $k=>$item ){
+            $arr_basic_licenses[$k] = UsefulController::getStripslashes($item);
+        }
+        $basic_licenses = [];
+        foreach ( $arr_basic_licenses as $k=>$i ) {
+            $basic_licenses[ $i['license_custom_id'] ][] = [
+                'license_basic_id'  => $i['license_basic_id'] ,
+                'name'              => $i['name']
+            ];
+        }
+        return $basic_licenses;
     }
 }

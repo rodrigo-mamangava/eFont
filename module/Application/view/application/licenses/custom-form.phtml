@@ -4,7 +4,7 @@
         <?php echo $this->partial('shop/projects/leftmenu'); ?>
         <div class="c-layout-sidebar-content ">
             <!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
-            <div class="" ng-controller="LicensesCtrl" ng-init="getLicenses();">
+            <div class="" ng-controller="LicensesCtrl" ng-init="form.check_custom=1;getLicenses();">
                 <div class="portlet">
                     <div class="portlet-title">
                         <div class="caption">
@@ -14,10 +14,10 @@
                     <!-- BEGIN BODY -->
                     <div class="portlet-body form">
                         <form class="form-horizontal" role="form" name="formLicenses">
-                            <input type="hidden" ng-model="form.check_custom" ng-init="form.check_custom=1" />
+                            <input type="text" ng-show="false" ng-model="form.check_custom" />
                             <div class="form-group margin-top-40 " style="margin-bottom: -20px">
                                 <label
-                                    class="col-md-7 uppercase bold"><?php echo $this->translate('CUSTOM LICENSE'); ?></label>
+                                    class="col-md-7 uppercase bold"><?php echo $this->translate('COMBO LICENSE'); ?></label>
                             </div>
 
                             <hr/>
@@ -29,7 +29,7 @@
                                 <div class="col-md-6">
                                     <input type="text" ng-model="form.name" class="form-control text-danger"
                                            maxlength="255"
-                                           placeholder="<?php echo $this->translate('Project License'); ?>"
+                                           placeholder="<?php echo $this->translate('Custom License'); ?>"
                                            required="required"/>
                                 </div>
 
@@ -53,6 +53,7 @@
                                     class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Files'); ?>
                                 </label>
                                 <div class="col-md-6">
+                                    <?php /*
                                     <label class="checkbox-inline"><input type="checkbox" ng-model="form.check_desktop"
                                                                           id="check_desktop"><?php echo $this->translate('Desktop'); ?>
                                     </label>
@@ -61,26 +62,54 @@
                                     </label>
                                     <label class="checkbox-inline"><input type="checkbox" ng-model="form.check_app"
                                                                           id="check_app"><?php echo $this->translate('App'); ?>
-                                    </label>
+                                    </label> */ ?>
+                                    <ul class="list-group">
+                                        <li ng-repeat="(l_key, l_item) in basic_licenses"
+                                            class="checkbox-inline"
+                                            style="padding-left: 0px">
+                                            <div >
+                                                <div class="c-checkbox c-toggle-hide"
+                                                     data-object-selector="c-form-register"
+                                                     data-animation-speed="600">
+                                                    <input type="checkbox" id="checkbox-{{l_item.id}}"
+                                                           class="c-check"
+                                                           ng-click="addLicenseInfoSectionByCheckedLicence( l_item )"
+                                                           ng-model="form.basic_licenses[l_item.id].check_enabled">
+                                                    <label for="checkbox-{{l_item.id}}">
+                                                        <span class="inc"></span>
+                                                        <span class="check"></span>
+                                                        <span class="box"></span>
+                                                        <small
+                                                            ng-class="form.basic_licenses[l_item.id].check_enabled?'c-font-green':'c-font-red'">
+                                                            {{l_item.name}}
+                                                        </small>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
 
-                            <!-- ACTIVATION -->
-                            <div class="form-group margin-bottom-20">
-                                <label
-                                    class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Activate'); ?>
-                                </label>
-                                <div class="col-md-10">
-                                    <label class="checkbox-inline control-label">
-                                        <input type="checkbox"
-                                               ng-model="form.check_enabled"
-                                               id="check_enabled"></label>
-                                </div>
-                            </div>
+                            <?php
+                            /**
+                             * <!-- ACTIVATION -->
+                             * <div class="form-group margin-bottom-20">
+                             * <label
+                             * class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Activate'); ?>
+                             * </label>
+                             * <div class="col-md-10">
+                             * <label class="checkbox-inline control-label">
+                             * <input type="checkbox"
+                             * ng-model="form.check_enabled"
+                             * id="check_enabled"></label>
+                             * </div>
+                             * </div>
+                             */
+                            ?>
 
                             <!-- INFO -->
-                            <section ng-show="form.check_desktop || form.check_app || form.check_web">
-
+                            <section ng-show="form.showCustomLicenseInfosSection">
                                 <div class="form-group margin-top-40" style="margin-top: 40px; margin-bottom: -20px;">
                                     <label
                                         class="col-md-7 uppercase bold"><?php echo $this->translate('CUSTOM LICENSE INFO'); ?></label>
@@ -88,47 +117,61 @@
 
                                 <hr/>
 
-                                <!-- Desktop -->
-                                <div class="form-group margin-top-40" ng-show="form.check_desktop">
-                                    <label
-                                        class="col-md-1 control-label bold pull-left"><?php echo $this->translate('Desktop'); ?></label>
-                                    <div class="col-md-11">
-                                        <div class="input-group col-md-10 pull-left">
-                                            <ul class="list-unstyled" ui-sortable="sortableFormatDesktop"
-                                                ng-model="form.formats[1]">
-                                                <li ng-repeat="(cart_key, cart_item) in form.formats[1]"
-                                                    class="col-md-12">
-                                                    <p>
-                                                    <table>
-                                                        <tr>
-                                                            <td class="col-md-7"><input type="text" class="form-control"
-                                                                                        ng-model="cart_item.parameters"
-                                                                                        placeholder="<?php echo $this->translate('1-2 USERS, UNLIMITED'); ?>">
-                                                            </td>
-                                                            <td class="col-md-3"><input type="text" class="form-control"
-                                                                                        ng-model="cart_item.multiplier"
-                                                                                        placeholder="<?php echo $this->translate('Multiplier'); ?>">
-                                                            </td>
-                                                            <td class="col-md-2"><span class="input-group-btn"><div
-                                                                        class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>
-                                                                <span class="input-group-btn"><button
-                                                                        class="btn c-btn c-btn-red c-btn-square c-font-white"
-                                                                        type="button"
-                                                                        ng-click="removeFormatItem(1, cart_key)"><i
-                                                                            class="fa fa-minus"></i></button></span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    </p>
-                                                </li>
-                                            </ul>
+                                <div>
+                                    <div ng-repeat="(l_key, l_item) in form.basic_licenses | removeBlackItems track by $index ">
+                                        <!-- Desktop -->
+                                        <div class="form-group margin-top-40" ng-show="l_item.check_enabled">
+                                            <label
+                                                class="col-md-2 control-label bold pull-left">
+                                                <small>{{ l_item.name }}</small>
+                                            </label>
+                                            <div class="col-md-10">
+                                                <div class="input-group col-md-10 pull-left">
+                                                    <ul class="list-unstyled" ui-sortable="sortableFormatDesktop"
+                                                        ng-model="form.formats[l_item.license_basic_id]">
+                                                        <li ng-repeat="(cart_key, cart_item) in form.formats[l_item.license_basic_id]"
+                                                            class="col-md-12">
+                                                            <input type="text" ng-show="false"
+                                                                   ng-model="cart_item.license_basic_id"/>
+                                                            <p>
+                                                            <table>
+                                                                <tr>
+                                                                    <td class="col-md-7"><input type="text"
+                                                                                                class="form-control"
+                                                                                                ng-model="cart_item.parameters"
+                                                                                                placeholder="<?php echo $this->translate('TYPE LINCENSE INFO HERE'); ?>">
+                                                                    </td>
+                                                                    <td class="col-md-3"><input type="text"
+                                                                                                class="form-control"
+                                                                                                ng-model="cart_item.multiplier"
+                                                                                                placeholder="<?php echo $this->translate('Multiplier'); ?>">
+                                                                    </td>
+                                                                    <td class="col-md-2"><span class="input-group-btn"><div
+                                                                                class="btn c-btn c-btn-yellow c-btn-square c-font-white myHandle">{{cart_key}}</div></span>
+                                                                        <span class="input-group-btn"><button
+                                                                                class="btn c-btn c-btn-red c-btn-square c-font-white"
+                                                                                type="button"
+                                                                                ng-click="removeFormatItem(l_item.license_basic_id, cart_key)"><i
+                                                                                    class="fa fa-minus"></i></button></span>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            </p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="form-group margin-top-40 margin-bottom-10"><a
+                                                        ng-click="addFormatItem(l_item.license_basic_id, 1, l_item.license_basic_id);"
+                                                        href="javascript:;"
+                                                        class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"
+                                                        style="margin-top: 10px;"><i
+                                                            class="fa fa-plus"></i></a></div>
+                                            </div>
                                         </div>
-                                        <div class="form-group margin-top-40 margin-bottom-10"><a
-                                                ng-click="addFormatItem(1);" href="javascript:;"
-                                                class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" style="margin-top: 10px;"><i
-                                                    class="fa fa-plus"></i></a></div>
                                     </div>
                                 </div>
+
 
                                 <!-- WEB -->
                                 <div class="form-group margin-top-40" ng-show="form.check_web">
@@ -167,7 +210,8 @@
                                         </div>
                                         <div class="form-group margin-top-40 margin-bottom-10"><a
                                                 ng-click="addFormatItem(2);" href="javascript:;"
-                                                class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" style="margin-top: 10px;"><i
+                                                class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"
+                                                style="margin-top: 10px;"><i
                                                     class="fa fa-plus"></i></a></div>
                                     </div>
                                 </div>
@@ -209,7 +253,8 @@
                                         </div>
                                         <div class="form-group margin-top-40 margin-bottom-10"><a
                                                 ng-click="addFormatItem(3);" href="javascript:;"
-                                                class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l" style="margin-top: 10px;"><i
+                                                class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"
+                                                style="margin-top: 10px;"><i
                                                     class="fa fa-plus"></i></a></div>
                                     </div>
                                 </div>

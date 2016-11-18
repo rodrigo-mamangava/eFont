@@ -67,7 +67,7 @@
                             <section ng-repeat="(f_key, f_item) in families">
                                 <!-- FORMATS -->
                                 <hr/>
-                                <input type="text" ng-show="false" ng-model="f_item.family_name=form.name" />
+
                                 <!-- PRICES -->
                                 <div class="form-group margin-top-40">
                                     <label class="col-md-2 control-label bold pull-left">
@@ -93,7 +93,8 @@
                                 </div>
 
                                 <section ng-repeat="(t_key, t_item) in formats" id="sec-formats"
-                                         ng-init="f_item.formats[t_item.id].format_id = t_item.id">
+                                         ng-init="f_item.formats[t_item.id].format_id = t_item.id"
+                                         ng-show="fileFormatByCompany( t_item.name)">
                                     <!-- UPLOAD -->
                                     <div class="form-group margin-top-40">
                                         <label class="col-md-2 control-label bold pull-left"><a
@@ -136,12 +137,13 @@
                                                             ng-hide="t_item.id == '0'" type="text" class="form-control"
                                                             ng-model="fl_item.font_subfamily"/></td>
                                                     <td class="col-md-2"><span ng-show="t_item.id == '0'">Trial</span>
-                                                        <div ng-hide="t_item.id == '0'" class="input-group"><span
+                                                        <div ng-hide="t_item.id == '0'" class="input-group"><?php /*<span
                                                                 class="input-group-addon"><input type="checkbox"
-                                                                                                 ng-model="fl_item.check_price"></span><input
+                                                                                                 ng-model="fl_item.check_price"></span>*/?><input
                                                                 ui-money-mask="2" ng-model="fl_item.font_price"
                                                                 type="text" class="form-control"
-                                                                ng-disabled="!fl_item.check_price"></div>
+                                                                ng-disabled="true"
+                                                            <?php /*ng-disabled="!fl_item.check_price"*/?>></div>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -254,13 +256,13 @@
                                         <div class="col-md-6">
                                             <hr class="row"/>
                                             <h5>{{t_item.name}}</h5>
-                                            <table class="table table-bordered table-striped"
-                                            ">
+                                            <table class="table table-bordered table-striped">
                                             <tr ng-repeat="(fl_key, fl_item) in f_item.formats[t_item.id].files"
                                                 ng-show="f_item.formats[t_item.id].files">
                                                 <td class="not-not-border">{{fl_item.font_subfamily}}</td>
-                                                <td class="not-not-border"><span ng-show="t_item.id == '0'">Trial</span><span
-                                                        ng-hide="t_item.id == '0'">{{fl_item.font_price | currency}}
+                                                <td class="not-not-border"><span ng-show="t_item.id == '0'">Trial</span>
+                                                    <span ng-hide="t_item.id == '0'">
+                                                        {{fl_item.font_price | currency}}
                                                 </td>
                                             </tr>
                                             <tr ng-hide="f_item.formats[t_item.id].files">

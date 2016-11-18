@@ -9,20 +9,30 @@ namespace Shop\Controller;
  */
 class LicenseHasFormatsController extends \Useful\Controller\ControlController
 {
-	/**
-	 * Salva/Atualiza o item
-	 * 
-	 * @param unknown $id
-	 * @param unknown $license_id
-	 * @param unknown $license_formats_id
-	 * @param unknown $company_id
-	 * @param unknown $user_id
-	 * @param unknown $parameters
-	 * @param unknown $multiplier
-	 * @param unknown $sequence
-	 */
-	public function save($id, $license_id, $license_formats_id, $company_id, $user_id, $parameters, $multiplier, $sequence){
-		return  $this->getDbTable ( '\Shop\Model\LicenseHasFormatsTable' )->save($id, $license_id, $license_formats_id, $company_id, $user_id, $parameters, $multiplier, $sequence);
+    /**
+     * Salva/Atualiza o item
+     *
+     * @param $id
+     * @param $license_id
+     * @param $license_formats_id
+     * @param $company_id
+     * @param $user_id
+     * @param $parameters
+     * @param $multiplier
+     * @param $sequence
+     * @param $license_basic_id
+     * @return mixed
+     */
+	public function save(
+	    $id, $license_id, $license_formats_id,
+        $company_id, $user_id, $parameters,
+        $multiplier, $sequence, $license_basic_id  ){
+
+		return  $this->getDbTable ( '\Shop\Model\LicenseHasFormatsTable' )->save(
+                $id, $license_id, $license_formats_id,
+                $company_id, $user_id, $parameters,
+                $multiplier, $sequence, $license_basic_id
+        );
 	}
 	/**
 	 * Retorna todos os itens

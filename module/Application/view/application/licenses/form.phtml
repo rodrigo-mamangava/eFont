@@ -4,7 +4,7 @@
         <?php echo $this->partial('shop/projects/leftmenu'); ?>
         <div class="c-layout-sidebar-content ">
             <!-- BEGIN C-LAYOUT-SIDEBAR-CONTENT-->
-            <div class="" ng-controller="LicensesCtrl" ng-init="getLicenses();">
+            <div class="" ng-controller="LicensesCtrl" ng-init="form.check_custom=0;getLicenses();">
                 <div class="portlet">
                     <div class="portlet-title">
                         <div class="caption">
@@ -42,6 +42,7 @@
                                             <span class="input-group-btn " style=""><button class="btn blue"
                                                                                             type="button"
                                                                                             onclick="fileUploadDropzone('media_url');"><?php echo $this->translate('Upload'); ?></button></span>
+                                            <input type="hidden" id="accepted_file" name="accepted_file" value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -57,31 +58,36 @@
                                            ng-show="companyData.check_fmt_otf">
                                             <input type="checkbox"
                                                   ng-model="form.check_fmt_otf"
-                                                  id="check_otf"><?php echo $this->translate('.OTF'); ?>
+                                                  id="check_otf"
+                                                   ng-disabled="form.check_fmt_trial"><?php echo $this->translate('.OTF'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
                                            ng-show="companyData.check_fmt_ttf">
                                             <input type="checkbox"
                                               ng-model="form.check_fmt_ttf"
-                                              id="check_ttf"><?php echo $this->translate('.TTF'); ?>
+                                              id="check_ttf"
+                                               ng-disabled="form.check_fmt_trial"><?php echo $this->translate('.TTF'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
                                            ng-show="companyData.check_fmt_eot">
                                             <input type="checkbox"
                                               ng-model="form.check_fmt_eot"
-                                              id="check_eot"><?php echo $this->translate('.EOT'); ?>
+                                              id="check_eot"
+                                              ng-disabled="form.check_fmt_trial"><?php echo $this->translate('.EOT'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
                                            ng-show="companyData.check_fmt_woff">
                                             <input type="checkbox"
                                                ng-model="form.check_fmt_woff"
-                                               id="check_woff"><?php echo $this->translate('.WOFF'); ?>
+                                               id="check_woff"
+                                               ng-disabled="form.check_fmt_trial"><?php echo $this->translate('.WOFF'); ?>
                                     </label>
                                     <label class="checkbox-inline control-label"
                                            ng-show="companyData.check_fmt_woff2">
                                             <input type="checkbox"
                                             ng-model="form.check_fmt_woff2"
-                                            id="check_woff2"><?php echo $this->translate('.WOFF2'); ?>
+                                            id="check_woff2"
+                                            ng-disabled="form.check_fmt_trial"><?php echo $this->translate('.WOFF2'); ?>
                                     </label>
 
 
@@ -92,12 +98,14 @@
                                            ng-show="companyData.check_fmt_trial">
                                             <input type="checkbox"
                                                 ng-model="form.check_fmt_trial"
-                                                id="check_trial"><?php echo $this->translate('Trial'); ?>
+                                                id="check_trial"
+                                                ng-click="toggleAcceptedFiles( form.check_fmt_trial )"><?php echo $this->translate('Trial'); ?>
                                     </label>
                                 </div>
                             </div>
 
 
+                            <?php /**
                             <!-- ACTIVATION -->
                             <div class="form-group margin-bottom-20">
                                 <label
@@ -110,29 +118,30 @@
                                                id="check_enabled"></label>
                                 </div>
                             </div>
+                            */ ?>
 
                             <!-- INFO -->
-                            <div class="form-group margin-top-40" style="margin-top: 40px; margin-bottom: -20px;">
+                            <div class="form-group margin-top-40" style="margin-top: 40px; margin-bottom: -20px;" ng-hide="form.check_fmt_trial">
                                 <label
                                     class="col-md-9 uppercase bold"
                                     style=" vertical-align: text-bottom; margin-top: 18px;"><?php echo $this->translate('LICENSE INFO'); ?></label>
 
                                 <div class="col-md-1 form-group pull-right" style="margin-right: 20px;"><a
-                                            ng-click="addFormatItem(4);" href="javascript:;"
+                                            ng-click="addFormatItem(0, 0, 0);" href="javascript:;"
                                         class="btn c-btn c-btn-green c-btn-square c-font-white c-font-bold c-font-uppercase c-cart-float-l"><i
                                             class="fa fa-plus"></i></a></div>
 
                             </div>
 
-                            <hr/>
+                            <hr ng-hide="form.check_fmt_trial" />
 
-                            <div class="form-group margin-top-10">
+                            <div class="form-group margin-top-10" ng-hide="form.check_fmt_trial">
 
                                 <div class="col-md-11">
                                     <div class="input-group col-md-10 pull-left">
                                         <ul class="list-unstyled" ui-sortable="sortableFormatDesktop"
-                                            ng-model="form.formats[4]">
-                                            <li ng-repeat="(cart_key, cart_item) in form.formats[4]"
+                                            ng-model="form.formats[0]">
+                                            <li ng-repeat="(cart_key, cart_item) in form.formats[0]"
                                                 class="col-md-12">
                                                 <p>
                                                 <table>
@@ -155,7 +164,7 @@
                                                             <span class="input-group-btn"><button
                                                                     class="btn c-btn c-btn-red c-btn-square c-font-white"
                                                                     type="button"
-                                                                    ng-click="removeFormatItem(4, cart_key)"><i class="fa fa-minus"></i></button></span>
+                                                                    ng-click="removeFormatItem(0, cart_key)"><i class="fa fa-minus"></i></button></span>
                                                         </td>
                                                     </tr>
                                                 </table>

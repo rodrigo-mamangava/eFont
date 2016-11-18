@@ -2,17 +2,26 @@ var FormDropzone = function () {
 	return {
 		//main function to initiate the module
 		init: function () {  
-			var acceptedFiles = ".jpeg,.jpg,.png,.gif, .pdf, .doc, .docx, .zip";
-			if ( $('#accepted_file').length){
-				acceptedFiles = $('#accepted_file').val(); 
-			}
+			var acceptedFiles = ".jpeg,.jpg,.png,.gif,.pdf,.doc,.docx,.zip";
+			var acceptedFilesBkp  = acceptedFiles;
+
 			//console.log(acceptedFiles);
 			var myDropzone = new Dropzone("#my-dropzone", {
 				maxFilesize: 6,
 				uploadMultiple: false,
 				maxFiles: 1,
 				acceptedFiles: acceptedFiles,
-				autoDiscover: true			
+				autoDiscover: true
+			});
+
+			//Atualiza caso haja modificacoes
+			$('#accepted_file').on("change", function () {
+				if ( $('#accepted_file').val().length >= 3){
+					acceptedFiles = $('#accepted_file').val();
+				} else {
+					acceptedFiles = acceptedFilesBkp;
+				}
+				myDropzone.options.acceptedFiles = acceptedFiles;
 			});
 
 			myDropzone.on("addedfile", function(file) {

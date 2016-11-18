@@ -60,6 +60,9 @@ class ProductsController extends ApplicationController {
 			$data ['total'] = $Paginator->getTotalItemCount ();
 			$data ['count'] = $count;
 			$data ['offset'] = $offset;
+
+            //Dados da Empresa
+            $data ['company'] = $this->getCompanyProfile();
 			
 			$outcome = $status = true;
 		}
@@ -144,7 +147,8 @@ class ProductsController extends ApplicationController {
 						// Familia
 						$family = array ();
 						$family ['id'] = isset ( $f_item ['id'] ) ? $f_item ['id'] : null;
-						$family ['family_name'] = isset ( $f_item ['family_name'] ) ? $f_item ['family_name'] : null;
+						//$family ['family_name'] = isset ( $f_item ['family_name'] ) ? $f_item ['family_name'] : null;
+                        $family ['family_name'] = $project_name;
 						$family ['check_weight'] = isset ( $f_item ['check_weight'] ) ? $f_item ['check_weight'] : null;
 						$family ['check_enabled'] = isset ( $f_item ['check_enabled'] ) ? $f_item ['check_enabled'] : false;
 						$family ['check_family'] = isset ( $f_item ['check_family'] ) ? $f_item ['check_family'] : false;
@@ -324,6 +328,9 @@ class ProductsController extends ApplicationController {
 								// FORMATOS
 								$formats = $f_item ['formats'];
 								foreach ( $formats as $t_item ) {
+                                    if ( $t_item ['format_id'] == null ){
+                                        continue;
+                                    }
 									$family_has_formats_id = $FamilyHasFormats->save ( $t_item ['id'], $family_id, $t_item ['format_id'], $t_item ['media_url'], $t_item ['number_files'], $t_item ['collapsed'], $company_id, $user_id, $project_id );
 									if ($family_has_formats_id) {
 										$ok_formats = true;

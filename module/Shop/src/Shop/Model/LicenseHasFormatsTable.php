@@ -12,23 +12,30 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 	public function __construct(Adapter $adapter) {
 		$this->adapter = $adapter;
 	}
-	/**
-	 * Salva/Atualiza um item
-	 *
-	 * @param unknown $id        	
-	 * @param unknown $license_id        	
-	 * @param unknown $license_formats_id        	
-	 * @param unknown $company_id        	
-	 * @param unknown $user_id        	
-	 * @param unknown $parameters        	
-	 * @param unknown $multiplier        	
-	 * @param unknown $sequence        	
-	 */
-	public function save($id, $license_id, $license_formats_id, $company_id, $user_id, $parameters, $multiplier, $sequence) {
+
+    /**
+     * Salva/Atualiza um item
+     *
+     * @param $id
+     * @param $license_id
+     * @param $license_formats_id
+     * @param $company_id
+     * @param $user_id
+     * @param $parameters
+     * @param $multiplier
+     * @param $sequence
+     * @param $license_basic_id
+     * @return bool|int
+     */
+	public function save(
+	    $id, $license_id, $license_formats_id,
+        $company_id, $user_id, $parameters,
+        $multiplier, $sequence, $license_basic_id ) {
 		$data = array (
 				'company_id' => $company_id,
 				'user_id' => $user_id,
 				'license_id' => $license_id,
+                'license_basic_id' => $license_basic_id,
 				'license_formats_id' => $license_formats_id,
 				'parameters' => addslashes ( $parameters ),
 				'multiplier' => addslashes ( $multiplier ),
@@ -36,7 +43,7 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 				'dt_update' => date ( 'Y-m-d H:i:s' ),
 				'removed' => 0 
 		);
-		
+
 		$id = ( int ) $id;
 		if ($id == 0) {
 			unset ( $data ['id'] );
@@ -56,12 +63,15 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 		}
 		return $id;
 	}
-	/**
-	 * Atualizacao individual
-	 *
-	 * @param unknown $id        	
-	 * @param unknown $data        	
-	 */
+
+    /**
+     * Atualizacao individual
+     *
+     * @param $id
+     * @param $data
+     * @param $company_id
+     * @return bool
+     */
 	public function updated($id, $data, $company_id) {
 		$data ['dt_update'] = date ( 'Y-m-d H:i:s' );
 		
@@ -77,13 +87,15 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 		}
 		return $data;
 	}
-	/**
-	 * Busca pela chave principal
-	 *
-	 * @param unknown $id        	
-	 * @throws Exception
-	 * @return boolean|multitype:
-	 */
+
+    /**
+     * Busca pela chave principal
+     *
+     * @param $id
+     * @param $company_id
+     * @return bool
+     * @throws \Exception
+     */
 	public function find($id, $company_id) {
 		try {
 			// SELECT
@@ -112,13 +124,14 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 			throw new \Exception ( 'ERROR : ' . $e->getMessage () );
 		}
 	}
-	
-	/**
-	 * Todos os items
-	 *
-	 * @param unknown $license_id        	
-	 * @param unknown $company_id        	
-	 */
+
+    /**
+     * Todos os items
+     *
+     * @param $license_id
+     * @param $company_id
+     * @return \Zend\Paginator\Paginator
+     */
 	public function fetchAll($license_id, $company_id) {
 		// SELECT
 		$select = new Select ();
@@ -137,13 +150,13 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 		
 		return ($paginator);
 	}
-	
-	/**
-	 * Todos os items
-	 *
-	 * @param unknown $license_id        	
-	 * @param unknown $company_id        	
-	 */
+
+    /**
+     * Todos os items
+     *
+     * @param $license_id
+     * @return \Zend\Paginator\Paginator
+     */
 	public function fetchAllShop($license_id) {
 		// SELECT
 		$select = new Select ();
@@ -172,12 +185,14 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 		
 		return ($paginator);
 	}
-	/**
-	 * Remove um item
-	 *
-	 * @param unknown $id        	
-	 * @param unknown $company_id        	
-	 */
+
+    /**
+     * Remove um item
+     *
+     * @param $id
+     * @param $company_id
+     * @return array|bool
+     */
 	public function removed($id, $company_id) {
 		// Update
 		$data = array ();
@@ -193,13 +208,14 @@ class LicenseHasFormatsTable extends AbstractTableGateway {
 		}
 		return $data;
 	}
-	
-	/**
-	 * Remove pela chave da licenca principal
-	 *
-	 * @param unknown $license_id        	
-	 * @param unknown $company_id        	
-	 */
+
+    /**
+     * Remove pela chave da licenca principal
+     *
+     * @param $license_id
+     * @param $company_id
+     * @return array|bool
+     */
 	public function removeByLicense($license_id, $company_id) {
 		// Update
 		$data = array ();

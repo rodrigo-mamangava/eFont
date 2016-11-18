@@ -223,6 +223,42 @@ class LicensesTable extends AbstractTableGateway {
 	public function filter($search, $count, $offset, $company_id, $check_custom = 0) {
 		// SELECT
 		$select = new Select ();
+        $select->columns(
+            array(
+                'id',
+                'name',
+                'media_url',
+                'dt_creation',
+                'dt_update',
+                'removed',
+                'company_id',
+                'user_id',
+                'check_trial',
+                'check_desktop',
+                'check_app',
+                'check_web',
+                'check_enabled',
+                'currency_dollar',
+                'currency_euro',
+                'currency_libra',
+                'currency_real',
+                'check_fmt_otf',
+                'check_fmt_ttf',
+                'check_fmt_eot',
+                'check_fmt_woff',
+                'check_fmt_woff2',
+                'check_fmt_trial',
+                'check_custom',
+                'total_info' => new \Zend\Db\Sql\Expression (
+                    "( SELECT COUNT(lhf.id) 
+                         FROM license_has_formats lhf
+                        WHERE lhf.license_id = {$this->table}.id
+                          AND TRIM(lhf.parameters) <> ''
+                          AND TRIM(lhf.multiplier) <> ''
+                          AND lhf.removed <> 1 )"
+                )
+            )
+        );
 		// FROM
 		$select->from ( $this->table );
 		if (! is_null ( $search ) && strlen ( $search ) > 1) {
@@ -242,6 +278,10 @@ class LicensesTable extends AbstractTableGateway {
 		
 		// ORDER
 		$select->order ( "{$this->table}.name ASC" );
+
+//        echo $select->getSqlString();
+//        exit;
+
 		// Executando
 		$adapter = new \Zend\Paginator\Adapter\DbSelect ( $select, $this->adapter, $this->resultSetPrototype );
 		$paginator = new \Zend\Paginator\Paginator ( $adapter );

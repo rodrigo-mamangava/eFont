@@ -21,6 +21,8 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 		$scope.maxSize = 10;
 		//Checkbox
 		$scope.selected_items = 0;
+
+		$scope.companyData = null;
 	};
 	//Lista de itens
 	$scope.initProducts = function(search){//Carrega todos os itens
@@ -34,6 +36,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 						$scope.products = res.data.items;
 						$scope.totalItems = res.data.total;
 						$scope.currentPage = res.data.offset;
+						$scope.companyData = res.data.company;
 					});
 				});
 			}else{
@@ -76,6 +79,15 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	 */
 	$scope.getProducts = function(){
 		isSpinnerBar(true);
+
+		ShopSrvc.getCompanyProfile().then(function(res){
+			if(res.status == true){
+				$timeout(function(){
+					$scope.companyData = res.data.company;
+				}, 100);
+			}
+		});
+
 		//Licencas ativas
 		ShopSrvc.getListActiveLicenses().then(function(res){
 			if(res.status == true){
@@ -122,7 +134,7 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 			}else{
 				bootbox.alert(res.data, function(){
 					$timeout(function(){
-						$scope.changeTemplateURL('/ef-licenses/form');
+						$scope.changeTemplateURL('/ef-licenses');
 					}, 500);
 				});
 			}
@@ -345,4 +357,27 @@ ShopApp.controller('ProductsCtrl', function($scope, $timeout, $http, $localStora
 	$scope.notimplemented = function(){
 		bootbox.alert('Not implemented.');
 	};
+
+	/**
+	 * @param format_name
+	 * @returns {boolean}
+	 */
+	$scope.fileFormatByCompany = function( format_name ){
+		if ( format_name == "Trial" ) {
+			return true;
+		} else if ( format_name == ".OTF" && $scope.companyData.check_fmt_otf == true){
+			return true;
+		} else if ( format_name == ".TTF" && $scope.companyData.check_fmt_ttf == true){
+			return true;
+		} else if ( format_name == ".EOT" && $scope.companyData.check_fmt_eot == true){
+			return true;
+		} else if ( format_name == ".WOFF" && $scope.companyData.check_fmt_woff == true){
+			return true;
+		} else if ( format_name == ".WOFF2" && $scope.companyData.check_fmt_woff2 == true){
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 });

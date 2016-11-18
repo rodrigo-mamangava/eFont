@@ -1,27 +1,31 @@
 <!-- MODAL ARQUIVO -->
 <div id="modal_file_upload_form_static" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title"><?php echo $this->translate('Upload');?></h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-				<div class="col-md-12">
-				<!-- DROPZONE -->
-                 <form action="<?php echo $this->url('ef-upload', array('action' => 'file'),array('force_canonical' => true)); ?>" class="dropzone dropzone-file-area dz-clickable" id="my-dropzone" method="post" enctype="multipart/form-data">
-                 	<input type="hidden" name="dropzone-to-imagem" id="dropzone-to-imagem"> 
-                 	<input type="hidden" name="dropzone-to-id" id="dropzone-to-id"> 
-                 	<input type="hidden" name="uuid-to-id" id="uuid-to-id">
-					<h3 class="sbold"><i class="fa fa-cloud-upload"></i> Selecione o arquivo para enviar</h3>
-					<p><i class="fa fa-hand-grab-o"></i> Ou arraste e solte o arquivo aqui.</p>
-					<div class="dz-default dz-message"><span></span></div>                 
-                 </form>
-                 <!-- END DROPZONE -->
-                 </div>
-                 </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><?php echo $this->translate('Upload'); ?></h4>
             </div>
-		</div>
-	</div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- DROPZONE -->
+                        <form
+                            action="<?php echo $this->url('ef-upload', array('action' => 'file'), array('force_canonical' => true)); ?>"
+                            class="dropzone dropzone-file-area dz-clickable" id="my-dropzone" method="post"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="dropzone-to-imagem" id="dropzone-to-imagem">
+                            <input type="hidden" name="dropzone-to-id" id="dropzone-to-id">
+                            <input type="hidden" name="uuid-to-id" id="uuid-to-id">
+                            <h3 class="sbold"><i class="fa fa-cloud-upload"></i> Selecione o arquivo para enviar</h3>
+                            <p><i class="fa fa-hand-grab-o"></i> Ou arraste e solte o arquivo aqui.</p>
+                            <div class="dz-default dz-message"><span></span></div>
+                        </form>
+                        <!-- END DROPZONE -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

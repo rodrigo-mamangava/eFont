@@ -17,6 +17,10 @@ return array (
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\LicenseHasFormatsTable ( $dbAdapter );
 				},
+                'Shop\Model\CustomLicenseHasBasicLicensesTable' => function ($sm) {
+                    $dbAdapter = $sm->get ( 'Adapter' );
+                    return new \Shop\Model\CustomLicenseHasBasicLicensesTable ( $dbAdapter );
+                },
 				'Shop\Model\LicenseFormatsTable' => function ($sm) {
 					$dbAdapter = $sm->get ( 'Adapter' );
 					return new \Shop\Model\LicenseFormatsTable ( $dbAdapter );
