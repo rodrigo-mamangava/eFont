@@ -10,7 +10,7 @@
     "require": {
         "php": ">=5.5",
         "zendframework/zendframework": "~2.5",
-        "zendframework/zftool": "^0.1.0",
+        "zendframework/zftool": "dev-master",
         "google/apiclient": "^1.1",
         "google/recaptcha": "^1.1",
         "mailgun/mailgun-php": "^2.0",

@@ -54,7 +54,7 @@ class UsefulController {
 			} elseif (strpos ( $key, 'collapsed_' ) !== false || strpos ( $key, 'collapsed' ) !== false) {
 				$obj->{$key} = $value == '1' ? true : false;
 			} elseif (strpos ( $key, 'ddig' ) !== false) {
-				if (strlen ( $key ) > 5) {
+				if (strlen ( $value ) > 5) {
 					$obj->{$key} = \Cryptography\Controller\CryptController::encrypt ( $value, true );
 				} else {
 					$obj->{$key} = \Cryptography\Controller\CryptController::encrypt ( 'data/tmp/mplus-1c-medium.ttf', true );

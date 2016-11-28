@@ -13,3 +13,11 @@ composer.lock
 zftool.phar
 data
 public/bower_components
+
+config/autoload/global.php
+
+config/autoload/global.php
+
+public/bower.json
+
+config/autoload/global.php

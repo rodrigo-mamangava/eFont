@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2f89f3ffcd87a4396bd2521662f840ed",
-    "content-hash": "f9d7bde409e53142844cf19b8b283c2c",
+    "hash": "19495a03e2490b9e0ebc946403b8fcd5",
+    "content-hash": "2e99705568b3893be4f580dd1c691315",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -4373,12 +4373,12 @@
             "version": "2.5.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zf2.git",
+                "url": "https://github.com/zendframework/zendframework.git",
                 "reference": "e192ce17bacd22896dd319f58bad18bc1b290100"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/e192ce17bacd22896dd319f58bad18bc1b290100",
+                "url": "https://api.github.com/repos/zendframework/zendframework/zipball/e192ce17bacd22896dd319f58bad18bc1b290100",
                 "reference": "e192ce17bacd22896dd319f58bad18bc1b290100",
                 "shasum": ""
             },
@@ -4691,16 +4691,16 @@
         },
         {
             "name": "zendframework/zftool",
-            "version": "v0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/ZFTool.git",
-                "reference": "8bab848834bfc48fef2f4b3e874ddd3760fb9e0d"
+                "reference": "840c3eecd58454396983d84d1da293813af484af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZFTool/zipball/8bab848834bfc48fef2f4b3e874ddd3760fb9e0d",
-                "reference": "8bab848834bfc48fef2f4b3e874ddd3760fb9e0d",
+                "url": "https://api.github.com/repos/zendframework/ZFTool/zipball/840c3eecd58454396983d84d1da293813af484af",
+                "reference": "840c3eecd58454396983d84d1da293813af484af",
                 "shasum": ""
             },
             "require": {
@@ -4711,16 +4711,22 @@
                 "zendframework/zend-file": ">=2.2.2",
                 "zendframework/zend-form": ">=2.2.2",
                 "zendframework/zend-http": ">=2.2.2",
+                "zendframework/zend-i18n": ">=2.2.2",
                 "zendframework/zend-loader": ">=2.2.2",
+                "zendframework/zend-log": ">=2.2.2",
                 "zendframework/zend-modulemanager": ">=2.2.2",
                 "zendframework/zend-mvc": ">=2.2.2",
                 "zendframework/zend-serializer": ">=2.2.2",
                 "zendframework/zend-servicemanager": ">=2.2.2",
                 "zendframework/zend-stdlib": ">=2.2.2",
                 "zendframework/zend-text": ">=2.2.2",
-                "zendframework/zend-version": ">=2.2.2",
+                "zendframework/zend-version": ">=2.2.2 ",
                 "zendframework/zend-view": ">=2.2.2",
                 "zendframework/zenddiagnostics": ">=1.0.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.7.*",
+                "phpunit/phpunit": "4.*"
             },
             "bin": [
                 "zf.php"
@@ -4741,13 +4747,15 @@
                 "tool",
                 "zf2"
             ],
-            "time": "2014-04-22 18:35:37"
+            "time": "2015-10-21 07:40:59"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "zendframework/zftool": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

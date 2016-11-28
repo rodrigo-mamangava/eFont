@@ -1,0 +1,149 @@
+<?php include_once 'index.phtml'; ?>
+
+
+<style>
+
+    @font-face {
+        font-family: 'MyWebFont';
+        //src: url('webfont.eot'); /* IE9 Compat Modes */
+        src: url('font-test/font-test.tiff')  format('truetype'); /* IE9 Compat Modes */
+        src: url('font-test/font-test.eot?#iefix') format('embedded-opentype'),  //IE6-IE8 
+            url('font-test/font-test.woff2') format('woff2'),  //Super Modern Browsers 
+            url('font-test/font-test.woff') format('woff'),  //Pretty Modern Browsers 
+            url('font-test/font-test.ttf')  format('truetype'),  //Safari, Android, iOS 
+            url('font-test/font-test.svg#svgFontName') format('svg');  //Legacy iOS 
+    }
+
+    .testador .frase, .testador .texto-duas-col{
+        font-family: 'MyWebFont';
+        font-size: 20px;        
+    }
+
+
+
+</style>
+
+
+
+
+<div class="testador container" ng-controller="ShopProductDetailsCtrl" ng-init="initDetail();" >
+
+    <div class="row testador-tituo">        
+        <div class="col-xs-12">
+            <h1>Testador de fonte</h1>            
+            <hr/>           
+        </div>       
+    </div>
+
+    <div class="row testador-atributos"  >        
+        <div class="col-xs-12">
+
+            <div>
+                <label>Font Size</label>
+                <p>{{fontSize}}px</p>
+                <input type="range" name="points"  ng-model="fontSize" min="1" max="100">
+            </div>
+            <div>
+                <label>Letter Spacing</label>
+                <p>{{letterSpacing}}px</p>
+                <input type="range" name="points"  ng-model="letterSpacing" min="-10" max="50">
+            </div>
+
+            <div class="widget">
+                <label>Font Style</label>
+                <fieldset>
+                    <input type="radio" name="radio-1" ng-model="fontStyle" id="radio-1" value="normal"> normal
+                    <input type="radio" name="radio-1" ng-model="fontStyle" id="radio-2" value="italic" > italic
+                    <input type="radio" name="radio-1" ng-model="fontStyle" id="radio-3" value="oblique" >oblique
+                </fieldset>
+
+                <label>Font Variant</label>
+                <fieldset>
+                    <input type="radio" name="radio-2" ng-model="fontVariant" id="radio-1" value="normal"> normal
+                    <input type="radio" name="radio-2" ng-model="fontVariant" id="radio-2" value="small-caps" > small-caps
+
+                </fieldset>
+
+                <label>Font Weight</label>
+                <fieldset>
+                    <input type="radio" name="radio-3" ng-model="fontWeight"  value="normal"> normal
+                    <input type="radio" name="radio-3" ng-model="fontWeight"  value="bold" > bold
+                    <input type="radio" name="radio-3" ng-model="fontWeight"  value="bolder" > bolder
+                    <input type="radio" name="radio-3" ng-model="fontWeight"  value="lighter" > lighter
+
+                </fieldset>
+
+                <label>Text Align</label>
+                <fieldset>
+                    <input type="radio" name="radio-4" ng-model="textAlign"  value="center"> center
+                    <input type="radio" name="radio-4" ng-model="textAlign"  value="left" > left
+                    <input type="radio" name="radio-4" ng-model="textAlign"  value="right" > right
+                </fieldset>
+
+                <label>Frase ou Lorem ipsum</label>
+                <fieldset>
+                    <input type="radio" name="radio-5" ng-model="tipo"  value="true"> frase
+                    <input type="radio" name="radio-5" ng-model="tipo"  value="false"> lorem ipsum
+                </fieldset>
+
+            </div>
+        </div>       
+    </div>
+
+    <div class="row testador-conteudo" >        
+        <div class="col-xs-12 frase" contenteditable="true" 
+             style="
+             display: {{(tipo == 'true') ? 'block':'none'}};
+             font-size: {{fontSize}}px; 
+             font-style: {{fontStyle}};
+             letter-spacing: {{letterSpacing}}px;
+             font-variant: {{fontVariant}};
+             font-weight: {{fontWeight}};
+             text-align: {{textAlign}};
+             ">
+            <p>Teste essa fonte: Escreve o que quiser ;)</p>
+        </div>       
+    </div>
+
+    <div class="row testador-conteudo texto-duas-col" 
+         style="
+         display: {{(tipo == 'false') ? 'block':'none'}};
+         font-size: {{fontSize}}px; 
+         font-style: {{fontStyle}};
+         letter-spacing: {{letterSpacing}}px;
+         font-variant: {{fontVariant}};
+         font-weight: {{fontWeight}};
+         text-align: {{textAlign}};
+         "
+
+         >        
+        <div class="col-sm-6" contenteditable="true"  >
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Curabitur a nulla id risus euismod venenatis ut id elit. In leo 
+                lorem, efficitur sit amet ultricies eget, vestibulum in orci. 
+                Cras ex augue, pellentesque sit amet diam vitae, iaculis 
+                suscipit nisi. Cras ligula ex, faucibus sit amet molestie eget, 
+                aliquet eu diam. Suspendisse potenti. Donec dolor purus, 
+                iaculis vitae tempor et, rutrum nec metus. Sed eu porttitor 
+                dolor. Suspendisse aliquet, magna ac sollicitudin aliquam, ante 
+                ligula feugiat mi, non sodales metus magna ut sapien. Aliquam 
+                ultricies lacus vel nibh fermentum gravida.
+            </p>
+        </div>       
+        <div class="col-sm-6">
+            <p>
+                Duis non metus bibendum, condimentum dui ullamcorper, 
+                ullamcorper mi. Vivamus ornare cursus ultricies. Nam bibendum 
+                neque id sagittis scelerisque. Cras malesuada sem et nibh 
+                efficitur interdum. In interdum orci in nunc tincidunt fringilla. 
+                Morbi a lobortis leo. Morbi nec tempor arcu, id maximus mauris. 
+                Donec ac leo pharetra, scelerisque sem et, mattis sapien. Nam et 
+                leo a ex ultricies suscipit vel in ipsum. Maecenas finibus 
+                blandit tellus, sit amet volutpat eros condimentum ultricies. 
+                Pellentesque habitant morbi tristique senectus et netus et 
+                malesuada fames ac turpis egestas.
+            </p>
+        </div>       
+    </div>
+</div>

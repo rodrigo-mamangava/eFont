@@ -39,7 +39,8 @@ ShopApp.controller('ShopProductListCtrl', function($scope, $timeout, $http, $loc
 		$localStorage.ProductDetailsId = id;
 		console.log(id);
 		$timeout(function(){
-			$scope.changeTemplateURL('/shop-product-details');
+			//$scope.changeTemplateURL('/shop-product-details');
+			$scope.changeTemplateURL('/shop-product-details/detalhes?id='+id);
 		}, 500);		
 	};
 	/**
